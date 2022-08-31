@@ -7,13 +7,12 @@ public class Movement : MonoBehaviour
     [SerializeField] private LayerMask groundLayers;
     [SerializeField] private float runSpeed = 8f;
     [SerializeField] private float jumpHeight = 2f;
+    [SerializeField] private float gravity = -30f;
 
 
     private CharacterController player;
-    private float gravity = -30f;
     private Vector3 velocity;
     private bool isGrounded;
-    private float jumpInput;
     private float horizontalInput;
 
     void Awake() => player = GetComponent<CharacterController>();
@@ -43,8 +42,10 @@ public class Movement : MonoBehaviour
     }
 
     public void Jump(InputAction.CallbackContext context){
-        if(isGrounded){
-            velocity.y += Mathf.Sqrt(jumpHeight * -2 * gravity);
+        if(context.performed){
+            if(isGrounded){
+                velocity.y += Mathf.Sqrt(jumpHeight * -2 * gravity);
+            }
         }
     }
 }
