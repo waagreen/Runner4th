@@ -7,15 +7,21 @@ public class Movement : MonoBehaviour
     [SerializeField] private LayerMask groundLayers;
     [SerializeField] private float runSpeed = 8f;
     [SerializeField] private float jumpHeight = 2f;
-    [SerializeField] private float gravity = -30f;
-
+    [SerializeField] private float inputGravity = -30f;
 
     private CharacterController player;
     private Vector3 velocity;
-    private bool isGrounded;
+    private bool isGrounded => Physics.CheckSphere(transform.position, 0.1f, groundLayers, QueryTriggerInteraction.Ignore);
     private float horizontalInput;
+    private Vector3 initialPosition;
+    private float gravity => velocity.y < 0 ? inputGravity * 3f : inputGravity; 
 
-    void Awake() => player = GetComponent<CharacterController>();
+    void Awake() 
+    {
+        player = GetComponent<CharacterController>();
+        initialPosition = transform.position;
+        Debug.Log(initialPosition);
+    }
     
     void Update()
     {
@@ -24,12 +30,12 @@ public class Movement : MonoBehaviour
         //face the direction
         transform.forward = new Vector3(horizontalInput, 0, Mathf.Abs(horizontalInput) - 1);
 
-        //isGrounded
-        isGrounded = Physics.CheckSphere(transform.position, 0.1f, groundLayers, QueryTriggerInteraction.Ignore);
-
-        if(isGrounded && velocity.y < 0){
+        if(isGrounded && velocity.y < 0)
+        {
             velocity.y = 0;
-        }else{
+        }
+        else
+        {
             //add gravity
             velocity.y += gravity * Time.deltaTime;
         }
