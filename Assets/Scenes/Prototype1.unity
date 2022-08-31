@@ -1194,6 +1194,7 @@ MonoBehaviour:
     m_Bits: 8
   runSpeed: 8
   jumpHeight: 2
+  gravity: -40
 --- !u!1 &1868128019
 GameObject:
   m_ObjectHideFlags: 0
