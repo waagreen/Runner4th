@@ -28,92 +28,46 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
             ""id"": ""d3d2fa70-30f3-4adf-b458-9c387acfff9c"",
             ""actions"": [
                 {
-                    ""name"": ""Movement"",
-                    ""type"": ""Value"",
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
                     ""id"": ""d409c6ec-3d4e-4921-97d0-e6d4e36694e3"",
-                    ""expectedControlType"": ""Vector3"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Slide"",
+                    ""type"": ""Button"",
+                    ""id"": ""e03d9af7-43a7-4002-b21e-73d4b8d85078"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
                 {
-                    ""name"": ""3D Vector"",
-                    ""id"": ""d79fc233-4c1a-411e-8551-844adda4b786"",
-                    ""path"": ""3DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Movement"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""94aeef66-0a4d-4d66-8337-1a54dc2e550c"",
+                    ""name"": """",
+                    ""id"": ""4b80142d-31c9-4357-8db5-a52c0e4f8bad"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Movement"",
+                    ""action"": ""Jump"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": true
+                    ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""down"",
-                    ""id"": ""c7508d47-358f-47b0-97a9-8ce120db6494"",
-                    ""path"": """",
+                    ""name"": """",
+                    ""id"": ""bad04113-969c-4d74-851e-1919954fe1b2"",
+                    ""path"": ""<Keyboard>/ctrl"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Movement"",
+                    ""action"": ""Slide"",
                     ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""c4a7b9d1-f800-4ca4-b503-6c240935229e"",
-                    ""path"": ""<Keyboard>/a"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Movement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""440681d4-8455-48b3-b383-33af1bf869f5"",
-                    ""path"": ""<Keyboard>/d"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Movement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""forward"",
-                    ""id"": ""e86abea0-0949-4a5e-9e1d-31ebc7a13016"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Movement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""backward"",
-                    ""id"": ""ffd9362b-5ceb-4f52-893a-fb8947c73085"",
-                    ""path"": ""<Keyboard>/s"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Movement"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -122,7 +76,8 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
 }");
         // Keyboard
         m_Keyboard = asset.FindActionMap("Keyboard", throwIfNotFound: true);
-        m_Keyboard_Movement = m_Keyboard.FindAction("Movement", throwIfNotFound: true);
+        m_Keyboard_Jump = m_Keyboard.FindAction("Jump", throwIfNotFound: true);
+        m_Keyboard_Slide = m_Keyboard.FindAction("Slide", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -182,12 +137,14 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
     // Keyboard
     private readonly InputActionMap m_Keyboard;
     private IKeyboardActions m_KeyboardActionsCallbackInterface;
-    private readonly InputAction m_Keyboard_Movement;
+    private readonly InputAction m_Keyboard_Jump;
+    private readonly InputAction m_Keyboard_Slide;
     public struct KeyboardActions
     {
         private @PlayerInput m_Wrapper;
         public KeyboardActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Movement => m_Wrapper.m_Keyboard_Movement;
+        public InputAction @Jump => m_Wrapper.m_Keyboard_Jump;
+        public InputAction @Slide => m_Wrapper.m_Keyboard_Slide;
         public InputActionMap Get() { return m_Wrapper.m_Keyboard; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -197,22 +154,29 @@ public partial class @PlayerInput : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_KeyboardActionsCallbackInterface != null)
             {
-                @Movement.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMovement;
-                @Movement.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMovement;
-                @Movement.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnMovement;
+                @Jump.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnJump;
+                @Jump.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnJump;
+                @Jump.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnJump;
+                @Slide.started -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnSlide;
+                @Slide.performed -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnSlide;
+                @Slide.canceled -= m_Wrapper.m_KeyboardActionsCallbackInterface.OnSlide;
             }
             m_Wrapper.m_KeyboardActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Movement.started += instance.OnMovement;
-                @Movement.performed += instance.OnMovement;
-                @Movement.canceled += instance.OnMovement;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
+                @Slide.started += instance.OnSlide;
+                @Slide.performed += instance.OnSlide;
+                @Slide.canceled += instance.OnSlide;
             }
         }
     }
     public KeyboardActions @Keyboard => new KeyboardActions(this);
     public interface IKeyboardActions
     {
-        void OnMovement(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
+        void OnSlide(InputAction.CallbackContext context);
     }
 }

@@ -11,12 +11,18 @@ public class Movement : MonoBehaviour
 
 
     private CharacterController player;
+    private PlayerInput reference;
     private Vector3 velocity;
-    private bool isGrounded => Physics.CheckSphere(transform.position, 0.1f, groundLayers, QueryTriggerInteraction.Ignore);
+    [HideInInspector] public bool isGrounded => Physics.CheckSphere(transform.position, 0.1f, groundLayers, QueryTriggerInteraction.Ignore);
     private float gravity => velocity.y < 0 ? inputGravity * 3f : inputGravity;
     private float horizontalInput;
 
-    void Awake() => player = GetComponent<CharacterController>();
+    void Awake(){
+        player = GetComponent<CharacterController>();
+        reference = new PlayerInput();
+
+        reference.Keyboard.Jump.started += Jump;
+    } 
     
     void Update()
     {
@@ -25,6 +31,7 @@ public class Movement : MonoBehaviour
         //face the direction
         transform.forward = new Vector3(horizontalInput, 0, Mathf.Abs(horizontalInput) - 1);
 
+
         if(isGrounded && velocity.y < 0){
             velocity.y = 0;
         }else{
@@ -32,18 +39,13 @@ public class Movement : MonoBehaviour
             velocity.y += gravity * Time.deltaTime;
         }
 
-        //move forward
-        //player.Move(new Vector3(horizontalInput * runSpeed,0,0) * Time.deltaTime);
-
         //vertical velocity
         player.Move(velocity * Time.deltaTime);
     }
 
     public void Jump(InputAction.CallbackContext context){
-        if(context.performed){
-            if(isGrounded){
-                velocity.y += Mathf.Sqrt(jumpHeight * -2 * gravity);
-            }
+        if(isGrounded){
+            velocity.y += Mathf.Sqrt(jumpHeight * -2 * gravity);
         }
-    }
+    } 
 }
