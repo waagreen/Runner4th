@@ -51,6 +51,7 @@ public class Movement : MonoBehaviour
         if(context.performed){
             if(isGrounded){
                 velocity.y += Mathf.Sqrt(jumpHeight * -2 * gravity);
+                CameraManager.SetNoise(ShakeMode.strong);
             }
         }
     }
