@@ -1089,6 +1089,7 @@ GameObject:
   - component: {fileID: 1843099154}
   - component: {fileID: 1843099153}
   - component: {fileID: 1843099155}
+  - component: {fileID: 1843099156}
   m_Layer: 0
   m_Name: Main_Character
   m_TagString: Untagged
@@ -1172,6 +1173,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: d409c6ec-3d4e-4921-97d0-e6d4e36694e3
     m_ActionName: Keyboard/Movement[/Keyboard/space,/Keyboard/a,/Keyboard/d,/Keyboard/w,/Keyboard/s]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1843099156}
+        m_TargetAssemblyTypeName: Slide, Assembly-CSharp
+        m_MethodName: Sliding
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e03d9af7-43a7-4002-b21e-73d4b8d85078
+    m_ActionName: Keyboard/Slide[/Keyboard/ctrl]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Keyboard
@@ -1193,8 +1210,22 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   runSpeed: 8
-  jumpHeight: 2
-  gravity: -40
+  jumpHeight: 0.5
+  inputGravity: -30
+--- !u!114 &1843099156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1843099151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e72a7c894d8a646e8899eecb4763a11c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reducedHeight: 0.2
+  inputHoldTime: 2
 --- !u!1 &1868128019
 GameObject:
   m_ObjectHideFlags: 0

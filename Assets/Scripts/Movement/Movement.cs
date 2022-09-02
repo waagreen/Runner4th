@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-public class Movement : MonoBehaviour
+using IncredibleCode;
+public class Movement : MonoBehaviour, IDataMovement
 {
     [SerializeField] private LayerMask groundLayers;
     [SerializeField] private float runSpeed = 8f;
@@ -16,12 +17,20 @@ public class Movement : MonoBehaviour
     private Vector3 initialPosition;
     private float gravity => velocity.y < 0 ? inputGravity * 3f : inputGravity; 
 
-    void Awake() 
-    {
-        player = GetComponent<CharacterController>();
-        initialPosition = transform.position;
-        Debug.Log(initialPosition);
-    }
+    [SerializeField] private float runSpeed = 8f, jumpHeight = 2f,inputGravity = -30f;
+    [HideInInspector] public bool isGrounded => Physics.CheckSphere(transform.position, 0.1f, groundLayers, QueryTriggerInteraction.Ignore);
+    private CharacterController playerJP;
+    private PlayerInput referenceJP;
+    private Vector3 velocity;
+    private float gravity => velocity.y < 0 ? inputGravity * 3f : inputGravity;
+    private float horizontalInput;
+
+    void Awake(){
+        playerJP = GetComponent<CharacterController>();
+        referenceJP = new PlayerInput();
+
+        referenceJP.Keyboard.Jump.started += Jump;
+    } 
     
     void Update()
     {
@@ -40,11 +49,8 @@ public class Movement : MonoBehaviour
             velocity.y += gravity * Time.deltaTime;
         }
 
-        //move forward
-        player.Move(new Vector3(horizontalInput * runSpeed,0,0) * Time.deltaTime);
-
         //vertical velocity
-        player.Move(velocity * Time.deltaTime);
+        playerJP.Move(velocity * Time.deltaTime);
     }
 
     public void Jump(InputAction.CallbackContext context){
@@ -54,5 +60,5 @@ public class Movement : MonoBehaviour
                 CameraManager.SetNoise(ShakeMode.strong);
             }
         }
-    }
+    } 
 }
