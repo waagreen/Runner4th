@@ -2,32 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using IncredibleCode;
 
-public class Slide : MonoBehaviour
+public class Slide : MonoBehaviour, ISlide
 {
-    private CharacterController player;
-    private PlayerInput reference;
-
+    [SerializeField] private float reducedHeight, inputHoldTime = 2f;
+    private CharacterController playerSD;
+    private PlayerInput referenceSD;
     private Vector3 originalHeight;
-    [SerializeField] private float reducedHeight;
-
-    [SerializeField] private float inputHoldTime = 2f;
     private float slideInputStartTime;
     private bool doingSlide = false;
-
     private void Awake(){
-        player = GetComponent<CharacterController>();
-        reference = new PlayerInput();
+        playerSD = GetComponent<CharacterController>();
+        referenceSD = new PlayerInput();
 
-        reference.Keyboard.Slide.started += Sliding;
-        originalHeight = player.transform.localScale;
+        referenceSD.Keyboard.Slide.started += Sliding;
+        originalHeight = playerSD.transform.localScale;
     }
 
     private void Update(){
         slideInputStartTime += Time.deltaTime;
 
         if(doingSlide && CheckSlideTime()){
-            player.transform.localScale = originalHeight;
+            playerSD.transform.localScale = originalHeight;
             slideInputStartTime = 0;
             doingSlide = false;
         }
@@ -35,7 +32,7 @@ public class Slide : MonoBehaviour
     public void Sliding(InputAction.CallbackContext context){
         doingSlide = true;
         slideInputStartTime = 0;
-        player.transform.localScale = new Vector3(1,reducedHeight,1);
+        playerSD.transform.localScale = new Vector3(1,reducedHeight,1);
     }
 
     private bool CheckSlideTime(){

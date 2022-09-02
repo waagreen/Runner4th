@@ -2,26 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-public class Movement : MonoBehaviour
+using IncredibleCode;
+public class Movement : MonoBehaviour, IDataMovement
 {
     [SerializeField] private LayerMask groundLayers;
-    [SerializeField] private float runSpeed = 8f;
-    [SerializeField] private float jumpHeight = 2f;
-    [SerializeField] private float inputGravity = -30f;
-
-
-    private CharacterController player;
-    private PlayerInput reference;
-    private Vector3 velocity;
+    [SerializeField] private float runSpeed = 8f, jumpHeight = 2f,inputGravity = -30f;
     [HideInInspector] public bool isGrounded => Physics.CheckSphere(transform.position, 0.1f, groundLayers, QueryTriggerInteraction.Ignore);
+    private CharacterController playerJP;
+    private PlayerInput referenceJP;
+    private Vector3 velocity;
     private float gravity => velocity.y < 0 ? inputGravity * 3f : inputGravity;
     private float horizontalInput;
-
     void Awake(){
-        player = GetComponent<CharacterController>();
-        reference = new PlayerInput();
+        playerJP = GetComponent<CharacterController>();
+        referenceJP = new PlayerInput();
 
-        reference.Keyboard.Jump.started += Jump;
+        referenceJP.Keyboard.Jump.started += Jump;
     } 
     
     void Update()
@@ -40,7 +36,7 @@ public class Movement : MonoBehaviour
         }
 
         //vertical velocity
-        player.Move(velocity * Time.deltaTime);
+        playerJP.Move(velocity * Time.deltaTime);
     }
 
     public void Jump(InputAction.CallbackContext context){
