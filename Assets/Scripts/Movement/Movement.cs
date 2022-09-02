@@ -59,26 +59,19 @@ public class Movement : MonoBehaviour
 
 
 
-        //move forward
-        if (isGrounded)
+		//move forward
+		maxRunSpeed = new VelocityStates().SetSpeed(vState, runSpeed);
+
+		if (isGrounded)
         {
             float speedRate = runSpeed/maxRunSpeed;
             runAcceleration = maxAcceleration * (1 - speedRate);
             runSpeed += runAcceleration;
 
-            if (runSpeed > maxRunSpeed) runSpeed = maxRunSpeed;
+			if (runSpeed > maxRunSpeed) runSpeed = maxRunSpeed;
 
             Debug.Log(runSpeed);
         }
-
-
-
-
-        //Set the runSpeed based on it's state
-        if (isGrounded)
-        {
-			runSpeed = new VelocityStates().SetSpeed(vState, runSpeed);
-		}
 		
 
 

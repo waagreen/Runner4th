@@ -6,21 +6,19 @@ public class VelocityStates
 {
     public enum State { Base, High, Maximun };
 
-    public State Speed;
-
     public float SetSpeed(State state, float speed)
     {
         //Switch btween the states of velocity
         switch (state)
         {
             case State.Base:
-                speed *= 1f;
+                speed = 100f;
                 break;
             case State.High:
-                speed *= 1.5f;
+                speed = 200f;
                 break;
             case State.Maximun:
-                speed *= 2.5f;
+                speed = 300f;
                 break;
             default:
                 break;
