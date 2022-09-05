@@ -1001,8 +1001,7 @@ MonoBehaviour:
   groundLayers:
     serializedVersion: 2
     m_Bits: 8
-  runSpeed: 8
-  jumpHeight: 2
+  jumpHeight: 12
   inputGravity: -90
   actualSpeed: 0
 --- !u!1 &1856934876

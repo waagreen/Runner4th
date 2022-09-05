@@ -16,18 +16,15 @@ public class Movement : MonoBehaviour, IDataMovement
     [Space]
     [Header("Jump parameters")]
     [SerializeField] private LayerMask groundLayers;
-    [SerializeField] private float runSpeed = 8f, jumpHeight = 2f,inputGravity = -30f;
+    [SerializeField] private float jumpHeight = 2f, inputGravity = -30f;
     [HideInInspector] public bool isGrounded => Physics.CheckSphere(transform.position, 0.1f, groundLayers, QueryTriggerInteraction.Ignore);
     
     private CharacterController playerJP;
     private PlayerInput referenceJP;
 
-    private CharacterController player;
     private Vector3 currentVelocity;
-    private Vector3 velocity;
     
-    private float gravity => velocity.y < 0 ? inputGravity * 3f : inputGravity;
-    private float horizontalInput;
+    private float gravity => currentVelocity.y < 0 ? inputGravity * 3f : inputGravity;
     private float runAcceleration = 2f;
     public float actualSpeed = 0f;
     
@@ -42,45 +39,30 @@ public class Movement : MonoBehaviour, IDataMovement
 
     private void FixedUpdate()
     {
-        //Input
-        horizontalInput = 1;
-     
-        //face the direction
-        transform.forward = new Vector3(horizontalInput, 0, Mathf.Abs(horizontalInput) - 1);
-
-        //vertical velocity
-        if(isGrounded && velocity.y < 0)
-        {
-            velocity.y = 0;
-        }
-        else
-        {
-            //add gravity
-            velocity.y += gravity * Time.deltaTime;
-        }
-        
         //move forward
         if (isGrounded)
         {   
-            runAcceleration = Mathf.Sqrt(accelerationRate * Time.deltaTime); 
+            runAcceleration = Mathf.Sqrt(accelerationRate * Time.fixedDeltaTime); 
             actualSpeed += runAcceleration;
 
             if (actualSpeed > maxRunSpeed) actualSpeed = maxRunSpeed;
 
-            Debug.Log($"ACTUAL SPEEd: {runAcceleration}");
-            Debug.Log(actualSpeed);
-        }
-		
+            Debug.Log($"ACTUAL SPEED: {runAcceleration}");
+        }  
+
         //move the player
-        var desiredVelocity = velocity.y * actualSpeed;
-		currentVelocity = (Vector3.left * desiredVelocity) * Time.deltaTime;
+		currentVelocity = (Vector3.right * Mathf.Abs(actualSpeed)) * Time.fixedDeltaTime;
+        var desiredGraviy = (new Vector3(0f, gravity, 0f)) * Time.fixedDeltaTime;
+
         playerJP.Move(currentVelocity);
+        if(!isGrounded) playerJP.Move(desiredGraviy);
     }
 
     public void Jump(InputAction.CallbackContext context)
     {
         if(isGrounded){
-            velocity.y += Mathf.Sqrt(jumpHeight * -2 * gravity);
+            Debug.Log("JUMP TOKEN");
+            currentVelocity.y += Mathf.Sqrt(jumpHeight * -2 * gravity);
         }  
     } 
 }
