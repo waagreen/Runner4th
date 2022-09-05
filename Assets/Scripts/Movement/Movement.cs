@@ -48,14 +48,13 @@ public class Movement : MonoBehaviour, IDataMovement
             if (actualSpeed > maxRunSpeed) actualSpeed = maxRunSpeed;
 
             Debug.Log($"ACTUAL SPEED: {runAcceleration}");
-        }  
+        }
 
         //move the player
 		currentVelocity = (Vector3.right * Mathf.Abs(actualSpeed)) * Time.fixedDeltaTime;
         var desiredGraviy = (new Vector3(0f, gravity, 0f)) * Time.fixedDeltaTime;
 
         if(!isGrounded) playerJP.Move(desiredGraviy);
-        else currentVelocity.y = 0f;
 
         playerJP.Move(currentVelocity);
     }
@@ -63,7 +62,6 @@ public class Movement : MonoBehaviour, IDataMovement
     public void Jump(InputAction.CallbackContext context)
     {
         if(isGrounded){
-            Debug.Log("JUMP TOKEN");
             currentVelocity.y += Mathf.Sqrt(jumpHeight * -2f * gravity);
         }  
     } 
