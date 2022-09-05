@@ -62,7 +62,7 @@ public class Movement : MonoBehaviour, IDataMovement
         //move forward
         if (isGrounded)
         {   
-            runAcceleration = Mathf.Sqrt(accelerationRate * Time.fixedDeltaTime); 
+            runAcceleration = Mathf.Sqrt(accelerationRate * Time.deltaTime); 
             actualSpeed += runAcceleration;
 
             if (actualSpeed > maxRunSpeed) actualSpeed = maxRunSpeed;
@@ -72,8 +72,9 @@ public class Movement : MonoBehaviour, IDataMovement
         }
 		
         //move the player
-		currentVelocity = new Vector3(0, velocity.y * actualSpeed, 0) * Time.deltaTime;
-        player.Move(currentVelocity);
+        var desiredVelocity = velocity.y * actualSpeed;
+		currentVelocity = (Vector3.left * desiredVelocity) * Time.deltaTime;
+        playerJP.Move(currentVelocity);
     }
 
     public void Jump(InputAction.CallbackContext context)

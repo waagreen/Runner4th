@@ -973,6 +973,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: d409c6ec-3d4e-4921-97d0-e6d4e36694e3
     m_ActionName: Keyboard/Movement[/Keyboard/space,/Keyboard/a,/Keyboard/d,/Keyboard/w,/Keyboard/s]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e03d9af7-43a7-4002-b21e-73d4b8d85078
+    m_ActionName: Keyboard/Slide[/Keyboard/ctrl]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Keyboard
@@ -990,12 +994,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df052f029cdb746ad90f740a133c289e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  accelerationRate: 0.5
+  maxRunSpeed: 500
+  maxAcceleration: 3
+  vState: 0
   groundLayers:
     serializedVersion: 2
     m_Bits: 8
   runSpeed: 8
   jumpHeight: 2
   inputGravity: -90
+  actualSpeed: 0
 --- !u!1 &1856934876
 GameObject:
   m_ObjectHideFlags: 0
@@ -1042,7 +1051,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7791798, y: 1}
+    m_SensorSize: {x: 1.7777778, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
