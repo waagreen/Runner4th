@@ -54,15 +54,17 @@ public class Movement : MonoBehaviour, IDataMovement
 		currentVelocity = (Vector3.right * Mathf.Abs(actualSpeed)) * Time.fixedDeltaTime;
         var desiredGraviy = (new Vector3(0f, gravity, 0f)) * Time.fixedDeltaTime;
 
-        playerJP.Move(currentVelocity);
         if(!isGrounded) playerJP.Move(desiredGraviy);
+        else currentVelocity.y = 0f;
+
+        playerJP.Move(currentVelocity);
     }
 
     public void Jump(InputAction.CallbackContext context)
     {
         if(isGrounded){
             Debug.Log("JUMP TOKEN");
-            currentVelocity.y += Mathf.Sqrt(jumpHeight * -2 * gravity);
+            currentVelocity.y += Mathf.Sqrt(jumpHeight * -2f * gravity);
         }  
     } 
 }

@@ -995,13 +995,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   accelerationRate: 0.5
-  maxRunSpeed: 500
-  maxAcceleration: 3
+  maxRunSpeed: 300
+  maxAcceleration: 2
   vState: 0
   groundLayers:
     serializedVersion: 2
     m_Bits: 8
-  jumpHeight: 12
+  jumpHeight: 10
   inputGravity: -90
   actualSpeed: 0
 --- !u!1 &1856934876
