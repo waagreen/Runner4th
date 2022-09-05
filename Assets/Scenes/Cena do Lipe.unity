@@ -345,7 +345,6 @@ GameObject:
   - component: {fileID: 134634451}
   - component: {fileID: 134634450}
   - component: {fileID: 134634449}
-  - component: {fileID: 1142079579}
   m_Layer: 3
   m_Name: Floor
   m_TagString: Untagged
@@ -1436,19 +1435,6 @@ MonoBehaviour:
   speedText: {fileID: 2033054408}
   distanceText: {fileID: 573268867}
   player: {fileID: 1826960388}
---- !u!114 &1142079579
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 134634447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 846feadf7c72fb947a1a6c205f2786b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  xSpeed: 15
 --- !u!1 &1209676014
 GameObject:
   m_ObjectHideFlags: 0
@@ -1772,11 +1758,11 @@ GameObject:
   - component: {fileID: 1723673407}
   m_Layer: 0
   m_Name: CM vcam1
-  m_TagString: Untagged
+  m_TagString: MainVirtualCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1723673407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1924,15 +1910,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df052f029cdb746ad90f740a133c289e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  accelerationRate: 0.5
+  maxRunSpeed: 100
+  maxAcceleration: 2
+  vState: 0
   groundLayers:
     serializedVersion: 2
     m_Bits: 8
-  maxRunSpeed: 100
-  maxAcceleration: 2
-  runSpeed: 10
-  jumpHeight: 2
-  gravity: -40
-  vState: 0
+  jumpHeight: 0.5
+  inputGravity: -90
   actualSpeed: 0
 --- !u!143 &1826960389
 CharacterController:
@@ -1994,6 +1980,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: d409c6ec-3d4e-4921-97d0-e6d4e36694e3
     m_ActionName: Keyboard/Movement[/Keyboard/space,/Keyboard/a,/Keyboard/d,/Keyboard/w,/Keyboard/s]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e03d9af7-43a7-4002-b21e-73d4b8d85078
+    m_ActionName: Keyboard/Slide[/Keyboard/ctrl]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Keyboard

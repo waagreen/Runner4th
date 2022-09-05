@@ -20,9 +20,9 @@ public class Movement : MonoBehaviour
 
     protected CharacterController playerJP;
     protected PlayerInput referenceJP;
-    protected Vector3 currentVelocity;
+    protected Vector3 desiredGravity;
 
-    protected float gravity => currentVelocity.y < 0 ? inputGravity * 3f : inputGravity;
+    protected float gravity => desiredGravity.y < 0 ? inputGravity * 3f : inputGravity;
     protected float runAcceleration = 2f;
     public float actualSpeed = 0f;
 
@@ -44,24 +44,19 @@ public class Movement : MonoBehaviour
             actualSpeed += runAcceleration;
 
             if (actualSpeed > maxRunSpeed) actualSpeed = maxRunSpeed;
-
-            Debug.Log($"ACTUAL SPEED: {runAcceleration}");
         }
 
-        //move the player
-        //currentVelocity = (Vector3.right * Mathf.Abs(actualSpeed)) * Time.fixedDeltaTime;
-        var desiredGraviy = (new Vector3(0f, gravity, 0f)) * Time.fixedDeltaTime;
+        if(isGrounded && desiredGravity.y < 0f) desiredGravity.y = 0f;
+        else desiredGravity.y += gravity * Time.fixedDeltaTime;
 
-        if (!isGrounded) playerJP.Move(desiredGraviy);
-
-        playerJP.Move(currentVelocity);
+        playerJP.Move(desiredGravity * Time.fixedDeltaTime);
     }
 
     public void Jump(InputAction.CallbackContext context)
     {
         if (isGrounded)
         {
-            currentVelocity.y += Mathf.Sqrt(jumpHeight * -2f * gravity);
+            desiredGravity.y += Mathf.Sqrt(jumpHeight * -2f * gravity);
         }
     }
 }
