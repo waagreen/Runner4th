@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using IncredibleCode;
 
-public class Slide : MonoBehaviour, ISlide
+public class Slide : MonoBehaviour
 {
     [SerializeField] private float reducedHeight, inputHoldTime = 2f;
     private CharacterController playerSD;

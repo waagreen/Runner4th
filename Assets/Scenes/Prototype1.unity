@@ -1088,8 +1088,8 @@ GameObject:
   - component: {fileID: 1843099152}
   - component: {fileID: 1843099154}
   - component: {fileID: 1843099153}
-  - component: {fileID: 1843099155}
   - component: {fileID: 1843099156}
+  - component: {fileID: 1843099157}
   m_Layer: 0
   m_Name: Main_Character
   m_TagString: Untagged
@@ -1159,8 +1159,8 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1843099155}
-        m_TargetAssemblyTypeName: Movement, Assembly-CSharp
+      - m_Target: {fileID: 1843099157}
+        m_TargetAssemblyTypeName: JumpInput, Assembly-CSharp
         m_MethodName: Jump
         m_Mode: 0
         m_Arguments:
@@ -1194,24 +1194,6 @@ MonoBehaviour:
   m_DefaultActionMap: Keyboard
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &1843099155
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1843099151}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df052f029cdb746ad90f740a133c289e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundLayers:
-    serializedVersion: 2
-    m_Bits: 8
-  runSpeed: 8
-  jumpHeight: 0.5
-  inputGravity: -30
 --- !u!114 &1843099156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1226,6 +1208,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reducedHeight: 0.2
   inputHoldTime: 2
+--- !u!114 &1843099157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1843099151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04864832d57b240e5b533b460bdf263d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 8
+  jumpHeight: 1
+  inputGravity: -30
+  actualSpeed: 0
 --- !u!1 &1868128019
 GameObject:
   m_ObjectHideFlags: 0
