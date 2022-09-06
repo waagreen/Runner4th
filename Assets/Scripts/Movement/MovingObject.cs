@@ -2,17 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovingObject : MonoBehaviour
+public class MovingObject : PoolingObjectReturner
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private float movingSpeed => DataManager.globalMovement.ActualSpeed;
+    private float screenWidth => Screen.width;
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        transform.position += (Vector3.left * movingSpeed) * Time.fixedDeltaTime;
+
+        if (transform.position.x < 0) gameObject.SetActive(false);
     }
 }

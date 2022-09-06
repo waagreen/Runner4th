@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private bool CheckSlideTime(){
-        return slideInputStartTime > inputHoldTime;
+        return slideInputStartTime >= inputHoldTime;
     }
 
     private void OnDisable() 
