@@ -14,9 +14,9 @@ public class SpeedText : MonoBehaviour
     void Update()
     {
         //Sets the speed and distance text
-        distance += player.actualSpeed * Time.deltaTime;
+        distance += player.ActualSpeed * Time.deltaTime;
 
-        speedText.text = $"{Mathf.Floor(player.actualSpeed)} m/s";
+        speedText.text = $"{Mathf.Floor(player.ActualSpeed)} m/s";
         distanceText.text = $"{Mathf.Floor(distance)} m";
-	}
+    }
 }

@@ -331,7 +331,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &134634447
 GameObject:
@@ -365,7 +365,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 584363042}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &134634449
 BoxCollider:
@@ -1021,6 +1021,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 584363042}
+  - component: {fileID: 584363043}
   m_Layer: 3
   m_Name: Environment
   m_TagString: Untagged
@@ -1040,6 +1041,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1826960391}
   - {fileID: 134634448}
   - {fileID: 1980246004}
   - {fileID: 1209676015}
@@ -1047,6 +1049,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &584363043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 584363041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df052f029cdb746ad90f740a133c289e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  accelerationRate: 0.5
+  maxRunSpeed: 300
+  maxAcceleration: 2
+  vState: 0
 --- !u!1 &833612452
 GameObject:
   m_ObjectHideFlags: 3
@@ -1413,7 +1431,7 @@ RectTransform:
   - {fileID: 2033054407}
   - {fileID: 573268866}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1434,7 +1452,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speedText: {fileID: 2033054408}
   distanceText: {fileID: 573268867}
-  player: {fileID: 1826960388}
+  player: {fileID: 0}
 --- !u!1 &1209676014
 GameObject:
   m_ObjectHideFlags: 0
@@ -1469,7 +1487,7 @@ Transform:
   - {fileID: 271232225}
   - {fileID: 379594383}
   m_Father: {fileID: 584363042}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1209676016
 MonoBehaviour:
@@ -1815,7 +1833,7 @@ Transform:
   m_Children:
   - {fileID: 833612453}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1782829805
 GameObject:
@@ -1851,7 +1869,7 @@ Transform:
   - {fileID: 1292117469}
   - {fileID: 1266619742}
   m_Father: {fileID: 584363042}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1782829807
 MonoBehaviour:
@@ -1890,7 +1908,7 @@ GameObject:
   - component: {fileID: 1826960391}
   - component: {fileID: 1826960390}
   - component: {fileID: 1826960389}
-  - component: {fileID: 1826960388}
+  - component: {fileID: 1826960392}
   m_Layer: 0
   m_Name: Main_Character
   m_TagString: Untagged
@@ -1898,28 +1916,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1826960388
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1826960387}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df052f029cdb746ad90f740a133c289e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  accelerationRate: 0.5
-  maxRunSpeed: 100
-  maxAcceleration: 2
-  vState: 0
-  groundLayers:
-    serializedVersion: 2
-    m_Bits: 8
-  jumpHeight: 0.5
-  inputGravity: -90
-  actualSpeed: 0
 --- !u!143 &1826960389
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1965,19 +1961,7 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1826960388}
-        m_TargetAssemblyTypeName: Movement, Assembly-CSharp
-        m_MethodName: Jump
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: d409c6ec-3d4e-4921-97d0-e6d4e36694e3
     m_ActionName: Keyboard/Movement[/Keyboard/space,/Keyboard/a,/Keyboard/d,/Keyboard/w,/Keyboard/s]
   - m_PersistentCalls:
@@ -1996,15 +1980,32 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1826960387}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7295388}
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_Father: {fileID: 584363042}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1826960392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1826960387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04864832d57b240e5b533b460bdf263d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  jumpHeight: 0.5
+  inputGravity: -60
 --- !u!1 &1980246003
 GameObject:
   m_ObjectHideFlags: 0
@@ -2037,7 +2038,7 @@ Transform:
   m_Children:
   - {fileID: 1650234411}
   m_Father: {fileID: 584363042}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1980246005
 MonoBehaviour:
