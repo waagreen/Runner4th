@@ -11,6 +11,6 @@ public class MovingObject : PoolingObjectReturner
     {
         transform.position += (Vector3.left * movingSpeed) * Time.fixedDeltaTime;
 
-        if (transform.position.x < 0) gameObject.SetActive(false);
+        //if (transform.position.x < 0) gameObject.SetActive(false);
     }
 }

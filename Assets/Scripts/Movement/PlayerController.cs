@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
     {
         inputMap.Enable();
         
-        inputMap.Keyboard.Jump.performed += Jump; 
+        inputMap.Keyboard.Jump.started += Jump; 
         inputMap.Keyboard.Slide.started += Sliding;  
     }
     
@@ -47,6 +47,7 @@ public class PlayerController : MonoBehaviour
             transform.localScale = originalHeight;
             slideInputStartTime = 0;
             doingSlide = false;
+            CameraManager.SetNoise(ShakeMode.moderate);
         }
 
         // handle gravity
@@ -62,7 +63,6 @@ public class PlayerController : MonoBehaviour
         if (isGrounded) 
         {
             desiredGravity.y += Mathf.Sqrt(jumpHeight * -2f * gravity);
-            CameraManager.SetNoise(ShakeMode.moderate);
         }
     }
 
@@ -81,7 +81,7 @@ public class PlayerController : MonoBehaviour
     {
         inputMap.Disable();
 
-        inputMap.Keyboard.Jump.performed -= Jump;  
+        inputMap.Keyboard.Jump.started -= Jump;  
         inputMap.Keyboard.Slide.started -= Sliding;    
     }
 }
