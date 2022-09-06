@@ -39,7 +39,8 @@ public class JumpInput : MonoBehaviour
     }
     
     void FixedUpdate()
-    {
+    {   
+        // handle slide cooldown
         slideInputStartTime += Time.deltaTime;
 
         if(doingSlide && CheckSlideTime()){
@@ -48,15 +49,21 @@ public class JumpInput : MonoBehaviour
             doingSlide = false;
         }
 
+        // handle gravity
         if (isGrounded && desiredGravity.y < 0f) desiredGravity.y = 0f;
         else desiredGravity.y += gravity * Time.fixedDeltaTime;
 
+        // player jump
         playerJP.Move(desiredGravity * Time.fixedDeltaTime);
     }
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (isGrounded) desiredGravity.y += Mathf.Sqrt(jumpHeight * -2f * gravity);
+        if (isGrounded) 
+        {
+            desiredGravity.y += Mathf.Sqrt(jumpHeight * -2f * gravity);
+            CameraManager.SetNoise(ShakeMode.moderate);
+        }
     }
 
     public void Sliding(InputAction.CallbackContext context)
