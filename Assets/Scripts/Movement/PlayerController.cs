@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] protected LayerMask groundLayers;
     [SerializeField] protected float jumpHeight = 2f, inputGravity = -30f;
     [HideInInspector] public bool isGrounded => Physics.CheckSphere(transform.position, 0.1f, groundLayers, QueryTriggerInteraction.Ignore);
+    private float layerValue => groundLayers.value;
 
     [Header("Slide parameters")]
     [SerializeField] private float reducedHeight, inputHoldTime = 2f;
@@ -28,6 +29,7 @@ public class PlayerController : MonoBehaviour
         inputMap = new PlayerInput();
         
         originalHeight = playerJP.transform.localScale; 
+        Debug.Log(layerValue);
     }
 
     private void OnEnable()
@@ -54,16 +56,14 @@ public class PlayerController : MonoBehaviour
         if (isGrounded && desiredGravity.y < 0f) desiredGravity.y = 0f;
         else desiredGravity.y += gravity * Time.fixedDeltaTime;
 
+        
         // player jump
         playerJP.Move(desiredGravity * Time.fixedDeltaTime);
     }
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (isGrounded) 
-        {
-            desiredGravity.y += Mathf.Sqrt(jumpHeight * -2f * gravity);
-        }
+        if (isGrounded) desiredGravity.y += Mathf.Sqrt(jumpHeight * -2f * gravity);
     }
 
     public void Sliding(InputAction.CallbackContext context)
