@@ -9,7 +9,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] protected LayerMask groundLayers;
     [SerializeField] protected float jumpHeight = 2f, inputGravity = -30f;
     [HideInInspector] public bool isGrounded => Physics.CheckSphere(transform.position, 0.1f, groundLayers, QueryTriggerInteraction.Ignore);
-    private float layerValue => groundLayers.value;
 
     [Header("Slide parameters")]
     [SerializeField] private float reducedHeight, inputHoldTime = 2f;
@@ -21,6 +20,10 @@ public class PlayerController : MonoBehaviour
     protected CharacterController playerJP;
     protected Vector3 desiredGravity;
 
+    private RaycastHit hit;
+    private Ray ray => new Ray(new Vector3(transform.position.x + 0.8f, transform.position.y + 1f, transform.position.z), Vector3.down);
+    //private ArrayList layerNames = new ArrayList();
+
     protected float gravity => desiredGravity.y < 0 ? inputGravity * 3f : inputGravity;
 
     void Awake()
@@ -29,7 +32,6 @@ public class PlayerController : MonoBehaviour
         inputMap = new PlayerInput();
         
         originalHeight = playerJP.transform.localScale; 
-        Debug.Log(layerValue);
     }
 
     private void OnEnable()
@@ -56,7 +58,14 @@ public class PlayerController : MonoBehaviour
         if (isGrounded && desiredGravity.y < 0f) desiredGravity.y = 0f;
         else desiredGravity.y += gravity * Time.fixedDeltaTime;
 
-        
+        //raycast for collision
+        if(Physics.Raycast(ray, out hit, 10f, groundLayers)) {
+            Debug.DrawRay(new Vector3(transform.position.x + 0.8f, transform.position.y + 1f, transform.position.z), Vector3.down, Color.yellow); // just to see the ray
+            for(int i=0; i<=31; i++){
+                var layerN = LayerMask.LayerToName(3); //name of the layer 
+            }
+        }
+
         // player jump
         playerJP.Move(desiredGravity * Time.fixedDeltaTime);
     }
