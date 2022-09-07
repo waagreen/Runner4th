@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     protected Vector3 desiredGravity;
 
     private RaycastHit hit;
-    private Ray ray => new Ray(new Vector3(transform.position.x + 0.8f, transform.position.y + 1f, transform.position.z), Vector3.down);
+    private Ray ray => new Ray(transform.position, Vector3.down);
     //private ArrayList layerNames = new ArrayList();
 
     protected float gravity => desiredGravity.y < 0 ? inputGravity * 3f : inputGravity;
@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
             for(int i=0; i<=31; i++){
                 var layerN = LayerMask.LayerToName(3); //name of the layer 
             }
-        }
+        } 
 
         // player jump
         playerJP.Move(desiredGravity * Time.fixedDeltaTime);
@@ -73,6 +73,7 @@ public class PlayerController : MonoBehaviour
     public void Jump(InputAction.CallbackContext context)
     {
         if (isGrounded) desiredGravity.y += Mathf.Sqrt(jumpHeight * -2f * gravity);
+        
     }
 
     public void Sliding(InputAction.CallbackContext context)
