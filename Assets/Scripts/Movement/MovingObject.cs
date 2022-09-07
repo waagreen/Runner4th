@@ -5,12 +5,20 @@ using UnityEngine;
 public class MovingObject : PoolingObjectReturner
 {
     private float movingSpeed => DataManager.globalMovement.ActualSpeed;
+    
     private float screenWidth => Screen.width;
+    private Vector3 objectPosition => Camera.main.WorldToScreenPoint(transform.position); 
 
-    void FixedUpdate()
+    private void Awake()
+    {
+        Debug.Log("WORLD TRANSFORM: " + objectPosition.x);
+        Debug.Log("THIS TRANSFORM: " + screenWidth);
+    }
+
+    private void FixedUpdate()
     {
         transform.position += (Vector3.left * movingSpeed) * Time.fixedDeltaTime;
 
-        //if (transform.position.x < 0) gameObject.SetActive(false);
+        if(objectPosition.x < screenWidth - objectPosition.x / 2f) gameObject.SetActive(false);
     }
 }
