@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Linq;
 
 public class PlayerController : MonoBehaviour
 {
@@ -26,10 +27,11 @@ public class PlayerController : MonoBehaviour
     protected Vector3 desiredGravity;
     protected float gravity => desiredGravity.y < 0 ? inputGravity * 3f : inputGravity;
     #endregion
-
+    
     #region Raycast Variables
     private RaycastHit hit;
     private Ray ray => new Ray(transform.position, Vector3.down);
+    private const int kMaxLayers = 31;
     #endregion
 
     #region Basic Unity Methods
@@ -63,7 +65,7 @@ public class PlayerController : MonoBehaviour
         if (Physics.Raycast(ray, out hit, 10f, groundLayers))
         {
             Debug.DrawRay(new Vector3(transform.position.x + 0.8f, transform.position.y + 1f, transform.position.z), Vector3.down, Color.yellow); // just to see the ray
-            for (int i = 0; i <= 31; i++)
+            for (int i = 0; i <= kMaxLayers; i++)
             {
                 var layerName = LayerMask.LayerToName(i); //name of the layer 
                 CheckFeedback(layerName);
@@ -79,7 +81,6 @@ public class PlayerController : MonoBehaviour
     public void Jump(InputAction.CallbackContext context)
     {
         if (isGrounded) desiredGravity.y += Mathf.Sqrt(jumpHeight * -2f * gravity);
-
     }
 
     public void Sliding(InputAction.CallbackContext context)
