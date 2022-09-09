@@ -7,18 +7,13 @@ public class MovingObject : PoolingObjectReturner
     private float movingSpeed => DataManager.globalMovement.ActualSpeed;
     
     private float screenWidth => Screen.width;
-    private Vector3 objectPosition => Camera.main.WorldToScreenPoint(transform.position); 
-
-    private void Awake()
-    {
-        Debug.Log("WORLD TRANSFORM: " + objectPosition.x);
-        Debug.Log("THIS TRANSFORM: " + screenWidth);
-    }
+    private Vector3 objectPosition => Camera.main.WorldToScreenPoint(transform.position + transform.localScale); 
 
     private void FixedUpdate()
     {
         transform.position += (Vector3.left * movingSpeed) * Time.fixedDeltaTime;
 
-        if(objectPosition.x < screenWidth - objectPosition.x / 2f) gameObject.SetActive(false);
+        float positionSquared = Mathf.Pow(objectPosition.x, 2f);
+        if(objectPosition.x < screenWidth - positionSquared) gameObject.SetActive(false);
     }
 }

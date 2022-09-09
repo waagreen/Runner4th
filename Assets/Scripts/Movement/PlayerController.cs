@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Linq;
 
 public class PlayerController : MonoBehaviour
 {
@@ -19,12 +20,12 @@ public class PlayerController : MonoBehaviour
     protected PlayerInput inputMap;
     protected CharacterController playerJP;
     protected Vector3 desiredGravity;
-
+    protected float gravity => desiredGravity.y < 0 ? inputGravity * 3f : inputGravity;
+    
     private RaycastHit hit;
     private Ray ray => new Ray(transform.position, Vector3.down);
-    //private ArrayList layerNames = new ArrayList();
+    private const int kMaxLayers = 31;
 
-    protected float gravity => desiredGravity.y < 0 ? inputGravity * 3f : inputGravity;
 
     void Awake()
     {
@@ -59,10 +60,10 @@ public class PlayerController : MonoBehaviour
         else desiredGravity.y += gravity * Time.fixedDeltaTime;
 
         //raycast for collision
-        if(Physics.Raycast(ray, out hit, 10f, groundLayers)) {
-            Debug.DrawRay(new Vector3(transform.position.x + 0.8f, transform.position.y + 1f, transform.position.z), Vector3.down, Color.yellow); // just to see the ray
-            for(int i=0; i<=31; i++){
-                var layerN = LayerMask.LayerToName(3); //name of the layer 
+        if(Physics.Raycast(ray, out hit, 25f, groundLayers)) {
+            Debug.DrawRay(new Vector3(transform.position.x + 0.8f, transform.position.y + 1f, transform.position.z), Vector3.forward, Color.yellow); // just to see the ray
+            for(int i=0; i <= kMaxLayers; i++){
+                var layerN = LayerMask.LayerToName(i); //name of the layer 
             }
         } 
 
@@ -73,7 +74,6 @@ public class PlayerController : MonoBehaviour
     public void Jump(InputAction.CallbackContext context)
     {
         if (isGrounded) desiredGravity.y += Mathf.Sqrt(jumpHeight * -2f * gravity);
-        
     }
 
     public void Sliding(InputAction.CallbackContext context)
