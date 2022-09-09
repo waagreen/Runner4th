@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
-    #region Input Methods
+    #region Input Events
     public void Jump(InputAction.CallbackContext context)
     {
         if (isGrounded) desiredGravity.y += Mathf.Sqrt(jumpHeight * -2f * gravity);
