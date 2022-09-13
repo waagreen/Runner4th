@@ -8,9 +8,9 @@ public class PlayerController : MonoBehaviour
 {
     #region Jump Variables
     [Header("Jump parameters")]
-    [SerializeField] protected LayerMask groundLayers;
+    [SerializeField] protected LayerMask rayCastLayers;
     [SerializeField] protected float jumpHeight = 2f, inputGravity = -30f;
-    [HideInInspector] public bool isGrounded => Physics.CheckSphere(transform.position, 0.1f, groundLayers, QueryTriggerInteraction.Ignore);
+    [HideInInspector] public bool isGrounded => Physics.CheckSphere(transform.position, 0.1f, rayCastLayers, QueryTriggerInteraction.Ignore);
     #endregion
 
     #region Slide Variables
@@ -29,9 +29,8 @@ public class PlayerController : MonoBehaviour
     #endregion
     
     #region Raycast Variables
-    private RaycastHit hit;
-    private Ray ray => new Ray(transform.position, Vector3.down);
-    private const int kMaxLayers = 31;
+    private RaycastHit hit; 
+    private Ray ray => new Ray(new Vector3(transform.position.x + 0.8f, transform.position.y + 1f, transform.position.z), Vector3.down);
     #endregion
 
     #region Basic Unity Methods
@@ -58,14 +57,16 @@ public class PlayerController : MonoBehaviour
         }
 
         // handle gravity
+        
         if (isGrounded && desiredGravity.y < 0f) desiredGravity.y = 0f;
         else desiredGravity.y += gravity * Time.fixedDeltaTime;
 
         //raycast for collision
-        if (Physics.Raycast(ray, out hit, 10f, groundLayers))
+        if (Physics.Raycast(ray, out hit, 100f, rayCastLayers))
         {
-            Debug.DrawRay(new Vector3(transform.position.x + 0.8f, transform.position.y + 1f, transform.position.z), Vector3.down, Color.yellow); // just to see the ray
-            for (int i = 0; i <= kMaxLayers; i++)
+            Debug.Log(LayerMask.LayerToName(hit.transform.gameObject.layer));
+            Debug.DrawRay(ray.origin, ray.direction * 1000, Color.yellow); // just to see the ray
+            for (int i = 0; i <= 31; i++)
             {
                 var layerName = LayerMask.LayerToName(i); //name of the layer 
                 CheckFeedback(layerName);
@@ -80,8 +81,9 @@ public class PlayerController : MonoBehaviour
     #region Input Events
     public void Jump(InputAction.CallbackContext context)
     {
-        if (isGrounded) desiredGravity.y += Mathf.Sqrt(jumpHeight * -2f * gravity);
-    }
+        if (isGrounded) desiredGravity.y += Mathf.Sqrt(jumpHeight * -2f * (inputGravity * 2));
+		Debug.Log($"desiredGravity({desiredGravity.x}, {desiredGravity.y}, {desiredGravity.z})");
+	}
 
     public void Sliding(InputAction.CallbackContext context)
     {
@@ -116,8 +118,11 @@ public class PlayerController : MonoBehaviour
         switch(layerName){
             case "Ground":
                 Debug.Log("TA OLHANDO PARA O CHÃO");
+                hit.transform.gameObject.GetComponent<Renderer>().material.color = new Color(0, 0, 255);
+                Debug.Log("BLUE");
                 return;
-            default: 
+            default:
+                hit.transform.gameObject.GetComponent<Renderer>().material.color = Color.white;
                 return;
         }
     }

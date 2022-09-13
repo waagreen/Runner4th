@@ -14,7 +14,7 @@ public class SpeedText : MonoBehaviour
     void Update()
     {
         //Sets the speed and distance text
-        distance += displaySpeed * Time.deltaTime;
+        distance += displaySpeed * Time.fixedDeltaTime;
 
         speedText.text = $"{Mathf.Floor(displaySpeed)} m/s";
         distanceText.text = $"{Mathf.Floor(distance)} m";
