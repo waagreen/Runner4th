@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
     protected PlayerInput inputMap;
     protected CharacterController playerJP;
     protected Vector3 desiredGravity;
-    protected float gravity => desiredGravity.normalized.y > 0f ? inputGravity : inputGravity * 3f;
+    //protected float gravity => desiredGravity.y > 0f ? inputGravity : inputGravity * 3f;
 
     #endregion
     
@@ -66,10 +66,6 @@ public class PlayerController : MonoBehaviour
             CameraManager.SetNoise(ShakeMode.moderate);
         }
 
-        // handle gravity
-        if (isGrounded && desiredGravity.normalized.y < 0f) desiredGravity.y = 0f;
-        else desiredGravity.y += gravity * Time.fixedDeltaTime;
-
         //raycast for collision
         if (Physics.Raycast(ray, out hit, 10f))
         {
@@ -79,6 +75,10 @@ public class PlayerController : MonoBehaviour
             LayerMask layerHit = hit.transform.gameObject.layer;
             CheckFeedback(layerHit.value);
         }
+ 
+        // handle gravity
+        if (isGrounded && desiredGravity.y <= 0f) desiredGravity.y = 0f;
+        else desiredGravity.y += inputGravity * Time.fixedDeltaTime;
 
         // player jump
         playerJP.Move(desiredGravity * Time.fixedDeltaTime);
@@ -90,7 +90,11 @@ public class PlayerController : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (isGrounded) desiredGravity.y += Mathf.Sqrt(jumpHeight * -2f * gravity);
+        if (isGrounded)
+        { 
+            float lerp = Mathf.Lerp(inputGravity / 5f, inputGravity, 0.15f);
+            desiredGravity.y += Mathf.Sqrt(jumpHeight * -3.0f * lerp);
+        }
     }
 
     public void Sliding(InputAction.CallbackContext context)
@@ -104,14 +108,14 @@ public class PlayerController : MonoBehaviour
     {
         inputMap.Enable();
 
-        inputMap.Keyboard.Jump.started += Jump;
+        inputMap.Keyboard.Jump.performed += Jump;
         inputMap.Keyboard.Slide.started += Sliding;
     }
     private void OnDisable()
     {
         inputMap.Disable();
 
-        inputMap.Keyboard.Jump.started -= Jump;
+        inputMap.Keyboard.Jump.performed -= Jump;
         inputMap.Keyboard.Slide.started -= Sliding;
     }
 
@@ -127,10 +131,10 @@ public class PlayerController : MonoBehaviour
     private void CheckFeedback(int layerHit){
         switch(layerHit){
             case 3:
-                Debug.Log("TA OLHANDO PARA O CHÃO");
+                //Debug.Log("TA OLHANDO PARA O CHÃO");
                 break;
             case 6:
-                Debug.Log("VOCÊ CONSEGUIU PULAR!!");
+                //Debug.Log("VOCÊ CONSEGUIU PULAR!!");
                 return;
             default: 
                 break;
