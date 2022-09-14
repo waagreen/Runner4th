@@ -10,6 +10,7 @@ public class GlobalMovement : MonoBehaviour
     [SerializeField][Range(200f, 500f)] protected float maxRunSpeed;
     [SerializeField][Range(1f, 5f)] protected float maxAcceleration;
     [SerializeField] protected VelocityStates.State vState;
+    [SerializeField] protected Renderer sphereFeedback;
 
     protected float runAcceleration = 1f;
     private float _actualSpeed = 0f;
@@ -26,6 +27,10 @@ public class GlobalMovement : MonoBehaviour
         runAcceleration = Mathf.Sqrt(accelerationRate * Time.fixedDeltaTime);
         _actualSpeed += runAcceleration;
 
+        //GameObject.FindGameObjectWithTag("Feedback").GetComponent<Renderer>().material.color = new Color(0,128,0);
+
         if (_actualSpeed > maxRunSpeed) _actualSpeed = maxRunSpeed;
+        else if(_actualSpeed >= 20f && _actualSpeed < 40f)  sphereFeedback.material.color = new Color(0,128,0);
+        else if(_actualSpeed >= 40f)  sphereFeedback.material.color = new Color(255,0,0);
     }
 }
