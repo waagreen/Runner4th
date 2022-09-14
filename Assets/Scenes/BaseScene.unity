@@ -1585,9 +1585,9 @@ MonoBehaviour:
   groundLayers:
     serializedVersion: 2
     m_Bits: 72
-  jumpHeight: 2
-  inputGravity: -55
-  reducedHeight: 0
+  jumpHeight: 1
+  inputGravity: -20
+  reducedHeight: 0.5
   inputHoldTime: 2
 --- !u!1 &2033054406
 GameObject:
