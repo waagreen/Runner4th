@@ -124,7 +124,7 @@ public class PlayerController : MonoBehaviour
         return slideInputStartTime >= inputHoldTime;
     }
 
-    private void CheckFeedback(LayerMask layerHit){
+    private void CheckFeedback(int layerHit){
         switch(layerHit){
             case 3:
                 Debug.Log("TA OLHANDO PARA O CHÃO");
