@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
     protected PlayerInput inputMap;
     protected CharacterController playerJP;
     protected Vector3 desiredGravity;
-    protected float gravity => desiredGravity.y < 0 ? inputGravity * 3f : inputGravity;
+    protected float gravity => desiredGravity.normalized.y > 0f ? inputGravity : inputGravity * 3f;
 
     #endregion
     
@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // handle gravity
-        if (isGrounded && desiredGravity.y < 0f) desiredGravity.y = 0f;
+        if (isGrounded && desiredGravity.normalized.y < 0f) desiredGravity.y = 0f;
         else desiredGravity.y += gravity * Time.fixedDeltaTime;
 
         //raycast for collision

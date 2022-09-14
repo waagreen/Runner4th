@@ -6,12 +6,12 @@ using UnityEngine;
 public class GlobalMovement : MonoBehaviour
 {
     [Header("Speed parameters")]
-    [SerializeField][Range(0.5f, 2f)] private float accelerationRate;
-    [SerializeField][Range(300f, 1000f)] protected float maxRunSpeed;
-    [SerializeField][Range(2f, 10f)] protected float maxAcceleration;
+    [SerializeField][Range(0.1f, 1f)] private float accelerationRate;
+    [SerializeField][Range(200f, 500f)] protected float maxRunSpeed;
+    [SerializeField][Range(1f, 5f)] protected float maxAcceleration;
     [SerializeField] protected VelocityStates.State vState;
 
-    protected float runAcceleration = 2f;
+    protected float runAcceleration = 1f;
     private float _actualSpeed = 0f;
     public float ActualSpeed => _actualSpeed;
     
