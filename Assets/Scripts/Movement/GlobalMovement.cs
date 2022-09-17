@@ -15,7 +15,7 @@ public class GlobalMovement : MonoBehaviour
 {
     [Header("Speed parameters")]
     [SerializeField][Range(0.01f, 1f)] private float accelerationRate;
-    [SerializeField][Range(40f, 300f)] protected float maxRunSpeed;
+    [SerializeField][Range(10f, 300f)] protected float maxRunSpeed;
     [SerializeField] protected Renderer sphereFeedback;
     
     private const float kMinSpeed = 5f;
