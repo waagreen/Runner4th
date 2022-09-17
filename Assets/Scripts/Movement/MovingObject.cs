@@ -5,8 +5,6 @@ using MyBox;
 
 public class MovingObject : PoolingObjectReturner
 {   
-    public bool isDestructable = false;
-    [ConditionalField(nameof(isDestructable))] public VelocityState desiredVelocity;
     
     private GlobalMovement globalMove => DataManager.globalMovement;
     
@@ -21,18 +19,4 @@ public class MovingObject : PoolingObjectReturner
         if(objectPosition.x < screenWidth - positionSquared) gameObject.SetActive(false);
     }
 
-    private void OnCollisionEnter(Collision other) 
-    {
-        if(isDestructable)
-        {
-            if(other.transform.tag == "Player" && desiredVelocity == globalMove.CurrentState)
-            {
-                gameObject.SetActive(false);
-            }
-            else if(other.transform.tag == "Player" && desiredVelocity != globalMove.CurrentState)
-            {
-                globalMove.ReduceSpeed();
-            }
-        }
-    }
 }
