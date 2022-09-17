@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(DataManager.globalMovement.CurrentState == VelocityState.Idle) gameObject.SetActive(false);
+        if(DataManager.globalMovement.CurrentState == VelocityState.Idle) gameObject.SetActive(false); // TODO: implementar ciclo de morte e evento para notificar UI
 
         // handle slide cooldown
         slideInputStartTime += Time.deltaTime;
