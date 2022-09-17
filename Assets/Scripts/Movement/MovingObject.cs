@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MyBox;
+
 public class MovingObject : PoolingObjectReturner
-{
-    public VelocityState desiredVelocity;
+{   
+    public bool isDestructable = false;
+    [ConditionalField(nameof(isDestructable))] public VelocityState desiredVelocity;
+    
     private GlobalMovement globalMove => DataManager.globalMovement;
     
     private float screenWidth => Screen.width;
@@ -19,13 +23,16 @@ public class MovingObject : PoolingObjectReturner
 
     private void OnCollisionEnter(Collision other) 
     {
-        if(other.transform.tag == "Player" && desiredVelocity == globalMove.CurrentState)
+        if(isDestructable)
         {
-            gameObject.SetActive(false);
-        }
-        else if(other.transform.tag == "Player" && desiredVelocity != globalMove.CurrentState)
-        {
-            globalMove.ReduceSpeed();
+            if(other.transform.tag == "Player" && desiredVelocity == globalMove.CurrentState)
+            {
+                gameObject.SetActive(false);
+            }
+            else if(other.transform.tag == "Player" && desiredVelocity != globalMove.CurrentState)
+            {
+                globalMove.ReduceSpeed();
+            }
         }
     }
 }
