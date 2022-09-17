@@ -16,7 +16,7 @@ public class PoolingSpawner : MonoBehaviour
 
         if (timeSinceSpawn >= timeToSpawn)
         {
-            GameObject newObject = objectPool.GetObject(objectsToSpawn[0]);
+            GameObject newObject = objectPool.GetObject(objectsToSpawn[Random.Range(0, objectsToSpawn.Count)]);
             newObject.transform.position = transform.position;
             timeSinceSpawn = 0f;
         }

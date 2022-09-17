@@ -1416,6 +1416,7 @@ MonoBehaviour:
   timeToSpawn: 2
   objectsToSpawn:
   - {fileID: 6587067426823095439, guid: 4398e38ef8b9bdf4d980e5abbd2ef020, type: 3}
+  - {fileID: 6587067426823095439, guid: c9aa4a1d159e59942912a75e7554d49d, type: 3}
 --- !u!1 &2033054406
 GameObject:
   m_ObjectHideFlags: 0

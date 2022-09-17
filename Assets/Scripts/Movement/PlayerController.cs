@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(DataManager.globalMovement.CurrentState == VelocityState.Idle) gameObject.SetActive(false);
+        if(DataManager.globalMovement.CurrentState == VelocityState.Idle) gameObject.SetActive(false); // TODO: implementar ciclo de morte e evento para notificar UI
 
         // handle slide cooldown
         slideInputStartTime += Time.deltaTime;
@@ -82,8 +82,8 @@ public class PlayerController : MonoBehaviour
  
         // handle gravity
         if (isGrounded && desiredGravity.y < 0f) desiredGravity.y = 0f;
-        else desiredGravity.y += gravity * Time.fixedDeltaTime;
-
+        
+        desiredGravity.y += gravity * Time.fixedDeltaTime;
         rb.velocity = desiredGravity;
     }
 
