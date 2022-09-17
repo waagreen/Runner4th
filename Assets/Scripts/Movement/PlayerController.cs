@@ -27,10 +27,11 @@ public class PlayerController : MonoBehaviour
 
     #region Input Variables
 
+    protected Rigidbody rb;
     protected PlayerInput inputMap;
     protected CharacterController playerJP;
     protected Vector3 desiredGravity;
-    //protected float gravity => desiredGravity.y > 0f ? inputGravity : inputGravity * 3f;
+    protected float gravity => desiredGravity.y > 0f ? inputGravity : inputGravity * 3f;
 
     #endregion
     
@@ -46,15 +47,19 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
-        playerJP = GetComponent<CharacterController>();
+        // playerJP = GetComponent<CharacterController>();
+        rb = GetComponent<Rigidbody>();
+        
         inputMap = new PlayerInput();
 
-        originalHeight = playerJP.transform.localScale;
+        originalHeight = transform.localScale;
     }
 
 
     void FixedUpdate()
     {
+        if(DataManager.globalMovement.CurrentState == VelocityState.Idle) gameObject.SetActive(false);
+
         // handle slide cooldown
         slideInputStartTime += Time.deltaTime;
 
@@ -63,7 +68,6 @@ public class PlayerController : MonoBehaviour
             transform.localScale = originalHeight;
             slideInputStartTime = 0;
             doingSlide = false;
-            CameraManager.SetNoise(ShakeMode.moderate);
         }
 
         //raycast for collision
@@ -77,11 +81,10 @@ public class PlayerController : MonoBehaviour
         }
  
         // handle gravity
-        if (isGrounded && desiredGravity.y <= 0f) desiredGravity.y = 0f;
-        else desiredGravity.y += inputGravity * Time.fixedDeltaTime;
+        if (isGrounded && desiredGravity.y < 0f) desiredGravity.y = 0f;
+        else desiredGravity.y += gravity * Time.fixedDeltaTime;
 
-        // player jump
-        playerJP.Move(desiredGravity * Time.fixedDeltaTime);
+        rb.velocity = desiredGravity;
     }
 
     #endregion
@@ -102,6 +105,7 @@ public class PlayerController : MonoBehaviour
         doingSlide = true;
         slideInputStartTime = 0;
         transform.localScale = new Vector3(1, reducedHeight, 1);
+        CameraManager.SetNoise(ShakeMode.moderate);
     }
     
     private void OnEnable()

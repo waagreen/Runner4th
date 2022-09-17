@@ -5,7 +5,7 @@ using UnityEngine;
 public class PoolingSpawner : MonoBehaviour
 {
     [SerializeField] private float timeToSpawn;
-    [SerializeField] private GameObject objectsToSpawn;
+    [SerializeField] private List<GameObject> objectsToSpawn;
 
     private float timeSinceSpawn;
     private PoolingMaster objectPool => DataManager.masterPool;
@@ -16,7 +16,7 @@ public class PoolingSpawner : MonoBehaviour
 
         if (timeSinceSpawn >= timeToSpawn)
         {
-            GameObject newObject = objectPool.GetObject(objectsToSpawn);
+            GameObject newObject = objectPool.GetObject(objectsToSpawn[0]);
             newObject.transform.position = transform.position;
             timeSinceSpawn = 0f;
         }
