@@ -82,8 +82,8 @@ public class PlayerController : MonoBehaviour
  
         // handle gravity
         if (isGrounded && desiredGravity.y < 0f) desiredGravity.y = 0f;
-        else desiredGravity.y += gravity * Time.fixedDeltaTime;
-
+        
+        desiredGravity.y += gravity * Time.fixedDeltaTime;
         rb.velocity = desiredGravity;
     }
 
