@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 3623451646426655089}
   - component: {fileID: 3623451646426655088}
   - component: {fileID: 3623451646426655091}
-  - component: {fileID: 6923445079926167055}
   m_Layer: 0
   m_Name: Coin
   m_TagString: Untagged
@@ -31,11 +30,11 @@ Transform:
   m_GameObject: {fileID: 3623451646426655090}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 7, y: 1.25, z: 1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2057277382170458092}
   - {fileID: 7586119599067065300}
+  - {fileID: 2057277382170458092}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
@@ -5469,7 +5468,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 5251
+  m_VersionIndex: 5293
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -5572,18 +5571,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!114 &6923445079926167055
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3623451646426655090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 735e94f8a8815df4d8c961bde362ed13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &283884815350342925
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5594,7 +5581,7 @@ PrefabInstance:
     - target: {fileID: 2268799763881300705, guid: 95d1df05e9182c54ca26d7885e1564df,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2268799763881300705, guid: 95d1df05e9182c54ca26d7885e1564df,
         type: 3}
@@ -5654,7 +5641,7 @@ PrefabInstance:
     - target: {fileID: 2268799763881300708, guid: 95d1df05e9182c54ca26d7885e1564df,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 95d1df05e9182c54ca26d7885e1564df, type: 3}
@@ -5671,10 +5658,75 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3623451646426655100}
     m_Modifications:
+    - target: {fileID: 4413918727696910714, guid: 0fc91bbf4f70e0f499d8ade9660d210f,
+        type: 3}
+      propertyPath: autoRandomSeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413918727696910714, guid: 0fc91bbf4f70e0f499d8ade9660d210f,
+        type: 3}
+      propertyPath: SizeModule.curve.scalar
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413918727696910714, guid: 0fc91bbf4f70e0f499d8ade9660d210f,
+        type: 3}
+      propertyPath: InitialModule.maxNumParticles
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413918727696910714, guid: 0fc91bbf4f70e0f499d8ade9660d210f,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].time
+      value: 0.01639149
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413918727696910714, guid: 0fc91bbf4f70e0f499d8ade9660d210f,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].inSlope
+      value: 0.4469314
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413918727696910714, guid: 0fc91bbf4f70e0f499d8ade9660d210f,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].inSlope
+      value: -0.3248285
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413918727696910714, guid: 0fc91bbf4f70e0f499d8ade9660d210f,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].outSlope
+      value: 0.4469314
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413918727696910714, guid: 0fc91bbf4f70e0f499d8ade9660d210f,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].inWeight
+      value: 0.14731082
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413918727696910714, guid: 0fc91bbf4f70e0f499d8ade9660d210f,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].outSlope
+      value: -0.3248285
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413918727696910714, guid: 0fc91bbf4f70e0f499d8ade9660d210f,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].outWeight
+      value: 0.14189029
+      objectReference: {fileID: 0}
+    - target: {fileID: 4427608144687545524, guid: 0fc91bbf4f70e0f499d8ade9660d210f,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 4427608144687545524, guid: 0fc91bbf4f70e0f499d8ade9660d210f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 4427608144687545524, guid: 0fc91bbf4f70e0f499d8ade9660d210f,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.32
+      objectReference: {fileID: 0}
     - target: {fileID: 4436787463040646960, guid: 0fc91bbf4f70e0f499d8ade9660d210f,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4436787463040646960, guid: 0fc91bbf4f70e0f499d8ade9660d210f,
         type: 3}
@@ -5684,12 +5736,12 @@ PrefabInstance:
     - target: {fileID: 4436787463040646960, guid: 0fc91bbf4f70e0f499d8ade9660d210f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.967978
+      value: -2.76
       objectReference: {fileID: 0}
     - target: {fileID: 4436787463040646960, guid: 0fc91bbf4f70e0f499d8ade9660d210f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.5340403
+      value: 0.53
       objectReference: {fileID: 0}
     - target: {fileID: 4436787463040646960, guid: 0fc91bbf4f70e0f499d8ade9660d210f,
         type: 3}
@@ -5726,10 +5778,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5699843226032350016, guid: 0fc91bbf4f70e0f499d8ade9660d210f,
+        type: 3}
+      propertyPath: SizeModule.curve.scalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7543310167059992535, guid: 0fc91bbf4f70e0f499d8ade9660d210f,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8763477001209271689, guid: 0fc91bbf4f70e0f499d8ade9660d210f,
         type: 3}
       propertyPath: m_Name
       value: Particle_ShinyCoin
+      objectReference: {fileID: 0}
+    - target: {fileID: 8763477001209271689, guid: 0fc91bbf4f70e0f499d8ade9660d210f,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0fc91bbf4f70e0f499d8ade9660d210f, type: 3}
