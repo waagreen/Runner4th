@@ -26,7 +26,6 @@ public class PlayerController : MonoBehaviour
 
     [Header("Particles")]
     [SerializeField] private ParticleSystem particles;
-    [SerializeField] protected Renderer sphereFeedback;
     private ParticleSystem.ColorOverLifetimeModule colorOverLifeTime;
     private ParticleSystem.EmissionModule emissionModule;
     private int curretStateIndex;
