@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] protected LayerMask groundLayers;
     [SerializeField] protected float jumpHeight = 2f, inputGravity = -30f;
     [HideInInspector] public bool isGrounded => Physics.CheckSphere(transform.position, 0.05f, groundLayers, QueryTriggerInteraction.Ignore);
+    private float coyoteTime = 0.2f;
+    private float timeLeftGround = -10f;
 
     #endregion
 
@@ -67,7 +69,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(DataManager.globalMovement.CurrentState == VelocityState.Idle) gameObject.SetActive(false); // TODO: implementar ciclo de morte e evento para notificar UI
+        if(DataManager.globalMovement.CurrentState == VelocityState.Idle) DisableAndShowRestartScreen(); // TODO: implementar ciclo de morte e evento para notificar UI
+        
         
         if(!isGrounded && particles.isPlaying) particles.Stop();
         else if (isGrounded && particles.isStopped) particles.Play();
@@ -105,7 +108,7 @@ public class PlayerController : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (isGrounded)
+        if (isGrounded || Time.time < timeLeftGround + coyoteTime)
         { 
             float lerp = Mathf.Lerp(inputGravity / 5f, inputGravity, 0.15f);
             desiredGravity.y += Mathf.Sqrt(jumpHeight * -3.0f * lerp);
@@ -181,6 +184,14 @@ public class PlayerController : MonoBehaviour
         }
 
         curretStateIndex = stateIndex;
+    }
+
+    private void OnBecameInvisible() => DisableAndShowRestartScreen();
+
+    private void DisableAndShowRestartScreen()
+    {
+        gameObject.SetActive(false);
+        globalMove.ShowRestartScreen();
     }
     #endregion
 }

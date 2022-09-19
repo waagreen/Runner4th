@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.ConstrainedExecution;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum VelocityState : int
 { 
@@ -13,6 +14,8 @@ public enum VelocityState : int
 
 public class GlobalMovement : MonoBehaviour
 {
+    [SerializeField] private GameObject restartScreen;
+
     [Header("Speed parameters")]
     [SerializeField][Range(0.01f, 1f)] private float accelerationRate;
     [SerializeField][Range(10f, 300f)] protected float maxRunSpeed;
@@ -31,10 +34,12 @@ public class GlobalMovement : MonoBehaviour
     private float _actualSpeed = kMinSpeed;
     public float ActualSpeed => _actualSpeed;
 
+    private void Awake() {
+        DontDestroyOnLoad(restartScreen);
+    }
 
     protected void FixedUpdate()
     {
-
         //move forward
         if(OnSlope(PlayerTransform)) runAcceleration = Mathf.Sqrt((accelerationRate * 3f) * Time.fixedDeltaTime);
         else runAcceleration = Mathf.Sqrt(accelerationRate * Time.fixedDeltaTime); 
@@ -64,6 +69,12 @@ public class GlobalMovement : MonoBehaviour
     }
 
     public void ReduceSpeed() => _actualSpeed = _actualSpeed / 2f;
+    public void ReloadGame()
+    {
+        var currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.buildIndex);
+    }
+    public void ShowRestartScreen() => restartScreen.SetActive(true);
     
     private bool OnSlope(Transform t)
     {
