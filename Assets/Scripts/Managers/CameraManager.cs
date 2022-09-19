@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using System.Threading.Tasks;
+using DG.Tweening;
 
 public enum ShakeMode
 {
@@ -14,36 +15,25 @@ public enum ShakeMode
 
 public static class CameraManager
 {
-    public static CinemachineVirtualCamera virtualCam = GameObject.FindGameObjectWithTag("MainVirtualCamera").GetComponent<CinemachineVirtualCamera>();
-    private static CinemachineBasicMultiChannelPerlin cameraNoise = virtualCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+    // public static CinemachineVirtualCamera virtualCam = GameObject.FindGameObjectWithTag("MainVirtualCamera").GetComponent<CinemachineVirtualCamera>();
+    // private static CinemachineBasicMultiChannelPerlin cameraNoise = virtualCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
     public static void SetNoise(ShakeMode mode)
     {
         switch (mode)
         {
             case ShakeMode.weak:
-                CameraNoise(150, 1.5f, 1.5f);
+                Camera.main.DOShakePosition(1f, 0.5f, 1, 5f).SetEase(Ease.OutCubic);
                 return;
             case ShakeMode.moderate:
-                CameraNoise(150, 3f, 3f);
+                Camera.main.DOShakePosition(1.5f, 1f, 3, 20f).SetEase(Ease.OutCubic);
                 return;
             case ShakeMode.strong:
-                CameraNoise(175, 6f, 6f);
+                Camera.main.DOShakePosition(2f, 2f, 6, 40).SetEase(Ease.OutCubic);
                 return;
             default :
-                CameraNoise(100, 0.7f, 1);
+                Camera.main.DOShakePosition(1f, 0.5f, 3, 20).SetEase(Ease.OutCubic);
                 return;
         }
-    }
-
-    private async static void CameraNoise(int shakeDuration, float shakeAmplitude, float ShakeFrequency)
-    {
-        cameraNoise.m_AmplitudeGain = shakeAmplitude;
-        cameraNoise.m_FrequencyGain = ShakeFrequency;
-        
-        await Task.Delay(shakeDuration);
-
-        cameraNoise.m_AmplitudeGain = 0f;
-        cameraNoise.m_FrequencyGain = 0f;
     }
 }
