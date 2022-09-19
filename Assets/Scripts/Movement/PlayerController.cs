@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Linq;
+using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class PlayerController : MonoBehaviour
     [Header("Jump parameters")]
     [SerializeField] protected LayerMask groundLayers;
     [SerializeField] protected float jumpHeight = 2f, inputGravity = -30f;
-    [HideInInspector] public bool isGrounded => Physics.CheckSphere(transform.position, 0.1f, groundLayers, QueryTriggerInteraction.Ignore);
+    [HideInInspector] public bool isGrounded => Physics.CheckSphere(transform.position, 0.05f, groundLayers, QueryTriggerInteraction.Ignore);
 
     #endregion
 
@@ -23,13 +24,20 @@ public class PlayerController : MonoBehaviour
     private float slideInputStartTime;
     private bool doingSlide = false;
 
+    [Header("Particles")]
+    [SerializeField] private ParticleSystem particles;
+    [SerializeField] protected Renderer sphereFeedback;
+    private ParticleSystem.ColorOverLifetimeModule colorOverLifeTime;
+    private ParticleSystem.EmissionModule emissionModule;
+    private int curretStateIndex;
+
     #endregion
 
     #region Input Variables
 
+    private GlobalMovement globalMove => DataManager.globalMovement;
     protected Rigidbody rb;
     protected PlayerInput inputMap;
-    protected CharacterController playerJP;
     protected Vector3 desiredGravity;
     protected float gravity => desiredGravity.y > 0f ? inputGravity : inputGravity * 3f;
 
@@ -53,12 +61,18 @@ public class PlayerController : MonoBehaviour
         inputMap = new PlayerInput();
 
         originalHeight = transform.localScale;
+        colorOverLifeTime = particles.colorOverLifetime;
+        emissionModule = particles.emission;
     }
 
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         if(DataManager.globalMovement.CurrentState == VelocityState.Idle) gameObject.SetActive(false); // TODO: implementar ciclo de morte e evento para notificar UI
+        
+        if(!isGrounded && particles.isPlaying) particles.Stop();
+        else if (isGrounded && particles.isStopped) particles.Play();
+        SetStateGradient();
 
         // handle slide cooldown
         slideInputStartTime += Time.deltaTime;
@@ -104,7 +118,7 @@ public class PlayerController : MonoBehaviour
         doingSlide = true;
         slideInputStartTime = 0;
         transform.localScale = new Vector3(1, reducedHeight, 1);
-        CameraManager.SetNoise(ShakeMode.moderate);
+        CameraManager.SetNoise(ShakeMode.weak);
     }
     
     private void OnEnable()
@@ -143,6 +157,31 @@ public class PlayerController : MonoBehaviour
                 break;
         }
     }
+    
+    private void SetStateGradient()
+    {
+        int stateIndex = (int) globalMove.CurrentState;
+        if(stateIndex == curretStateIndex) return;
 
+        switch(stateIndex)
+        {
+            case 0:
+                colorOverLifeTime.color = globalMove.baseStateGradient;
+                emissionModule.rateOverTime = 50f;
+                break;
+            case 1:
+                colorOverLifeTime.color = globalMove.highStateGradient;
+                emissionModule.rateOverTime = 150f;
+                Camera.main.DOFieldOfView(45f, 2f).SetEase(Ease.OutCubic);
+                break;
+            case 2:
+                colorOverLifeTime.color = globalMove.maxStateGradient;
+                emissionModule.rateOverTime = 450f;
+                Camera.main.DOFieldOfView(50f, 2f).SetEase(Ease.OutCubic);
+                break;
+        }
+
+        curretStateIndex = stateIndex;
+    }
     #endregion
 }
