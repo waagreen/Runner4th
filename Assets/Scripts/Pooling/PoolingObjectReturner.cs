@@ -11,7 +11,7 @@ public class PoolingObjectReturner : MonoBehaviour
         if (objectPool != null)
         {
             objectPool.ReturnGameObject(gameObject);
-            Debug.Log($"{gameObject.name} was disabled and stored");
+            // Debug.Log($"{gameObject.name} was disabled and stored");
         }
     }
 }

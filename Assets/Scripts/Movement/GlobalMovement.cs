@@ -17,6 +17,7 @@ public class GlobalMovement : MonoBehaviour
     [SerializeField][Range(0.01f, 1f)] private float accelerationRate;
     [SerializeField][Range(10f, 300f)] protected float maxRunSpeed;
     [SerializeField] protected Renderer sphereFeedback;
+    [SerializeField] protected Transform PlayerTransform;
 
     [Header("State Colors")]
     public Gradient baseStateGradient;
@@ -35,16 +36,18 @@ public class GlobalMovement : MonoBehaviour
     {
 
         //move forward
-        runAcceleration = Mathf.Sqrt(accelerationRate * Time.fixedDeltaTime);
+        if(OnSlope(PlayerTransform)) runAcceleration = Mathf.Sqrt((accelerationRate * 3f) * Time.fixedDeltaTime);
+        else runAcceleration = Mathf.Sqrt(accelerationRate * Time.fixedDeltaTime); 
+        
         _actualSpeed += runAcceleration / 1.5f;
 
         if (CurrentState == VelocityState.Maximun)
         { 
             _actualSpeed = maxRunSpeed;
-            sphereFeedback.material.color = maxStateGradient.colorKeys[0].color;
+            sphereFeedback.material.color = maxStateGradient.colorKeys[1].color;
         }
-        else if (CurrentState == VelocityState.High) sphereFeedback.material.color = highStateGradient.colorKeys[0].color;
-        else  if (CurrentState == VelocityState.Base) sphereFeedback.material.color = baseStateGradient.colorKeys[0].color;
+        else if (CurrentState == VelocityState.High) sphereFeedback.material.color = highStateGradient.colorKeys[1].color;
+        else  if (CurrentState == VelocityState.Base) sphereFeedback.material.color = baseStateGradient.colorKeys[1].color;
     }
     
     public VelocityState GetSpeedState()
@@ -61,4 +64,15 @@ public class GlobalMovement : MonoBehaviour
     }
 
     public void ReduceSpeed() => _actualSpeed = _actualSpeed / 2f;
+    
+    private bool OnSlope(Transform t)
+    {
+        RaycastHit slopeHit;
+
+        if(Physics.Raycast(t.position, Vector3.down, out slopeHit, transform.localScale.x / 2 + 0.5f))
+        {
+            return slopeHit.normal != Vector3.up ? true : false;
+        }
+        else return false;
+    }
 }
