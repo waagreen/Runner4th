@@ -17,6 +17,11 @@ public class GlobalMovement : MonoBehaviour
     [SerializeField][Range(0.01f, 1f)] private float accelerationRate;
     [SerializeField][Range(100f, 300f)] protected float maxRunSpeed;
     [SerializeField] protected Renderer sphereFeedback;
+
+    [Header("State Colors")]
+    public Gradient baseStateGradient;
+    public Gradient highStateGradient;
+    public Gradient maxStateGradient;
     
     private const float kMinSpeed = 5f;
     
@@ -28,6 +33,7 @@ public class GlobalMovement : MonoBehaviour
 
     protected void FixedUpdate()
     {
+
         //move forward
         runAcceleration = Mathf.Sqrt(accelerationRate * Time.fixedDeltaTime);
         _actualSpeed += runAcceleration / 1.5f;
@@ -35,10 +41,10 @@ public class GlobalMovement : MonoBehaviour
         if (CurrentState == VelocityState.Maximun)
         { 
             _actualSpeed = maxRunSpeed;
-            sphereFeedback.material.color = new Color(255, 0, 0);
+            sphereFeedback.material.color = maxStateGradient.colorKeys[0].color;
         }
-        else if (CurrentState == VelocityState.High) sphereFeedback.material.color = new Color(0, 128, 0);
-        else  sphereFeedback.material.color = new Color(50, 50, 50);
+        else if (CurrentState == VelocityState.High) sphereFeedback.material.color = highStateGradient.colorKeys[0].color;
+        else  if (CurrentState == VelocityState.Base) sphereFeedback.material.color = baseStateGradient.colorKeys[0].color;
     }
     
     public VelocityState GetSpeedState()
