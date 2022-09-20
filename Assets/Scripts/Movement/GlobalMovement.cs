@@ -14,7 +14,7 @@ public enum VelocityState : int
 
 public class GlobalMovement : MonoBehaviour
 {
-    [SerializeField] private GameObject restartScreen;
+    [SerializeField] private GameObject gameManager;
 
     [Header("Speed parameters")]
     [SerializeField][Range(0.01f, 1f)] private float accelerationRate;
@@ -28,14 +28,21 @@ public class GlobalMovement : MonoBehaviour
     public Gradient maxStateGradient;
     
     private const float kMinSpeed = 5f;
+    private static bool wasAlreadySpawned = false;
     
     public VelocityState CurrentState => GetSpeedState();
     protected float runAcceleration = 1f;
     private float _actualSpeed = kMinSpeed;
     public float ActualSpeed => _actualSpeed;
+    
+    private void Start() {
 
-    private void Awake() {
-        DontDestroyOnLoad(restartScreen);
+        if(!wasAlreadySpawned)
+        {
+            DontDestroyOnLoad(gameManager);
+            wasAlreadySpawned = true;
+        }
+        else DestroyImmediate(gameManager);
     }
 
     protected void FixedUpdate()
@@ -70,11 +77,12 @@ public class GlobalMovement : MonoBehaviour
 
     public void ReduceSpeed() => _actualSpeed = _actualSpeed / 2f;
     public void ReloadGame()
-    {
+    {   
+        // restartScreen.SetActive(false);
         var currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.buildIndex);
     }
-    public void ShowRestartScreen() => restartScreen.SetActive(true);
+    public void ShowRestartScreen() {/*//=> restartScreen?.SetActive(true) */}
     
     private bool OnSlope(Transform t)
     {
@@ -86,4 +94,5 @@ public class GlobalMovement : MonoBehaviour
         }
         else return false;
     }
+
 }

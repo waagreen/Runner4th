@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     [Header("Jump parameters")]
     [SerializeField] protected LayerMask groundLayers;
     [SerializeField] protected float jumpHeight = 2f, inputGravity = -30f;
-    [HideInInspector] public bool isGrounded => Physics.CheckSphere(transform.position, 0.05f, groundLayers, QueryTriggerInteraction.Ignore);
+    [HideInInspector] public bool isGrounded => Physics.CheckSphere(transform.position, .25f, groundLayers, QueryTriggerInteraction.Ignore);
     private float coyoteTime = 0.2f;
     private float timeLeftGround = -10f;
 
@@ -191,7 +191,7 @@ public class PlayerController : MonoBehaviour
     private void DisableAndShowRestartScreen()
     {
         gameObject.SetActive(false);
-        globalMove.ShowRestartScreen();
+        globalMove.ReloadGame();
     }
     #endregion
 }
