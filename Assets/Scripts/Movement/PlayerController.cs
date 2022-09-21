@@ -13,8 +13,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] protected LayerMask groundLayers;
     [SerializeField] protected float jumpHeight = 2f, inputGravity = -30f;
     [HideInInspector] public bool isGrounded => Physics.CheckSphere(transform.position, .25f, groundLayers, QueryTriggerInteraction.Ignore);
-    private float coyoteTime = 0.2f;
-    private float timeLeftGround = -10f;
+    [SerializeField] float jumpButtonGracePeriod;
+    private float? lastGroundedTime;
+    private float? jumpButtonPressedTime;
 
     #endregion
 
@@ -95,9 +96,12 @@ public class PlayerController : MonoBehaviour
             LayerMask layerHit = hit.transform.gameObject.layer;
             CheckFeedback(layerHit.value);
         }
+
+        //coyote time with jump buffer
+        if(isGrounded) lastGroundedTime = Time.time;
  
         // handle gravity
-        if (isGrounded && desiredGravity.y < 0f) desiredGravity.y = 0f;
+        if (Time.time - lastGroundedTime <= jumpButtonGracePeriod && desiredGravity.y < 0f) desiredGravity.y = 0f;
         desiredGravity.y += gravity * Time.fixedDeltaTime;
         rb.velocity = desiredGravity;
     }
@@ -108,10 +112,14 @@ public class PlayerController : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (isGrounded || Time.time < timeLeftGround + coyoteTime)
+        if(context.performed) jumpButtonPressedTime = Time.time;
+        if (Time.time - jumpButtonPressedTime <= jumpButtonGracePeriod && Time.time - lastGroundedTime <= jumpButtonGracePeriod)
         { 
             float lerp = Mathf.Lerp(inputGravity / 5f, inputGravity, 0.15f);
             desiredGravity.y += Mathf.Sqrt(jumpHeight * -3.0f * lerp);
+
+            jumpButtonPressedTime = null;
+            lastGroundedTime = null;
         }
     }
 
