@@ -6,10 +6,15 @@ using MyBox;
 public class MovingObject : PoolingObjectReturner
 {   
     
-    private GlobalMovement globalMove => DataManager.globalMovement;
+    private GlobalMovement globalMove;
     
     private float screenWidth => Screen.width;
-    private Vector3 objectPosition => Camera.main.WorldToScreenPoint(transform.position + transform.localScale); 
+    private Vector3 objectPosition => Camera.main.WorldToScreenPoint(transform.position + transform.localScale);
+
+    private void Awake()
+    {
+        globalMove = GameObject.Find("-- MANAGER").GetComponent<GlobalMovement>();
+    }
 
     private void FixedUpdate()
     {

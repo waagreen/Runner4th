@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5966980693357103283}
   - component: {fileID: 1120094862756962144}
   m_Layer: 0
-  m_Name: High Speed Wall
+  m_Name: High speed Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -301,7 +301,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ef8698a861c522a4db43c67e075e7a6d, type: 2}
+  - {fileID: 2100000, guid: cc19f3bf8a6960a4e9aa0ded8d0e2ed6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

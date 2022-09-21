@@ -122,6 +122,12 @@ public class PlayerController : MonoBehaviour
         transform.localScale = new Vector3(1, reducedHeight, 1);
         CameraManager.SetNoise(ShakeMode.weak);
     }
+
+    public void Quit(InputAction.CallbackContext context)
+    {
+        Application.Quit();
+        Debug.Log("QUIT THE GAME");
+    }
     
     private void OnEnable()
     {
@@ -129,6 +135,7 @@ public class PlayerController : MonoBehaviour
 
         inputMap.Keyboard.Jump.performed += Jump;
         inputMap.Keyboard.Slide.started += Sliding;
+        inputMap.Keyboard.Quit.performed += Quit;
     }
     private void OnDisable()
     {
@@ -136,6 +143,7 @@ public class PlayerController : MonoBehaviour
 
         inputMap.Keyboard.Jump.performed -= Jump;
         inputMap.Keyboard.Slide.started -= Sliding;
+        inputMap.Keyboard.Quit.performed -= Quit;
     }
 
     #endregion
@@ -191,7 +199,7 @@ public class PlayerController : MonoBehaviour
     private void DisableAndShowRestartScreen()
     {
         gameObject.SetActive(false);
-        globalMove.ReloadGame();
+        DataManager.globalMovement.ReloadGame();
     }
     #endregion
 }

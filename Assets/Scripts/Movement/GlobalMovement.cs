@@ -15,6 +15,7 @@ public enum VelocityState : int
 public class GlobalMovement : MonoBehaviour
 {
     [SerializeField] private GameObject gameManager;
+    [SerializeField] private GameObject _manager;
 
     [Header("Speed parameters")]
     [SerializeField][Range(0.01f, 1f)] private float accelerationRate;
@@ -27,7 +28,8 @@ public class GlobalMovement : MonoBehaviour
     public Gradient highStateGradient;
     public Gradient maxStateGradient;
     
-    private const float kMinSpeed = 5f;
+    public const float kMinSpeed = 2f;
+    public float distance = 0;
     private static bool wasAlreadySpawned = false;
     
     public VelocityState CurrentState => GetSpeedState();
@@ -36,24 +38,40 @@ public class GlobalMovement : MonoBehaviour
     public float ActualSpeed => _actualSpeed;
     
     private void Start() {
-
-        if(!wasAlreadySpawned)
+        
+        if (!wasAlreadySpawned)
         {
             DontDestroyOnLoad(gameManager);
+            DontDestroyOnLoad(this.gameObject);
             wasAlreadySpawned = true;
         }
-        else DestroyImmediate(gameManager);
+        else
+        {
+            DestroyImmediate(gameManager);
+            DestroyImmediate(this.gameObject);
+		}
+
+        
+
     }
 
     protected void FixedUpdate()
     {
-        //move forward
-        if(OnSlope(PlayerTransform)) runAcceleration = Mathf.Sqrt((accelerationRate * 3f) * Time.fixedDeltaTime);
+		if (PlayerTransform == null) PlayerTransform = GameObject.Find("Main_Character").GetComponent<Transform>();
+        
+		//move forward
+		if (OnSlope(PlayerTransform))
+        {
+			runAcceleration = Mathf.Sqrt((accelerationRate * 3f) * Time.fixedDeltaTime);
+		}
         else runAcceleration = Mathf.Sqrt(accelerationRate * Time.fixedDeltaTime); 
         
         _actualSpeed += runAcceleration / 1.5f;
+        distance += _actualSpeed * Time.deltaTime;
 
-        if (CurrentState == VelocityState.Maximun)
+		if (sphereFeedback == null) sphereFeedback = GameObject.Find("Speed_Feedback").GetComponent<MeshRenderer>();
+
+		if (CurrentState == VelocityState.Maximun)
         { 
             _actualSpeed = maxRunSpeed;
             sphereFeedback.material.color = maxStateGradient.colorKeys[1].color;
@@ -79,10 +97,19 @@ public class GlobalMovement : MonoBehaviour
     public void ReloadGame()
     {   
         // restartScreen.SetActive(false);
-        var currentScene = SceneManager.GetActiveScene();
+        UpdateUiData();
+        var currentScene = SceneManager.GetActiveScene();   
         SceneManager.LoadScene(currentScene.buildIndex);
-    }
+
+		
+	}
     public void ShowRestartScreen() {/*//=> restartScreen?.SetActive(true) */}
+
+    public void UpdateUiData()
+    {
+        _actualSpeed = kMinSpeed;
+        distance = 0;
+    }
     
     private bool OnSlope(Transform t)
     {
