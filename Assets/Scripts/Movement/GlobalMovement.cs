@@ -15,7 +15,7 @@ public enum VelocityState : int
 public class GlobalMovement : MonoBehaviour
 {
     [SerializeField] private GameObject gameManager;
-    [SerializeField] private GameObject _manager;
+    [SerializeField] private Camera mainCam;
 
     [Header("Speed parameters")]
     [SerializeField][Range(0.01f, 1f)] private float accelerationRate;
@@ -27,37 +27,32 @@ public class GlobalMovement : MonoBehaviour
     public Gradient baseStateGradient;
     public Gradient highStateGradient;
     public Gradient maxStateGradient;
-    
+
+    public Camera MainCamera => mainCam; 
     public const float kMinSpeed = 2f;
     public float distance = 0;
-    private static bool wasAlreadySpawned = false;
-    
     public VelocityState CurrentState => GetSpeedState();
     protected float runAcceleration = 1f;
-    private float _actualSpeed = kMinSpeed;
     public float ActualSpeed => _actualSpeed;
+   
+    private float _actualSpeed = kMinSpeed;
+    private static bool wasAlreadySpawned = false;
     
     private void Start() {
         
         if (!wasAlreadySpawned)
         {
             DontDestroyOnLoad(gameManager);
-            DontDestroyOnLoad(this.gameObject);
             wasAlreadySpawned = true;
         }
         else
         {
             DestroyImmediate(gameManager);
-            DestroyImmediate(this.gameObject);
 		}
-
-        
-
     }
 
     protected void FixedUpdate()
     {
-		if (PlayerTransform == null) PlayerTransform = GameObject.Find("Main_Character").GetComponent<Transform>();
         
 		//move forward
 		if (OnSlope(PlayerTransform))
@@ -69,7 +64,6 @@ public class GlobalMovement : MonoBehaviour
         _actualSpeed += runAcceleration / 1.5f;
         distance += _actualSpeed * Time.deltaTime;
 
-		if (sphereFeedback == null) sphereFeedback = GameObject.Find("Speed_Feedback").GetComponent<MeshRenderer>();
 
 		if (CurrentState == VelocityState.Maximun)
         { 
@@ -113,6 +107,8 @@ public class GlobalMovement : MonoBehaviour
     
     private bool OnSlope(Transform t)
     {
+        if(t == null) return false;
+        
         RaycastHit slopeHit;
 
         if(Physics.Raycast(t.position, Vector3.down, out slopeHit, transform.localScale.x / 2 + 0.5f))

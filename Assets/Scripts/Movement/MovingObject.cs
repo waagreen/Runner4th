@@ -5,27 +5,27 @@ using MyBox;
 
 public class MovingObject : PoolingObjectReturner
 {   
-    
-    private GlobalMovement globalMove;
-    
+    private GlobalMovement globalMove => DataManager.globalMovement;
+    private Camera mainCam => globalMove.MainCamera;
+
     private float screenWidth => Screen.width;
     private Vector3 myRightEdge;
-    private float screenLeftEdge;
-    private Vector3 objectPosition => Camera.main.WorldToScreenPoint(transform.position + transform.localScale);
+    private BoxCollider myExtension;
 
-    private void Awake()
-    {
-        globalMove = GameObject.Find("-- MANAGER").GetComponent<GlobalMovement>();
-        myRightEdge = GetComponent<BoxCollider>().bounds.max;
-        screenLeftEdge = Camera.main.ScreenToWorldPoint(Vector2.zero).x;
+    private void Awake() {
+       if(myExtension == null) myExtension = GetComponent<BoxCollider>();
     }
 
     private void FixedUpdate()
     {
         transform.position += (Vector3.left * globalMove.ActualSpeed) * Time.fixedDeltaTime;
 
-        var updatedEdge = myRightEdge.x + transform.position.x + 0.5f;
-        if(updatedEdge < screenLeftEdge) gameObject.SetActive(false);
+        myRightEdge = mainCam.ScreenToViewportPoint(transform.position);
+        
+        float dist = (transform.position + transform.localScale - mainCam.transform.position).z;
+        Vector3 leftBorder = mainCam.ViewportToWorldPoint(new Vector3(0, 0, dist));
+
+        if(transform.position.x < leftBorder.x - (myExtension.size.x + 2.5f)) gameObject.SetActive(false);
     }
 
 }
