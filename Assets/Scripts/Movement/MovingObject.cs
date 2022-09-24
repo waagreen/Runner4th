@@ -21,7 +21,7 @@ public class MovingObject : PoolingObjectReturner
         transform.position += (Vector3.left * globalMove.ActualSpeed) * Time.fixedDeltaTime;
 
         float positionSquared = Mathf.Pow(objectPosition.x, 2f);
-        if(objectPosition.x < screenWidth - 4800) gameObject.SetActive(false);
+        if(objectPosition.x < screenWidth - 4800) gameObject.SetActive(false); 
     }
 
 }
