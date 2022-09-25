@@ -8,22 +8,12 @@ public class SpeedText : MonoBehaviour
     [SerializeField] private TextMeshProUGUI speedText;
     [SerializeField] private TextMeshProUGUI distanceText;
 
-    private GlobalMovement globalMovement;
-
-    private float displaySpeed;
-    private float distance;
-
-    private void Awake()
-    {
-        globalMovement = GameObject.Find("-- MANAGER").GetComponent<GlobalMovement>();
-    }
+    [SerializeField] private GlobalDataSO globalData;
 
     private void FixedUpdate()
     {
         //Sets the speed and distance text
-        Debug.Log(globalMovement.ActualSpeed);
-
-        speedText.text = $"{Mathf.Floor(globalMovement.ActualSpeed * 3.6f)}km/h";
-        distanceText.text = $"{Mathf.Floor(globalMovement.distance)} m";
+        speedText.text = $"{Mathf.Floor(globalData.ActualSpeed * 3.6f)}km/h";
+        distanceText.text = $"{Mathf.Floor(globalData.Distance)} m";
     }
 }

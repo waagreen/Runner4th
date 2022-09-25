@@ -35,18 +35,22 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Input Variables
-
-    private GlobalMovement globalMove => DataManager.globalMovement;
+    [SerializeField] private GlobalDataSO globalData;
     protected Rigidbody rb;
     protected PlayerInput inputMap;
     protected Vector3 desiredGravity;
     protected float gravity => desiredGravity.y > 0f ? inputGravity : inputGravity * 3f;
 
     #endregion
-    
-    #region Raycast Variables
 
-    private RaycastHit hit;
+    #region Events
+    public delegate void OnPlayerDeath();
+    public static event OnPlayerDeath onPlayerDeath;
+	#endregion
+
+	#region Raycast Variables
+
+	private RaycastHit hit;
     private Ray ray => new Ray(transform.position, Vector3.down);
     private const int kMaxLayers = 31;
 
@@ -66,10 +70,9 @@ public class PlayerController : MonoBehaviour
         emissionModule = particles.emission;
     }
 
-
     private void FixedUpdate()
     {
-        if(DataManager.globalMovement.CurrentState == VelocityState.Idle) DisableAndShowRestartScreen(); // TODO: implementar ciclo de morte e evento para notificar UI
+        if(DataManager.globalMovement.CurrentState == VelocityState.Idle) onPlayerDeath?.Invoke(); // TODO: implementar ciclo de morte e evento para notificar UI
         
         
         if(!isGrounded && particles.isPlaying) particles.Stop();
@@ -100,7 +103,36 @@ public class PlayerController : MonoBehaviour
         if (isGrounded && desiredGravity.y < 0f) desiredGravity.y = 0f;
         desiredGravity.y += gravity * Time.fixedDeltaTime;
         rb.velocity = desiredGravity;
+
+        //move foward
+        globalData.UpdateSpeed(globalData.OnSlope(gameObject));
     }
+
+    private void OnEnable()
+    {
+        inputMap.Enable();
+
+        inputMap.Keyboard.Jump.performed += Jump;
+        inputMap.Keyboard.Slide.started += Sliding;
+        inputMap.Keyboard.Quit.performed += Quit;
+
+        onPlayerDeath += DisablePlayer;
+        onPlayerDeath += globalData.ResetGame;
+    }
+
+    private void OnDisable()
+    {
+        inputMap.Disable();
+
+        inputMap.Keyboard.Jump.performed -= Jump;
+        inputMap.Keyboard.Slide.started -= Sliding;
+        inputMap.Keyboard.Quit.performed -= Quit;
+
+		onPlayerDeath -= DisablePlayer;
+        onPlayerDeath -= globalData.ResetGame;
+	}
+    
+    private void OnBecameInvisible() => onPlayerDeath?.Invoke();
 
     #endregion
 
@@ -129,28 +161,14 @@ public class PlayerController : MonoBehaviour
         Debug.Log("QUIT THE GAME");
     }
     
-    private void OnEnable()
-    {
-        inputMap.Enable();
 
-        inputMap.Keyboard.Jump.performed += Jump;
-        inputMap.Keyboard.Slide.started += Sliding;
-        inputMap.Keyboard.Quit.performed += Quit;
-    }
-    private void OnDisable()
-    {
-        inputMap.Disable();
+	#endregion
 
-        inputMap.Keyboard.Jump.performed -= Jump;
-        inputMap.Keyboard.Slide.started -= Sliding;
-        inputMap.Keyboard.Quit.performed -= Quit;
-    }
+	#region Check Methods
 
-    #endregion
+	
 
-    #region Check Methods
-
-    private bool CheckSlideTime()
+	private bool CheckSlideTime()
     {
         return slideInputStartTime >= inputHoldTime;
     }
@@ -170,22 +188,23 @@ public class PlayerController : MonoBehaviour
     
     private void SetStateGradient()
     {
-        int stateIndex = (int) globalMove.CurrentState;
+        int stateIndex = (int) globalData.CurrentState;
         if(stateIndex == curretStateIndex) return;
 
         switch(stateIndex)
         {
             case 0:
-                colorOverLifeTime.color = globalMove.baseStateGradient;
+                colorOverLifeTime.color = globalData.BaseStateGradient;
                 emissionModule.rateOverTime = 50f;
+                Camera.main.DOFieldOfView(40, 2f).SetEase(Ease.OutCubic);
                 break;
             case 1:
-                colorOverLifeTime.color = globalMove.highStateGradient;
+                colorOverLifeTime.color = globalData.HighStateGradient;
                 emissionModule.rateOverTime = 150f;
                 Camera.main.DOFieldOfView(45f, 2f).SetEase(Ease.OutCubic);
                 break;
             case 2:
-                colorOverLifeTime.color = globalMove.maxStateGradient;
+                colorOverLifeTime.color = globalData.MaxStateGradient;
                 emissionModule.rateOverTime = 450f;
                 Camera.main.DOFieldOfView(50f, 2f).SetEase(Ease.OutCubic);
                 break;
@@ -194,12 +213,11 @@ public class PlayerController : MonoBehaviour
         curretStateIndex = stateIndex;
     }
 
-    private void OnBecameInvisible() => DisableAndShowRestartScreen();
-
-    private void DisableAndShowRestartScreen()
+    private void DisablePlayer()
     {
+        Debug.Log("Event!");
         gameObject.SetActive(false);
-        DataManager.globalMovement.ReloadGame();
     }
+
     #endregion
 }

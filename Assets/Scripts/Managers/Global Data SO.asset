@@ -1,0 +1,113 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bd17608842516d45af8f1195a9fe08f, type: 3}
+  m_Name: Global Data SO
+  m_EditorClassIdentifier: 
+  _accelerationRate: 0.04
+  _maxRunSpeed: 15
+  _distance: 186.44284
+  _runAcceleration: 0.02828427
+  _actualSpeed: 9.928352
+  _spawnPos: {x: -12, y: 3, z: 0}
+  _playerObject: {fileID: 6977278634281835148, guid: b0ac9adfd617d654d90bf61967455700,
+    type: 3}
+  _baseStateGradient:
+    serializedVersion: 2
+    key0: {r: 0, g: 0.3679245, b: 0.033185367, a: 1}
+    key1: {r: 0.71302223, g: 1, b: 0, a: 1}
+    key2: {r: 0, g: 0.3679245, b: 0.033185367, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 65535
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  _highStateGradient:
+    serializedVersion: 2
+    key0: {r: 0, g: 1, b: 0.94956636, a: 1}
+    key1: {r: 0.03292513, g: 0, b: 1, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  _maxStateGradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 0.6931905, b: 0, a: 1}
+    key1: {r: 1, g: 0, b: 0.10514355, a: 1}
+    key2: {r: 0, g: 0, b: 0, a: 0}
+    key3: {r: 0, g: 0, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 65535
+    ctime2: 0
+    ctime3: 0
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 2
+    m_NumAlphaKeys: 2
+  SphereFeedback: {fileID: 795487115560537358, guid: 211c93c33b45d2f49b54b510bef98ac9,
+    type: 3}
+  _restartScreen: {fileID: 3739401880364562782, guid: afd69c4245dac4b46b1330fe1c51a90a,
+    type: 3}

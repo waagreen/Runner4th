@@ -4,14 +4,6 @@ using System.Runtime.ConstrainedExecution;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public enum VelocityState : int
-{ 
-    Idle = -1,
-    Base = 0,
-    High = 1, 
-    Maximun = 2, 
-}
-
 public class GlobalMovement : MonoBehaviour
 {
     [SerializeField] private GameObject gameManager;
@@ -79,6 +71,8 @@ public class GlobalMovement : MonoBehaviour
         else if (CurrentState == VelocityState.High) sphereFeedback.material.color = highStateGradient.colorKeys[1].color;
         else  if (CurrentState == VelocityState.Base) sphereFeedback.material.color = baseStateGradient.colorKeys[1].color;
     }
+
+    
     
     public VelocityState GetSpeedState()
     {
@@ -97,19 +91,9 @@ public class GlobalMovement : MonoBehaviour
     public void ReloadGame()
     {   
         // restartScreen.SetActive(false);
-        UpdateUiData();
         var currentScene = SceneManager.GetActiveScene();   
         SceneManager.LoadScene(currentScene.buildIndex);
-
-		
 	}
-    public void ShowRestartScreen() {/*//=> restartScreen?.SetActive(true) */}
-
-    public void UpdateUiData()
-    {
-        _actualSpeed = kMinSpeed;
-        distance = 0;
-    }
     
     private bool OnSlope(Transform t)
     {
