@@ -206,7 +206,7 @@ public class PlayerController : MonoBehaviour
     private void DisableAndShowRestartScreen()
     {
         gameObject.SetActive(false);
-        DataManager.GlobalMovement.ReloadGame();
+        DataManager.GlobalMovement.ShowRestartScreen();
     }
     #endregion
 }
