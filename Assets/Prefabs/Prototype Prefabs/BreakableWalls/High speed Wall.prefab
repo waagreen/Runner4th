@@ -13,10 +13,10 @@ GameObject:
   - component: {fileID: 5966980693357103280}
   - component: {fileID: 5966980693357103281}
   - component: {fileID: 5966980693357103282}
-  - component: {fileID: 5966980693357103283}
   - component: {fileID: 1120094862756962144}
+  - component: {fileID: 2157701097576791153}
   m_Layer: 0
-  m_Name: Base speed Wall
+  m_Name: High speed Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -301,7 +301,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: dc9b401e4d8f0ef4e9fa10f212c4cf3f, type: 2}
+  - {fileID: 2100000, guid: cc19f3bf8a6960a4e9aa0ded8d0e2ed6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -331,20 +331,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5966980693357103285}
   m_Mesh: {fileID: 0}
---- !u!64 &5966980693357103283
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5966980693357103285}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!114 &1120094862756962144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -358,4 +344,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDestructable: 1
-  desiredVelocity: 0
+  desiredVelocity: 1
+--- !u!65 &2157701097576791153
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5966980693357103285}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.49999976, y: 1, z: 0.9999995}
+  m_Center: {x: 0.25, y: 0.75, z: 0.5}
