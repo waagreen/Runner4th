@@ -72,7 +72,6 @@ public class PlayerController : MonoBehaviour
     {
         if(globalMove.CurrentState == VelocityState.Idle) DisableAndShowRestartScreen(); // TODO: implementar ciclo de morte e evento para notificar UI
         
-        
         if(!isGrounded && particles.isPlaying) particles.Stop();
         else if (isGrounded && particles.isStopped) particles.Play();
         SetStateGradient();

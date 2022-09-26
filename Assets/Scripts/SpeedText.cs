@@ -15,7 +15,6 @@ public class SpeedText : MonoBehaviour
     private void FixedUpdate()
     {
         //Sets the speed and distance text
-        Debug.Log(velocity);
         speedText.text = $"{Mathf.Floor(velocity * 3.6f)}km/h";
         distanceText.text = $"{Mathf.Floor(distance)} m";
     }

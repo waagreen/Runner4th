@@ -34,7 +34,6 @@ public class GlobalMovement : MonoBehaviour
     public float ActualSpeed => _actualSpeed;
    
     private float _actualSpeed = kMinSpeed;
-    private static bool wasAlreadySpawned = false;
 
     protected void FixedUpdate()
     {
@@ -73,7 +72,7 @@ public class GlobalMovement : MonoBehaviour
     public void ReduceSpeed() => _actualSpeed = _actualSpeed / 2f;
     public void ReloadGame()
     {   
-        // restartScreen.SetActive(false);
+        restartScreen.SetActive(false);
         var currentScene = SceneManager.GetActiveScene();   
         SceneManager.LoadScene(currentScene.buildIndex);
 	}
