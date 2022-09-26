@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] protected LayerMask groundLayers;
     [SerializeField] protected float jumpHeight = 2f, inputGravity = -30f;
     [HideInInspector] public bool isGrounded => Physics.CheckSphere(transform.position, .25f, groundLayers, QueryTriggerInteraction.Ignore);
-    [SerializeField] float jumpButtonGracePeriod;
+    [SerializeField] private float jumpButtonGracePeriod;
     private float? lastGroundedTime;
     private float? jumpButtonPressedTime;
 
@@ -50,6 +50,12 @@ public class PlayerController : MonoBehaviour
     private RaycastHit hit;
     private Ray ray => new Ray(transform.position, Vector3.down);
     private const int kMaxLayers = 31;
+
+    #endregion
+
+    #region Animation Varibles
+
+    [SerializeField] private Animator playerAnimation;
 
     #endregion
 
@@ -118,6 +124,8 @@ public class PlayerController : MonoBehaviour
             float lerp = Mathf.Lerp(inputGravity / 5f, inputGravity, 0.15f);
             desiredGravity.y += Mathf.Sqrt(jumpHeight * -3.0f * lerp);
 
+            playerAnimation.SetTrigger("Jump");
+
             jumpButtonPressedTime = null;
             lastGroundedTime = null;
         }
@@ -126,6 +134,7 @@ public class PlayerController : MonoBehaviour
     public void Sliding(InputAction.CallbackContext context)
     {
         doingSlide = true;
+        playerAnimation.SetTrigger("Slide");
         slideInputStartTime = 0;
         transform.localScale = new Vector3(1, reducedHeight, 1);
         CameraManager.SetNoise(ShakeMode.weak);
