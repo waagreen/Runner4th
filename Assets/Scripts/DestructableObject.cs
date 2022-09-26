@@ -5,7 +5,7 @@ using MyBox;
 
 public class DestructableObject : PoolingObjectReturner
 {
-    private GlobalMovement globalMove => DataManager.globalMovement;
+    private GlobalMovement globalMove => DataManager.GlobalMovement;
 
     public bool isDestructable = false;
     [ConditionalField(nameof(isDestructable))] public VelocityState desiredVelocity;

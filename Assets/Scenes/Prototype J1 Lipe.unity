@@ -13225,6 +13225,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 498684982}
+  - component: {fileID: 498684983}
   - component: {fileID: 498684981}
   - component: {fileID: 498684980}
   m_Layer: 0
@@ -13259,7 +13260,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 471521951}
-  mainCam: {fileID: 1024613425}
   accelerationRate: 0.04
   maxRunSpeed: 15
   sphereFeedback: {fileID: 2002236567}
@@ -13367,6 +13367,20 @@ Transform:
   m_Father: {fileID: 471521952}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &498684983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 498684979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21080225b0fdeb644ab7a523ab7eb76b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  globalMovement: {fileID: 498684981}
+  poolingMaster: {fileID: 498684980}
 --- !u!1 &504947797
 GameObject:
   m_ObjectHideFlags: 0
@@ -47061,7 +47075,7 @@ PrefabInstance:
     - target: {fileID: 6977278634281835143, guid: b0ac9adfd617d654d90bf61967455700,
         type: 3}
       propertyPath: jumpButtonGracePeriod
-      value: 0.2
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 6977278634281835144, guid: b0ac9adfd617d654d90bf61967455700,
         type: 3}

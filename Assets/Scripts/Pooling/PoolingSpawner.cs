@@ -8,7 +8,7 @@ public class PoolingSpawner : MonoBehaviour
     [SerializeField] private List<GameObject> objectsToSpawn;
 
     private float timeSinceSpawn;
-    private PoolingMaster objectPool => DataManager.masterPool;
+    private PoolingMaster objectPool => DataManager.PoolingMaster;
 
     private void Update()
     {

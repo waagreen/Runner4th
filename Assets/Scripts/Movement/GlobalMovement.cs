@@ -15,7 +15,6 @@ public enum VelocityState : int
 public class GlobalMovement : MonoBehaviour
 {
     [SerializeField] private GameObject gameManager;
-    [SerializeField] private Camera mainCam;
 
     [Header("Speed parameters")]
     [SerializeField][Range(0.01f, 1f)] private float accelerationRate;
@@ -28,7 +27,6 @@ public class GlobalMovement : MonoBehaviour
     public Gradient highStateGradient;
     public Gradient maxStateGradient;
 
-    public Camera MainCamera => mainCam; 
     public const float kMinSpeed = 2f;
     public float distance = 0;
     public VelocityState CurrentState => GetSpeedState();
@@ -37,33 +35,18 @@ public class GlobalMovement : MonoBehaviour
    
     private float _actualSpeed = kMinSpeed;
     private static bool wasAlreadySpawned = false;
-    
-    private void Start() {
-        
-        if (!wasAlreadySpawned)
-        {
-            DontDestroyOnLoad(gameManager);
-            wasAlreadySpawned = true;
-        }
-        else
-        {
-            DestroyImmediate(gameManager);
-		}
-    }
 
     protected void FixedUpdate()
     {
-        
 		//move forward
+        _actualSpeed += runAcceleration / 1.5f;
+        distance += _actualSpeed * Time.deltaTime;
+        
 		if (OnSlope(PlayerTransform))
         {
 			runAcceleration = Mathf.Sqrt((accelerationRate * 3f) * Time.fixedDeltaTime);
 		}
         else runAcceleration = Mathf.Sqrt(accelerationRate * Time.fixedDeltaTime); 
-        
-        _actualSpeed += runAcceleration / 1.5f;
-        distance += _actualSpeed * Time.deltaTime;
-
 
 		if (CurrentState == VelocityState.Maximun)
         { 
@@ -91,19 +74,10 @@ public class GlobalMovement : MonoBehaviour
     public void ReloadGame()
     {   
         // restartScreen.SetActive(false);
-        UpdateUiData();
         var currentScene = SceneManager.GetActiveScene();   
         SceneManager.LoadScene(currentScene.buildIndex);
-
-		
 	}
     public void ShowRestartScreen() {/*//=> restartScreen?.SetActive(true) */}
-
-    public void UpdateUiData()
-    {
-        _actualSpeed = kMinSpeed;
-        distance = 0;
-    }
     
     private bool OnSlope(Transform t)
     {

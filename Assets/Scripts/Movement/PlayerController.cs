@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
 
     #region Input Variables
 
-    private GlobalMovement globalMove => DataManager.globalMovement;
+    private GlobalMovement globalMove => DataManager.GlobalMovement;
     protected Rigidbody rb;
     protected PlayerInput inputMap;
     protected Vector3 desiredGravity;
@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(DataManager.globalMovement.CurrentState == VelocityState.Idle) DisableAndShowRestartScreen(); // TODO: implementar ciclo de morte e evento para notificar UI
+        if(globalMove.CurrentState == VelocityState.Idle) DisableAndShowRestartScreen(); // TODO: implementar ciclo de morte e evento para notificar UI
         
         
         if(!isGrounded && particles.isPlaying) particles.Stop();
@@ -207,7 +207,7 @@ public class PlayerController : MonoBehaviour
     private void DisableAndShowRestartScreen()
     {
         gameObject.SetActive(false);
-        DataManager.globalMovement.ReloadGame();
+        DataManager.GlobalMovement.ReloadGame();
     }
     #endregion
 }
