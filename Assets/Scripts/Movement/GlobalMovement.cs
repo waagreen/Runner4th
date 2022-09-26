@@ -76,7 +76,8 @@ public class GlobalMovement : MonoBehaviour
         var currentScene = SceneManager.GetActiveScene();   
         SceneManager.LoadScene(currentScene.buildIndex);
 	}
-    public void ShowRestartScreen() {/*//=> restartScreen?.SetActive(true) */}
+    
+    public void ShowRestartScreen() => restartScreen?.SetActive(true);
     
     private bool OnSlope(Transform t)
     {
