@@ -14,7 +14,7 @@ public enum VelocityState : int
 
 public class GlobalMovement : MonoBehaviour
 {
-    [SerializeField] private GameObject gameManager;
+    [SerializeField] private GameObject restartScreen;
 
     [Header("Speed parameters")]
     [SerializeField][Range(0.01f, 1f)] private float accelerationRate;
