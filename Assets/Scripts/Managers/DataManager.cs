@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class DataManager
+public class DataManager : Singleton<DataManager>
 {   
-    //acessa o gameObject que segura os scripts VITAIS para a fase funcionar.
-    private static GameObject levelManager = GameObject.FindGameObjectWithTag("LevelManager");
+    [SerializeField] private GlobalMovement globalMovement; 
+    [SerializeField] private PoolingMaster poolingMaster;
 
-    //managers
-    public static GlobalMovement globalMovement = levelManager.GetComponent<GlobalMovement>();
-    public static PoolingMaster masterPool = levelManager.GetComponent<PoolingMaster>();
+    public static GlobalMovement GlobalMovement => Instance.globalMovement;
+    public static PoolingMaster PoolingMaster => Instance.poolingMaster;
 }

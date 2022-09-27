@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PoolingObjectReturner : MonoBehaviour
 {
-    private PoolingMaster objectPool => DataManager.masterPool;
+    private PoolingMaster objectPool => DataManager.PoolingMaster;
 
     private void OnDisable() 
     {
