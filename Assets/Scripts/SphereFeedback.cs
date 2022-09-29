@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SphereFeedback : MonoBehaviour
 {
-	[SerializeField] private GlobalDataSO globalData;
+	private GlobalMovement globalData => DataManager.GlobalMovement;
 
 	private Renderer sphere;
 
@@ -15,8 +15,8 @@ public class SphereFeedback : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		if (globalData.CurrentState == VelocityState.Maximun) sphere.material.color = globalData.MaxStateGradient.colorKeys[1].color;
-		else if (globalData.CurrentState == VelocityState.High) sphere.material.color = globalData.HighStateGradient.colorKeys[1].color;
-		else if (globalData.CurrentState == VelocityState.Base) sphere.material.color = globalData.BaseStateGradient.colorKeys[1].color;
+		if (globalData.CurrentState == VelocityState.Maximun) sphere.material.color = globalData.maxStateGradient.colorKeys[1].color;
+		else if (globalData.CurrentState == VelocityState.High) sphere.material.color = globalData.highStateGradient.colorKeys[1].color;
+		else if (globalData.CurrentState == VelocityState.Base) sphere.material.color = globalData.baseStateGradient.colorKeys[1].color;
 	}
 }

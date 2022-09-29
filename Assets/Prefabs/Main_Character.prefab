@@ -5249,10 +5249,10 @@ MonoBehaviour:
     m_Bits: 8
   jumpHeight: 8
   inputGravity: -18
+  jumpButtonGracePeriod: 0.2
   reducedHeight: 0.35
   inputHoldTime: 0.7
   particles: {fileID: 6977278632999465985}
-  globalData: {fileID: 11400000, guid: 67f1516c2f0f512489f5fffadb4644d5, type: 2}
 --- !u!54 &6977278634281835142
 Rigidbody:
   m_ObjectHideFlags: 0
