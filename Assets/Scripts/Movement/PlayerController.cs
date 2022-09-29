@@ -189,7 +189,7 @@ public class PlayerController : MonoBehaviour
             case 1:
                 colorOverLifeTime.color = globalMove.highStateGradient;
                 emissionModule.rateOverTime = 150f;
-                Camera.main.DOFieldOfView(45f, 2f).SetEase(Ease.OutCubic);
+                Camera.main.DOFieldOfView(40f, 2f).SetEase(Ease.OutCubic);
                 break;
             case 2:
                 colorOverLifeTime.color = globalMove.maxStateGradient;
