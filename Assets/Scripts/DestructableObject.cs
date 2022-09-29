@@ -18,15 +18,10 @@ public class DestructableObject : PoolingObjectReturner
             {
 				gameObject.SetActive(false);
 			}
-            else if(other.transform.tag == "Player" && (int)desiredVelocity > (int)globalMove.CurrentState )
+            else if(other.transform.tag == "Player" && (int)desiredVelocity > (int)globalMove.CurrentState)
             {
                 globalMove.ReduceSpeed();
             }
-            
-            if(other.transform.tag == "Player" && transform.tag == "Obstacle")
-            {
-				globalMove.ReduceSpeed();
-			}
         }
     }
 }

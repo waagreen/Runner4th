@@ -10,6 +10,7 @@ public enum VelocityState : int
     Base = 0,
     High = 1, 
     Maximun = 2, 
+    Immovable = 3,
 }
 
 public class GlobalMovement : MonoBehaviour
@@ -43,7 +44,7 @@ public class GlobalMovement : MonoBehaviour
         
 		if (OnSlope(PlayerTransform))
         {
-			runAcceleration = Mathf.Sqrt((accelerationRate * 3f) * Time.fixedDeltaTime);
+			runAcceleration = Mathf.Sqrt((accelerationRate * 5f) * Time.fixedDeltaTime);
 		}
         else runAcceleration = Mathf.Sqrt(accelerationRate * Time.fixedDeltaTime); 
 

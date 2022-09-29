@@ -86,16 +86,6 @@ public class PlayerController : MonoBehaviour
             doingSlide = false;
         }
 
-        //raycast for collision
-        if (Physics.Raycast(ray, out hit, 10f))
-        {
-            Debug.DrawRay(new Vector3(transform.position.x + 0.8f, transform.position.y + 1f, transform.position.z), Vector3.down, Color.yellow); // just to see the ray
-
-            //check what layer value is hitting the player
-            LayerMask layerHit = hit.transform.gameObject.layer;
-            CheckFeedback(layerHit.value);
-        }
-
         //coyote time with jump buffer
         if(isGrounded) lastGroundedTime = Time.time;
  
@@ -157,23 +147,7 @@ public class PlayerController : MonoBehaviour
 
     #region Check Methods
 
-    private bool CheckSlideTime()
-    {
-        return slideInputStartTime >= inputHoldTime;
-    }
-
-    private void CheckFeedback(int layerHit){
-        switch(layerHit){
-            case 3:
-                //Debug.Log("TA OLHANDO PARA O CHÃO");
-                break;
-            case 6:
-                //Debug.Log("VOCÊ CONSEGUIU PULAR!!");
-                return;
-            default: 
-                break;
-        }
-    }
+    private bool CheckSlideTime() => slideInputStartTime >= inputHoldTime;
     
     private void SetStateGradient()
     {
