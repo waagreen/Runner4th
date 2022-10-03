@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
 
     #region Input Variables
 
-    private GlobalMovement globalMove => DataManager.globalMovement;
+    private GlobalMovement globalMove => DataManager.GlobalMovement;
     protected Rigidbody rb;
     protected PlayerInput inputMap;
     protected Vector3 desiredGravity;
@@ -76,8 +76,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(DataManager.globalMovement.CurrentState == VelocityState.Idle) DisableAndShowRestartScreen(); // TODO: implementar ciclo de morte e evento para notificar UI
-        
+        if(globalMove.CurrentState == VelocityState.Idle) DisableAndShowRestartScreen(); // TODO: implementar ciclo de morte e evento para notificar UI
         
         if(!isGrounded && particles.isPlaying) particles.Stop();
         else if (isGrounded && particles.isStopped) particles.Play();
@@ -91,16 +90,6 @@ public class PlayerController : MonoBehaviour
             transform.localScale = originalHeight;
             slideInputStartTime = 0;
             doingSlide = false;
-        }
-
-        //raycast for collision
-        if (Physics.Raycast(ray, out hit, 10f))
-        {
-            Debug.DrawRay(new Vector3(transform.position.x + 0.8f, transform.position.y + 1f, transform.position.z), Vector3.down, Color.yellow); // just to see the ray
-
-            //check what layer value is hitting the player
-            LayerMask layerHit = hit.transform.gameObject.layer;
-            CheckFeedback(layerHit.value);
         }
 
         //coyote time with jump buffer
@@ -167,23 +156,7 @@ public class PlayerController : MonoBehaviour
 
     #region Check Methods
 
-    private bool CheckSlideTime()
-    {
-        return slideInputStartTime >= inputHoldTime;
-    }
-
-    private void CheckFeedback(int layerHit){
-        switch(layerHit){
-            case 3:
-                //Debug.Log("TA OLHANDO PARA O CHÃO");
-                break;
-            case 6:
-                //Debug.Log("VOCÊ CONSEGUIU PULAR!!");
-                return;
-            default: 
-                break;
-        }
-    }
+    private bool CheckSlideTime() => slideInputStartTime >= inputHoldTime;
     
     private void SetStateGradient()
     {
@@ -199,7 +172,7 @@ public class PlayerController : MonoBehaviour
             case 1:
                 colorOverLifeTime.color = globalMove.highStateGradient;
                 emissionModule.rateOverTime = 150f;
-                Camera.main.DOFieldOfView(45f, 2f).SetEase(Ease.OutCubic);
+                Camera.main.DOFieldOfView(40f, 2f).SetEase(Ease.OutCubic);
                 break;
             case 2:
                 colorOverLifeTime.color = globalMove.maxStateGradient;
@@ -216,7 +189,7 @@ public class PlayerController : MonoBehaviour
     private void DisableAndShowRestartScreen()
     {
         gameObject.SetActive(false);
-        DataManager.globalMovement.ReloadGame();
+        DataManager.GlobalMovement.ShowRestartScreen();
     }
     #endregion
 }

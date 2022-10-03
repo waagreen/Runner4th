@@ -5,7 +5,7 @@ using MyBox;
 
 public class DestructableObject : PoolingObjectReturner
 {
-    private GlobalMovement globalMove => DataManager.globalMovement;
+    private GlobalMovement globalMove => DataManager.GlobalMovement;
 
     public bool isDestructable = false;
     [ConditionalField(nameof(isDestructable))] public VelocityState desiredVelocity;
@@ -18,15 +18,10 @@ public class DestructableObject : PoolingObjectReturner
             {
 				gameObject.SetActive(false);
 			}
-            else if(other.transform.tag == "Player" && (int)desiredVelocity > (int)globalMove.CurrentState )
+            else if(other.transform.tag == "Player" && (int)desiredVelocity > (int)globalMove.CurrentState)
             {
                 globalMove.ReduceSpeed();
             }
-            
-            if(other.transform.tag == "Player" && transform.tag == "Obstacle")
-            {
-				globalMove.ReduceSpeed();
-			}
         }
     }
 }
