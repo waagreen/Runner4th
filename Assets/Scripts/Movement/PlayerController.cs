@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     [Header("Jump parameters")]
     [SerializeField] protected LayerMask groundLayers;
     [SerializeField] protected float jumpHeight = 2f, inputGravity = -30f;
-    [HideInInspector] public bool isGrounded => Physics.CheckSphere(transform.position, .25f, groundLayers, QueryTriggerInteraction.Ignore);
+    [HideInInspector] public bool isGrounded => Physics.CheckSphere(new Vector3(transform.position.x, transform.position.y -.5f, transform.position.z), .4f, groundLayers, QueryTriggerInteraction.Ignore);
     [SerializeField] private float jumpButtonGracePeriod;
     private float? lastGroundedTime;
     private float? jumpButtonPressedTime;
@@ -55,7 +55,9 @@ public class PlayerController : MonoBehaviour
 
     #region Animation Varibles
 
-    [SerializeField] private Animator playerAnimation;
+    [SerializeField] private Animator playerAnim;
+
+    [SerializeField] private CapsuleCollider setHight;
 
     #endregion
 
@@ -76,7 +78,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(globalMove.CurrentState == VelocityState.Idle) DisableAndShowRestartScreen(); // TODO: implementar ciclo de morte e evento para notificar UI
+        if(DataManager.GlobalMovement.CurrentState == VelocityState.Idle) DisableAndShowRestartScreen(); // TODO: implementar ciclo de morte e evento para notificar UI
+        
         
         if(!isGrounded && particles.isPlaying) particles.Stop();
         else if (isGrounded && particles.isStopped) particles.Play();
@@ -90,6 +93,16 @@ public class PlayerController : MonoBehaviour
             transform.localScale = originalHeight;
             slideInputStartTime = 0;
             doingSlide = false;
+        }
+
+        //raycast for collision
+        if (Physics.Raycast(ray, out hit, 10f))
+        {
+            Debug.DrawRay(new Vector3(transform.position.x + 0.8f, transform.position.y + 1f, transform.position.z), Vector3.down, Color.yellow); // just to see the ray
+
+            //check what layer value is hitting the player
+            LayerMask layerHit = hit.transform.gameObject.layer;
+            CheckFeedback(layerHit.value);
         }
 
         //coyote time with jump buffer
@@ -113,7 +126,7 @@ public class PlayerController : MonoBehaviour
             float lerp = Mathf.Lerp(inputGravity / 5f, inputGravity, 0.15f);
             desiredGravity.y += Mathf.Sqrt(jumpHeight * -3.0f * lerp);
 
-            playerAnimation.SetTrigger("Jump");
+            playerAnim.SetTrigger("Jump");
 
             jumpButtonPressedTime = null;
             lastGroundedTime = null;
@@ -123,9 +136,11 @@ public class PlayerController : MonoBehaviour
     public void Sliding(InputAction.CallbackContext context)
     {
         doingSlide = true;
-        playerAnimation.SetTrigger("Slide");
+        playerAnim.SetTrigger("Slide");
         slideInputStartTime = 0;
-        transform.localScale = new Vector3(1, reducedHeight, 1);
+        setHight.bounds.SetMinMax(Vector3.one, Vector3.one * 2f);
+        Debug.Log(setHight.bounds);
+        //transform.localScale = new Vector3(1, reducedHeight, 1);
         CameraManager.SetNoise(ShakeMode.weak);
     }
 
@@ -156,7 +171,23 @@ public class PlayerController : MonoBehaviour
 
     #region Check Methods
 
-    private bool CheckSlideTime() => slideInputStartTime >= inputHoldTime;
+    private bool CheckSlideTime()
+    {
+        return slideInputStartTime >= inputHoldTime;
+    }
+
+    private void CheckFeedback(int layerHit){
+        switch(layerHit){
+            case 3:
+                //Debug.Log("TA OLHANDO PARA O CHÃO");
+                break;
+            case 6:
+                //Debug.Log("VOCÊ CONSEGUIU PULAR!!");
+                return;
+            default: 
+                break;
+        }
+    }
     
     private void SetStateGradient()
     {
@@ -172,7 +203,7 @@ public class PlayerController : MonoBehaviour
             case 1:
                 colorOverLifeTime.color = globalMove.highStateGradient;
                 emissionModule.rateOverTime = 150f;
-                Camera.main.DOFieldOfView(40f, 2f).SetEase(Ease.OutCubic);
+                Camera.main.DOFieldOfView(45f, 2f).SetEase(Ease.OutCubic);
                 break;
             case 2:
                 colorOverLifeTime.color = globalMove.maxStateGradient;
@@ -189,7 +220,7 @@ public class PlayerController : MonoBehaviour
     private void DisableAndShowRestartScreen()
     {
         gameObject.SetActive(false);
-        DataManager.GlobalMovement.ShowRestartScreen();
+        DataManager.GlobalMovement.ReloadGame();
     }
     #endregion
 }
