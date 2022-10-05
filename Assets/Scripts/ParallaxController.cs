@@ -10,11 +10,13 @@ public class ParallaxController : MonoBehaviour
     private float startX;
     private float increment;
    
-    private float speed => DataManager.GlobalMovement.ActualSpeed / 5f;
-    private float distance => DataManager.GlobalMovement.distance * -1f;
+    private float speed => DataManager.GlobalMovement.ActualSpeed * 5;
+    private List<Vector3> startPositions;
 
     void Start()
     {
+
+        startPositions = new List<Vector3>();
         layers = new Transform[transform.childCount];
         layersBounds = new float[layers.Length];
 
@@ -30,17 +32,13 @@ public class ParallaxController : MonoBehaviour
                 if(sR != null)
                 {
                     sR.sortingOrder = childCount;
-                    currentLayerWidth += sR.bounds.size.x; 
+                    currentLayerWidth += sR.bounds.size.x / 2f; 
                 }
             }
             
+            startPositions.Add(child.transform.position);
             layersBounds[childCount] = currentLayerWidth;
             childCount++;
-        }
-
-        foreach (var item in layersBounds)
-        {
-            Debug.Log(item);
         }
     }
 
@@ -51,16 +49,14 @@ public class ParallaxController : MonoBehaviour
         {
             increment = speed / layers.Length;
             
+            Vector3 startPos = startPositions[count];
+            float layerWidth = layersBounds[count]; 
+
             float multiplier = increment * count;
-            float xOffSet = distance * multiplier;
 
+            layer.localPosition += Vector3.left * multiplier * Time.deltaTime;
 
-            layer.position = new Vector3(distance + xOffSet, layer.position.y, layer.position.z);
-            if(Mathf.Abs(layer.position.x) < layersBounds[count])
-            {
-                layer.position = new Vector3(distance, layer.position.y, layer.position.z);
-                Debug.Log("GOT HERE");
-            }
+            if(layer.localPosition.x < startPos.x - layerWidth) layer.position = startPos;
 
             count++;
         }

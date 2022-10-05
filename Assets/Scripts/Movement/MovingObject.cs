@@ -11,7 +11,6 @@ public class MovingObject : PoolingObjectReturner
     private Camera principalCamera;
     private BoxCollider myExtension;
     Vector3 leftBorder;
-    private Animator test;
 
     private void Awake() {
         if(principalCamera == null) principalCamera = Camera.main;
