@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Slide parameters")]
     [SerializeField] private float reducedHeight, inputHoldTime = 2f;
-    private Vector3 originalHeight;
+    private float originalHeight;
     private float slideInputStartTime;
     private bool doingSlide = false;
 
@@ -57,7 +57,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Animator playerAnim;
 
-    [SerializeField] private CapsuleCollider setHight;
+    [SerializeField] private CapsuleCollider mCollider;
+
 
     #endregion
 
@@ -70,7 +71,7 @@ public class PlayerController : MonoBehaviour
         
         inputMap = new PlayerInput();
 
-        originalHeight = transform.localScale;
+        originalHeight = mCollider.height;
         colorOverLifeTime = particles.colorOverLifetime;
         emissionModule = particles.emission;
     }
@@ -90,7 +91,7 @@ public class PlayerController : MonoBehaviour
 
         if (doingSlide && CheckSlideTime())
         {
-            transform.localScale = originalHeight;
+            mCollider.height = originalHeight;
             slideInputStartTime = 0;
             doingSlide = false;
         }
@@ -138,8 +139,7 @@ public class PlayerController : MonoBehaviour
         doingSlide = true;
         playerAnim.SetTrigger("Slide");
         slideInputStartTime = 0;
-        setHight.bounds.SetMinMax(Vector3.one, Vector3.one * 2f);
-        Debug.Log(setHight.bounds);
+        mCollider.height /= 2f;
         //transform.localScale = new Vector3(1, reducedHeight, 1);
         CameraManager.SetNoise(ShakeMode.weak);
     }

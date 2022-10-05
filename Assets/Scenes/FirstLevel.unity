@@ -13299,10 +13299,10 @@ CapsuleCollider:
   m_Material: {fileID: 13400000, guid: 2d1b92c8292f3234baa92e29f307a81d, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5473349
-  m_Height: 2.1600316
+  m_Radius: 0.5087749
+  m_Height: 1.9837824
   m_Direction: 1
-  m_Center: {x: -0.008445524, y: 0.70001537, z: 0.06850424}
+  m_Center: {x: -0.008445524, y: 0.78814, z: 0.029944235}
 --- !u!95 &1266701171 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: ffff1d59067c74f3c81b78b959d6b542,
@@ -19668,12 +19668,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6977278634281835142, guid: b0ac9adfd617d654d90bf61967455700,
         type: 3}
+      propertyPath: m_Constraints
+      value: 122
+      objectReference: {fileID: 0}
+    - target: {fileID: 6977278634281835142, guid: b0ac9adfd617d654d90bf61967455700,
+        type: 3}
       propertyPath: m_CollisionDetection
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6977278634281835143, guid: b0ac9adfd617d654d90bf61967455700,
         type: 3}
       propertyPath: setHight
+      value: 
+      objectReference: {fileID: 1266701169}
+    - target: {fileID: 6977278634281835143, guid: b0ac9adfd617d654d90bf61967455700,
+        type: 3}
+      propertyPath: mCollider
       value: 
       objectReference: {fileID: 1266701169}
     - target: {fileID: 6977278634281835143, guid: b0ac9adfd617d654d90bf61967455700,
@@ -19724,7 +19734,7 @@ PrefabInstance:
     - target: {fileID: 6977278634281835144, guid: b0ac9adfd617d654d90bf61967455700,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.59
+      value: -0.25
       objectReference: {fileID: 0}
     - target: {fileID: 6977278634281835144, guid: b0ac9adfd617d654d90bf61967455700,
         type: 3}
