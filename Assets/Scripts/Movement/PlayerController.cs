@@ -12,11 +12,11 @@ public class PlayerController : MonoBehaviour
     [Header("Jump parameters")]
     [SerializeField] protected LayerMask groundLayers;
     [SerializeField] protected float jumpHeight = 2f, inputGravity = -30f;
-    [HideInInspector] public bool isGrounded => Physics.CheckSphere(new Vector3(transform.position.x, transform.position.y -.5f, transform.position.z), .4f, groundLayers, QueryTriggerInteraction.Ignore);
+    [HideInInspector] public bool isGrounded => Physics.CheckSphere(new Vector3(transform.position.x, transform.position.y -.5f, transform.position.z), .2f, groundLayers, QueryTriggerInteraction.Ignore);
     [SerializeField] private float inputJumpTime = 2f;
+    [SerializeField] private float jumpButtonGracePeriod;
     private float jumpInputStartTime;
     private bool isJumping = false;
-    [SerializeField] private float jumpButtonGracePeriod;
     private float? lastGroundedTime;
     private float? jumpButtonPressedTime;
 
@@ -83,7 +83,6 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         if(DataManager.GlobalMovement.CurrentState == VelocityState.Idle) DisableAndShowRestartScreen(); // TODO: implementar ciclo de morte e evento para notificar UI
-        
         
         if(!isGrounded && particles.isPlaying) particles.Stop();
         else if (isGrounded && particles.isStopped) particles.Play();
