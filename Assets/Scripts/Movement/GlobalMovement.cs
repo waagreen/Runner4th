@@ -38,9 +38,12 @@ public class GlobalMovement : MonoBehaviour
 
     protected void FixedUpdate()
     {
-		//move forward
-        _actualSpeed += runAcceleration / 1.5f;
-        distance += _actualSpeed * Time.deltaTime;
+        if(CurrentState != VelocityState.Idle)
+        {
+            //move forward
+            _actualSpeed += runAcceleration / 1.5f;
+            distance += _actualSpeed * Time.deltaTime;
+        }
         
 		if (OnSlope(PlayerTransform))
         {
@@ -70,7 +73,8 @@ public class GlobalMovement : MonoBehaviour
         return inState;
     }
 
-    public void ReduceSpeed() => _actualSpeed = _actualSpeed / 2f;
+    public void ReduceSpeed() => _actualSpeed /= 2f;
+    public void SetAsIdle() => _actualSpeed = 0f;
     
     public void ShowRestartScreen() => restartScreen?.SetActive(true);
     

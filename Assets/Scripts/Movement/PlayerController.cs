@@ -180,7 +180,8 @@ public class PlayerController : MonoBehaviour
     private void DisableAndShowRestartScreen()
     {
         gameObject.SetActive(false);
-        DataManager.GlobalMovement.ShowRestartScreen();
+        globalMove.ShowRestartScreen();
+        globalMove.SetAsIdle();
     }
     #endregion
 }
