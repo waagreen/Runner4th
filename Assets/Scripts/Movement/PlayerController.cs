@@ -218,7 +218,6 @@ public class PlayerController : MonoBehaviour
         
         globalMove.ShowRestartScreen();
         globalMove.SetAsIdle();
-        globalMove.ReloadGame();
     }
     #endregion
 }
