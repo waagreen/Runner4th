@@ -12,8 +12,11 @@ public class PlayerController : MonoBehaviour
     [Header("Jump parameters")]
     [SerializeField] protected LayerMask groundLayers;
     [SerializeField] protected float jumpHeight = 2f, inputGravity = -30f;
-    [HideInInspector] public bool isGrounded => Physics.CheckSphere(transform.position, .25f, groundLayers, QueryTriggerInteraction.Ignore);
-    [SerializeField] float jumpButtonGracePeriod;
+    [HideInInspector] public bool isGrounded => Physics.CheckSphere(new Vector3(transform.position.x, transform.position.y -.5f, transform.position.z), .4f, groundLayers, QueryTriggerInteraction.Ignore);
+    [SerializeField] private float inputJumpTime = 2f;
+    private float jumpInputStartTime;
+    private bool isJumping = false;
+    [SerializeField] private float jumpButtonGracePeriod;
     private float? lastGroundedTime;
     private float? jumpButtonPressedTime;
 
@@ -23,7 +26,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Slide parameters")]
     [SerializeField] private float reducedHeight, inputHoldTime = 2f;
-    private Vector3 originalHeight;
+    private float originalHeight;
     private float slideInputStartTime;
     private bool doingSlide = false;
 
@@ -53,6 +56,15 @@ public class PlayerController : MonoBehaviour
 
     #endregion
 
+    #region Animation Varibles
+
+    [SerializeField] private Animator playerAnim;
+
+    [SerializeField] private CapsuleCollider mCollider;
+
+
+    #endregion
+
     #region Basic Unity Methods
 
     void Awake()
@@ -62,7 +74,7 @@ public class PlayerController : MonoBehaviour
         
         inputMap = new PlayerInput();
 
-        originalHeight = transform.localScale;
+        originalHeight = mCollider.height;
         colorOverLifeTime = particles.colorOverLifetime;
         emissionModule = particles.emission;
     }
@@ -70,7 +82,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(globalMove.CurrentState == VelocityState.Idle) DisableAndShowRestartScreen(); // TODO: implementar ciclo de morte e evento para notificar UI
+        if(DataManager.GlobalMovement.CurrentState == VelocityState.Idle) DisableAndShowRestartScreen(); // TODO: implementar ciclo de morte e evento para notificar UI
+        
         
         if(!isGrounded && particles.isPlaying) particles.Stop();
         else if (isGrounded && particles.isStopped) particles.Play();
@@ -81,9 +94,19 @@ public class PlayerController : MonoBehaviour
 
         if (doingSlide && CheckSlideTime())
         {
-            transform.localScale = originalHeight;
+            mCollider.height = originalHeight;
+            playerAnim.Play("Running");
             slideInputStartTime = 0;
             doingSlide = false;
+        }
+
+        //handle jump bool
+        jumpInputStartTime += Time.deltaTime;
+
+        if(isJumping && CheckJumpTime()){
+            playerAnim.Play("Running");
+            jumpInputStartTime = 0;
+            isJumping = false;
         }
 
         //coyote time with jump buffer
@@ -107,6 +130,10 @@ public class PlayerController : MonoBehaviour
             float lerp = Mathf.Lerp(inputGravity / 5f, inputGravity, 0.15f);
             desiredGravity.y += Mathf.Sqrt(jumpHeight * -3.0f * lerp);
 
+            playerAnim.Play("Jump");
+            isJumping = true;
+            jumpInputStartTime = 0;
+
             jumpButtonPressedTime = null;
             lastGroundedTime = null;
         }
@@ -115,8 +142,9 @@ public class PlayerController : MonoBehaviour
     public void Sliding(InputAction.CallbackContext context)
     {
         doingSlide = true;
+        playerAnim.Play("Female Action Pose");
         slideInputStartTime = 0;
-        transform.localScale = new Vector3(1, reducedHeight, 1);
+        mCollider.height /= 2f;
         CameraManager.SetNoise(ShakeMode.weak);
     }
 
@@ -147,7 +175,14 @@ public class PlayerController : MonoBehaviour
 
     #region Check Methods
 
-    private bool CheckSlideTime() => slideInputStartTime >= inputHoldTime;
+    private bool CheckSlideTime()
+    {
+        return slideInputStartTime >= inputHoldTime;
+    }
+
+    private bool CheckJumpTime(){
+        return jumpInputStartTime >= inputJumpTime;
+    }
     
     private void SetStateGradient()
     {
@@ -163,7 +198,7 @@ public class PlayerController : MonoBehaviour
             case 1:
                 colorOverLifeTime.color = globalMove.highStateGradient;
                 emissionModule.rateOverTime = 150f;
-                Camera.main.DOFieldOfView(40f, 2f).SetEase(Ease.OutCubic);
+                Camera.main.DOFieldOfView(45f, 2f).SetEase(Ease.OutCubic);
                 break;
             case 2:
                 colorOverLifeTime.color = globalMove.maxStateGradient;
@@ -180,8 +215,10 @@ public class PlayerController : MonoBehaviour
     private void DisableAndShowRestartScreen()
     {
         gameObject.SetActive(false);
+        
         globalMove.ShowRestartScreen();
         globalMove.SetAsIdle();
+        globalMove.ReloadGame();
     }
     #endregion
 }
