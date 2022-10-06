@@ -13,9 +13,10 @@ public enum VelocityState : int
     Immovable = 3,
 }
 
-public class GlobalMovement : MonoBehaviour
+public class GlobalMovement : MonoBehaviour, ISaveble
 {
     [SerializeField] private GameObject restartScreen;
+    [SerializeField] private PlayerGameData gameData;
 
     [Header("Speed parameters")]
     [SerializeField][Range(0.01f, 1f)] private float accelerationRate;
@@ -28,13 +29,19 @@ public class GlobalMovement : MonoBehaviour
     public Gradient highStateGradient;
     public Gradient maxStateGradient;
 
+    public PlayerGameData GameData => gameData;
+    public VelocityState CurrentState => GetSpeedState();
     public const float kMinSpeed = 2f;
     public float distance = 0;
-    public VelocityState CurrentState => GetSpeedState();
     protected float runAcceleration = 1f;
     public float ActualSpeed => _actualSpeed;
    
     private float _actualSpeed = kMinSpeed;
+
+    private void Awake()
+    {
+        LoadJsonData(this);
+    }
 
     protected void FixedUpdate()
     {
@@ -91,4 +98,45 @@ public class GlobalMovement : MonoBehaviour
         else return false;
     }
 
+    private static void SaveJsonData(GlobalMovement gMove)
+    {
+        SaveData sd = new SaveData();
+        gMove.PopulateSaveData(sd);
+
+        if(FileManager.WriteToFile("SaveData.dat", sd.ToJson()))
+        {
+            Debug.Log("Save Succesful");
+        }
+    }
+
+    private static void LoadJsonData(GlobalMovement gMove)
+    {
+        if(FileManager.LoadFromFile("SaveData.dat", out var json))
+        {
+            SaveData sd = new SaveData();
+            sd.LoadFromJson(json);
+
+            gMove.LoadFromSaveData(sd);
+            Debug.Log("Load Succesful");
+        }
+    }
+
+    public void PopulateSaveData(SaveData a_SaveData)
+    {
+        gameData.currentBestDistance = distance;
+
+        a_SaveData.myCoins = gameData.totalCoins;
+        a_SaveData.bestDistance = gameData.currentBestDistance;
+    }
+    
+    public void LoadFromSaveData(SaveData a_SaveData)
+    {
+        gameData.totalCoins = a_SaveData.myCoins;
+        gameData.currentBestDistance = a_SaveData.bestDistance;
+    }
+
+    private void OnDestroy()
+    {
+        SaveJsonData(this);
+    }
 }

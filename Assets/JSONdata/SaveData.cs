@@ -5,12 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class SaveData
 {
-    [System.Serializable]
-    public struct PlayerWallet
-    {
-        public int myCoins;
-        public float bestDistance;
-    }
+    public int myCoins;
+    public float bestDistance;
 
     public string ToJson() => JsonUtility.ToJson(this);
 

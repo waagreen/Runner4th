@@ -10,12 +10,12 @@ public static class SaveDataManager
 
         foreach (var saveable in a_Saveables) saveable.PopulateSaveData(sd);
 
-        if (FileManager.WriteToFile("SaveData01.dat", sd.ToJson())) Debug.Log("Save Succesful");
+        if (FileManager.WriteToFile("SaveData.dat", sd.ToJson())) Debug.Log("Save Succesful");
     }
 
     public static void LoadJsonData(IEnumerable<ISaveble> a_Savables)
     {
-        if(FileManager.LoadFromFile("SaveData01.dat", out var json))
+        if(FileManager.LoadFromFile("SaveData.dat", out var json))
         {
             SaveData sd = new SaveData();
             sd.LoadFromJson(json);
