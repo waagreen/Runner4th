@@ -17,6 +17,7 @@ public class SpeedText : MonoBehaviour
     {
         bestDistance.SetText($"BEST DISTANCE: {gameData.currentBestDistance}");    
     }
+    
     private void FixedUpdate()
     {
 
