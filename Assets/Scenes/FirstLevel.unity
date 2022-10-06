@@ -19708,6 +19708,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6977278634281835143, guid: b0ac9adfd617d654d90bf61967455700,
         type: 3}
+      propertyPath: inputJumpTime
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6977278634281835143, guid: b0ac9adfd617d654d90bf61967455700,
+        type: 3}
       propertyPath: reducedHeight
       value: 0.35
       objectReference: {fileID: 0}

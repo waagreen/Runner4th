@@ -13,6 +13,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] protected LayerMask groundLayers;
     [SerializeField] protected float jumpHeight = 2f, inputGravity = -30f;
     [HideInInspector] public bool isGrounded => Physics.CheckSphere(new Vector3(transform.position.x, transform.position.y -.5f, transform.position.z), .4f, groundLayers, QueryTriggerInteraction.Ignore);
+    [SerializeField] private float inputJumpTime = 2f;
+    private float jumpInputStartTime;
+    private bool isJumping = false;
     [SerializeField] private float jumpButtonGracePeriod;
     private float? lastGroundedTime;
     private float? jumpButtonPressedTime;
@@ -92,8 +95,18 @@ public class PlayerController : MonoBehaviour
         if (doingSlide && CheckSlideTime())
         {
             mCollider.height = originalHeight;
+            playerAnim.Play("Running");
             slideInputStartTime = 0;
             doingSlide = false;
+        }
+
+        //handle jump bool
+        jumpInputStartTime += Time.deltaTime;
+
+        if(isJumping && CheckJumpTime()){
+            playerAnim.Play("Running");
+            jumpInputStartTime = 0;
+            isJumping = false;
         }
 
         //raycast for collision
@@ -127,7 +140,9 @@ public class PlayerController : MonoBehaviour
             float lerp = Mathf.Lerp(inputGravity / 5f, inputGravity, 0.15f);
             desiredGravity.y += Mathf.Sqrt(jumpHeight * -3.0f * lerp);
 
-            playerAnim.SetTrigger("Jump");
+            playerAnim.Play("Jump");
+            isJumping = true;
+            jumpInputStartTime = 0;
 
             jumpButtonPressedTime = null;
             lastGroundedTime = null;
@@ -137,7 +152,7 @@ public class PlayerController : MonoBehaviour
     public void Sliding(InputAction.CallbackContext context)
     {
         doingSlide = true;
-        playerAnim.SetTrigger("Slide");
+        playerAnim.Play("Female Action Pose");
         slideInputStartTime = 0;
         mCollider.height /= 2f;
         //transform.localScale = new Vector3(1, reducedHeight, 1);
@@ -174,6 +189,10 @@ public class PlayerController : MonoBehaviour
     private bool CheckSlideTime()
     {
         return slideInputStartTime >= inputHoldTime;
+    }
+
+    private bool CheckJumpTime(){
+        return jumpInputStartTime >= inputJumpTime;
     }
 
     private void CheckFeedback(int layerHit){
