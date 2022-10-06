@@ -71,12 +71,6 @@ public class GlobalMovement : MonoBehaviour
     }
 
     public void ReduceSpeed() => _actualSpeed = _actualSpeed / 2f;
-    public void ReloadGame()
-    {   
-        restartScreen.SetActive(false);
-        var currentScene = SceneManager.GetActiveScene();   
-        SceneManager.LoadScene(currentScene.buildIndex);
-	}
     
     public void ShowRestartScreen() => restartScreen?.SetActive(true);
     
