@@ -6,11 +6,12 @@ public class Coins : MonoBehaviour
 {
     [SerializeField] private IntValue skillPoints;
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other) 
     {
-        if(collision.gameObject.tag == "Player")
+        if(other.gameObject.tag == "Player")
         {
             skillPoints.value++;
+            gameObject.SetActive(false);
         }
     }
 }

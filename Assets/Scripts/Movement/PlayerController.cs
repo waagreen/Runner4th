@@ -7,8 +7,6 @@ using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
-    private UnityEvent deathEvent => DataManager.Loader.OnPlayerDeath;
-
     [Header("Jump parameters")]
     [SerializeField] protected LayerMask groundLayers;
     [SerializeField] protected float jumpHeight = 2f, inputGravity = -30f;
@@ -34,7 +32,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator playerAnim;
     [SerializeField] private TrailController trail;
 
-    private GlobalMovement globalMove => DataManager.GlobalMovement;
+    private UnityEvent deathEvent => DataManager.Loader.OnPlayerDeath;
     private Rigidbody rb;
     private PlayerInput inputMap;
     private Vector3 desiredGravity;
@@ -150,5 +148,9 @@ public class PlayerController : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    private void OnBecameInvisible() => deathEvent.Invoke();
+    private void OnBecameInvisible() 
+    {
+        deathEvent.Invoke();
+        Debug.Log("MORREU");
+    }
 }

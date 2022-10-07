@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 9074132547249526503}
   - component: {fileID: 1604197006261792000}
   - component: {fileID: 7472866894015572041}
-  - component: {fileID: -1459331924524632446}
   m_Layer: 0
   m_Name: Coin
   m_TagString: Untagged
@@ -94,7 +93,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7998365456041009088}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
@@ -112,17 +111,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillPoints: {fileID: 11400000, guid: 07ee025546696ac41a40827051266ece, type: 2}
---- !u!114 &-1459331924524632446
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7998365456041009088}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 159f645e10e47964086d1e4dd0084cfc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isDestructable: 1
-  desiredVelocity: 0

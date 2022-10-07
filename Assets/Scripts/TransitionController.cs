@@ -15,6 +15,10 @@ public class TransitionController : MonoBehaviour
     public Animator transition;
     public float transitionDuration;
 
+    private void Awake() {
+        OnPlayerDeath.AddListener(ShowRestartScreen);
+    }
+
     IEnumerator loadCoroutine(SceneOrder desiredScene)
     {
         transition.SetTrigger("Start");
@@ -26,8 +30,12 @@ public class TransitionController : MonoBehaviour
     public void LoadLevel(SceneOrder desiredScene) => StartCoroutine( loadCoroutine(desiredScene));
     
 
-    private void DisableAndShowRestartScreen()
+    private void ShowRestartScreen()
     {
         restartScreen.SetActive(true);
+    }
+
+    private void OnDestroy() {
+        OnPlayerDeath.RemoveListener(ShowRestartScreen);
     }
 }

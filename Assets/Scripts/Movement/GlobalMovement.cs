@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.ConstrainedExecution;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public enum VelocityState : int
 { 
@@ -19,7 +19,7 @@ public class GlobalMovement : MonoBehaviour, ISaveble
 
     [Header("Speed parameters")]
     [SerializeField][Range(0.01f, 1f)] private float accelerationRate;
-    [SerializeField][Range(10f, 300f)] protected float maxRunSpeed;
+    [SerializeField][Range(10f, 50f)] protected float maxRunSpeed;
     [SerializeField] protected Transform PlayerTransform;
 
     [Header("State Colors")]
@@ -30,29 +30,31 @@ public class GlobalMovement : MonoBehaviour, ISaveble
     
     public const float kMinSpeed = 2f;
     public float distance = 0;
-    public float CurrentSpeed => _actualSpeed;
+    public float CurrentSpeed => _currentlSpeed;
     
+    private UnityEvent deathEvent => DataManager.Loader.OnPlayerDeath;
     private float runAcceleration = 1f;
-    private float _actualSpeed = kMinSpeed;
+    private float _currentlSpeed = kMinSpeed;
 
     private void Awake()
     {
         LoadJsonData(this);
+        deathEvent.AddListener(SetSpeedToZero);
     }
 
     protected void FixedUpdate()
     {
-        if(CurrentState == VelocityState.Idle) DataManager.Loader.OnPlayerDeath.Invoke();
+        if(CurrentState == VelocityState.Idle) deathEvent.Invoke();
         else
         {
             //move forward
-            _actualSpeed += runAcceleration / 1.5f;
-            distance += _actualSpeed * Time.deltaTime;
+            _currentlSpeed += runAcceleration / 1.5f;
+            distance += _currentlSpeed * Time.deltaTime;
         }
 
         runAcceleration = OnSlope(PlayerTransform) ? Mathf.Sqrt((accelerationRate * 6f) * Time.fixedDeltaTime) : runAcceleration = Mathf.Sqrt(accelerationRate * Time.fixedDeltaTime);
 
-		if (CurrentState == VelocityState.Maximun) _actualSpeed = maxRunSpeed;
+		if (CurrentState == VelocityState.Maximun) _currentlSpeed = maxRunSpeed;
     }
     
     public VelocityState GetSpeedState()
@@ -68,7 +70,8 @@ public class GlobalMovement : MonoBehaviour, ISaveble
         return inState;
     }
 
-    public void ReduceSpeed() => _actualSpeed /= 2f;
+    private void SetSpeedToZero() => _currentlSpeed = 0f;
+    public void ReduceSpeed() => _currentlSpeed /= 2f;
     
     private bool OnSlope(Transform t)
     {
@@ -123,5 +126,6 @@ public class GlobalMovement : MonoBehaviour, ISaveble
     private void OnDestroy()
     {
         SaveJsonData(this);
+        deathEvent.RemoveListener(SetSpeedToZero);
     }
 }
