@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class Skill : MonoBehaviour
 {
-    [SerializeField] private SkillTree skillTree;
-    [SerializeField] private SkillHolder SkillHolder;
+    private SkillTree skillTree;
+    private SkillHolder skillHolder;
 
     public int id;
 
@@ -17,8 +17,11 @@ public class Skill : MonoBehaviour
 
     public int[] ConnectedSkills;
 
-    public void UpdateUI()
+    public void UpdateUI(SkillHolder skillHolder, SkillTree skillTree)
     {
+        this.skillTree = skillTree;
+        this.skillHolder = skillHolder;
+
         TitleText.text = $"{skillTree.skillLevels[id]}/{skillTree.skillCaps[id]}\n{skillTree.skillNames[id]}";
         DescriptionText.text = $"{skillTree.skillDescriptions[id]}\nCost: {skillTree.skillPoints.value}/1 SP";
 
@@ -27,8 +30,8 @@ public class Skill : MonoBehaviour
 
         foreach (var connectedSkill in ConnectedSkills)
         {
-            SkillHolder.SkillList[connectedSkill].gameObject.SetActive(skillTree.skillLevels[id] < 0);
-            SkillHolder.connectorList[connectedSkill].SetActive(skillTree.skillLevels[id] < 0);
+            skillHolder.SkillList[connectedSkill].gameObject.SetActive(skillTree.skillLevels[id] < 0);
+            skillHolder.connectorList[connectedSkill].SetActive(skillTree.skillLevels[id] < 0);
         }
     }
 
@@ -37,6 +40,6 @@ public class Skill : MonoBehaviour
         if (skillTree.skillPoints.value < 1 || skillTree.skillLevels[id] >= skillTree.skillCaps[id]) return;
         skillTree.skillPoints.value -= 1;
         skillTree.skillLevels[id]++;
-        SkillHolder.UpdateAllSkillUI();
+        skillHolder.UpdateAllSkillUI();
     }
 }

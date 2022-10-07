@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Skill Tree", menuName = "Skill Data")]
 public class SkillTree : ScriptableObject
 {
+    //DOTO: salvar pontos de skill restantes no json
     public IntValue skillPoints;
     
     public int[] skillCaps;

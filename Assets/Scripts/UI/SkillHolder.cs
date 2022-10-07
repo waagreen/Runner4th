@@ -11,11 +11,13 @@ public class SkillHolder : MonoBehaviour
 	public List<GameObject> connectorList;
 
 	
-
 	public void Start()
 	{
 		foreach (RectTransform connector in GetComponentsInChildren<RectTransform>()) connectorList.Add(connector.gameObject);
-		foreach (Skill skill in GetComponentsInChildren<Skill>()) SkillList.Add(skill);
+		foreach (Skill skill in GetComponentsInChildren<Skill>())
+		{ 
+			SkillList.Add(skill);
+		}
 
 		SkillList[0].ConnectedSkills = new int[] { 1 };
 		SkillList[1].ConnectedSkills = new int[] { 2 };
@@ -28,7 +30,7 @@ public class SkillHolder : MonoBehaviour
 	{
 		foreach (Skill skill in SkillList)
 		{
-			skill?.UpdateUI();
+			skill.UpdateUI(this, skillTree);
 		}
 	}
 }
