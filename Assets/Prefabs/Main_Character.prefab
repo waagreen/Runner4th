@@ -5096,10 +5096,10 @@ CapsuleCollider:
   m_Material: {fileID: 13400000, guid: 2d1b92c8292f3234baa92e29f307a81d, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.295992
-  m_Height: 2.3965678
+  m_Radius: 0.295
+  m_Height: 2.2
   m_Direction: 1
-  m_Center: {x: -0.010256823, y: 0.9945325, z: 0.029944235}
+  m_Center: {x: 0, y: 1.1, z: 0}
 --- !u!95 &5866666021025700458 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: ffff1d59067c74f3c81b78b959d6b542,
