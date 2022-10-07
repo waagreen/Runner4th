@@ -123,7 +123,7 @@ public class GlobalMovement : MonoBehaviour, ISaveble
 
     public void PopulateSaveData(SaveData a_SaveData)
     {
-        gameData.currentBestDistance = distance;
+        gameData.currentBestDistance = Mathf.RoundToInt(distance);
 
         a_SaveData.myCoins = gameData.totalCoins;
         a_SaveData.bestDistance = gameData.currentBestDistance;

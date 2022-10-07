@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     [Header("Jump parameters")]
     [SerializeField] protected LayerMask groundLayers;
     [SerializeField] protected float jumpHeight = 2f, inputGravity = -30f;
-    [HideInInspector] public bool isGrounded => Physics.CheckSphere(new Vector3(transform.position.x, transform.position.y -.5f, transform.position.z), .2f, groundLayers, QueryTriggerInteraction.Ignore);
+    [HideInInspector] public bool isGrounded => Physics.CheckSphere(new Vector3(transform.position.x, transform.position.y, transform.position.z), .2f, groundLayers, QueryTriggerInteraction.Ignore);
     [SerializeField] private float inputJumpTime = 2f;
     [SerializeField] private float jumpButtonGracePeriod;
     private float jumpInputStartTime;
@@ -26,9 +26,10 @@ public class PlayerController : MonoBehaviour
 
     [Header("Slide parameters")]
     [SerializeField] private float reducedHeight, inputHoldTime = 2f;
-    private float originalHeight;
     private float slideInputStartTime;
     private bool doingSlide = false;
+    private float originalColliderHeight;
+    private Vector3 originalColliderCenter;
 
     [Header("Particles")]
     [SerializeField] private ParticleSystem particles;
@@ -45,14 +46,6 @@ public class PlayerController : MonoBehaviour
     protected PlayerInput inputMap;
     protected Vector3 desiredGravity;
     protected float gravity => desiredGravity.y > 0f ? inputGravity : inputGravity * 3f;
-
-    #endregion
-    
-    #region Raycast Variables
-
-    private RaycastHit hit;
-    private Ray ray => new Ray(transform.position, Vector3.down);
-    private const int kMaxLayers = 31;
 
     #endregion
 
@@ -74,7 +67,9 @@ public class PlayerController : MonoBehaviour
         
         inputMap = new PlayerInput();
 
-        originalHeight = mCollider.height;
+        originalColliderCenter = mCollider.center;
+        originalColliderHeight = mCollider.height;
+
         colorOverLifeTime = particles.colorOverLifetime;
         emissionModule = particles.emission;
     }
@@ -93,7 +88,9 @@ public class PlayerController : MonoBehaviour
 
         if (doingSlide && CheckSlideTime())
         {
-            mCollider.height = originalHeight;
+            mCollider.center = originalColliderCenter;
+            mCollider.height = originalColliderHeight;
+
             playerAnim.Play("Running");
             slideInputStartTime = 0;
             doingSlide = false;
@@ -140,10 +137,12 @@ public class PlayerController : MonoBehaviour
 
     public void Sliding(InputAction.CallbackContext context)
     {
+        mCollider.center = new Vector3(0f, 0.3f, 0f); 
+        mCollider.height = 0.5f;
+
         doingSlide = true;
         playerAnim.Play("Female Action Pose");
         slideInputStartTime = 0;
-        mCollider.height /= 2f;
         CameraManager.SetNoise(ShakeMode.weak);
     }
 

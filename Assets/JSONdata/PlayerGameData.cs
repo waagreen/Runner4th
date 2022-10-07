@@ -10,6 +10,6 @@ public class PlayerGameData : ScriptableObject
     public int currentReservedCoins;
     public int totalCoins;
 
-    public float currentBestDistance;
+    public int currentBestDistance;
 
 }

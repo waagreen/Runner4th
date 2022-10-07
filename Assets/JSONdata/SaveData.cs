@@ -6,7 +6,7 @@ using UnityEngine;
 public class SaveData
 {
     public int myCoins;
-    public float bestDistance;
+    public int bestDistance;
 
     public string ToJson() => JsonUtility.ToJson(this);
 
