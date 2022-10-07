@@ -15,9 +15,6 @@ public enum ShakeMode
 
 public static class CameraManager
 {
-    // public static CinemachineVirtualCamera virtualCam = GameObject.FindGameObjectWithTag("MainVirtualCamera").GetComponent<CinemachineVirtualCamera>();
-    // private static CinemachineBasicMultiChannelPerlin cameraNoise = virtualCam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
-
     public static void SetNoise(ShakeMode mode)
     {
         switch (mode)
@@ -36,4 +33,6 @@ public static class CameraManager
                 return;
         }
     }
+
+    public static void SetFov(int newFOV, float duration = 2f) => Camera.main.DOFieldOfView(newFOV, duration).SetEase(Ease.OutCubic);
 }

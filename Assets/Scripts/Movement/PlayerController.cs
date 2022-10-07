@@ -3,26 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Linq;
-using DG.Tweening;
+using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
-    #region Jump Variables
+    private UnityEvent deathEvent => DataManager.Loader.OnPlayerDeath;
 
     [Header("Jump parameters")]
     [SerializeField] protected LayerMask groundLayers;
     [SerializeField] protected float jumpHeight = 2f, inputGravity = -30f;
-    [HideInInspector] public bool isGrounded => Physics.CheckSphere(new Vector3(transform.position.x, transform.position.y, transform.position.z), .2f, groundLayers, QueryTriggerInteraction.Ignore);
     [SerializeField] private float inputJumpTime = 2f;
     [SerializeField] private float jumpButtonGracePeriod;
+    
     private float jumpInputStartTime;
     private bool isJumping = false;
     private float? lastGroundedTime;
     private float? jumpButtonPressedTime;
-
-    #endregion
-
-    #region Slide Variables
+    
+    public bool isGrounded => Physics.CheckSphere(transform.position, .2f, groundLayers);
 
     [Header("Slide parameters")]
     [SerializeField] private float reducedHeight, inputHoldTime = 2f;
@@ -30,58 +28,34 @@ public class PlayerController : MonoBehaviour
     private bool doingSlide = false;
     private float originalColliderHeight;
     private Vector3 originalColliderCenter;
-
-    [Header("Particles")]
-    [SerializeField] private ParticleSystem particles;
-    private ParticleSystem.ColorOverLifetimeModule colorOverLifeTime;
-    private ParticleSystem.EmissionModule emissionModule;
-    private int curretStateIndex;
-
-    #endregion
-
-    #region Input Variables
+    [SerializeField] private CapsuleCollider mCollider;
+    
+    [Header("Animation & Particles")]
+    [SerializeField] private Animator playerAnim;
+    [SerializeField] private TrailController trail;
 
     private GlobalMovement globalMove => DataManager.GlobalMovement;
-    protected Rigidbody rb;
-    protected PlayerInput inputMap;
-    protected Vector3 desiredGravity;
-    protected float gravity => desiredGravity.y > 0f ? inputGravity : inputGravity * 3f;
+    private Rigidbody rb;
+    private PlayerInput inputMap;
+    private Vector3 desiredGravity;
+    private float gravity => desiredGravity.y > 0f ? inputGravity : inputGravity * 3f;
 
-    #endregion
-
-    #region Animation Varibles
-
-    [SerializeField] private Animator playerAnim;
-
-    [SerializeField] private CapsuleCollider mCollider;
-
-
-    #endregion
-
-    #region Basic Unity Methods
 
     void Awake()
     {
-        // playerJP = GetComponent<CharacterController>();
         rb = GetComponent<Rigidbody>();
         
         inputMap = new PlayerInput();
 
         originalColliderCenter = mCollider.center;
         originalColliderHeight = mCollider.height;
-
-        colorOverLifeTime = particles.colorOverLifetime;
-        emissionModule = particles.emission;
     }
 
 
     private void FixedUpdate()
     {
-        if(DataManager.GlobalMovement.CurrentState == VelocityState.Idle) DisableAndShowRestartScreen(); // TODO: implementar ciclo de morte e evento para notificar UI
-        
-        if(!isGrounded && particles.isPlaying) particles.Stop();
-        else if (isGrounded && particles.isStopped) particles.Play();
-        SetStateGradient();
+        if(!isGrounded && trail.IsPlaying) trail.StopEmission();
+        else if (isGrounded && trail.IsStopped) trail.StartEmission();
 
         // handle slide cooldown
         slideInputStartTime += Time.deltaTime;
@@ -114,10 +88,6 @@ public class PlayerController : MonoBehaviour
         rb.velocity = desiredGravity;
     }
 
-    #endregion
-
-    #region Input Events
-
     public void Jump(InputAction.CallbackContext context)
     {
         if(context.performed) jumpButtonPressedTime = Time.time;
@@ -145,33 +115,26 @@ public class PlayerController : MonoBehaviour
         slideInputStartTime = 0;
         CameraManager.SetNoise(ShakeMode.weak);
     }
-
-    public void Quit(InputAction.CallbackContext context)
-    {
-        Application.Quit();
-        Debug.Log("QUIT THE GAME");
-    }
     
     private void OnEnable()
     {
         inputMap.Enable();
 
+        deathEvent.AddListener(Death);
+
         inputMap.Keyboard.Jump.performed += Jump;
         inputMap.Keyboard.Slide.started += Sliding;
-        inputMap.Keyboard.Quit.performed += Quit;
     }
+    
     private void OnDisable()
     {
         inputMap.Disable();
 
+        deathEvent.RemoveListener(Death);
+
         inputMap.Keyboard.Jump.performed -= Jump;
         inputMap.Keyboard.Slide.started -= Sliding;
-        inputMap.Keyboard.Quit.performed -= Quit;
     }
-
-    #endregion
-
-    #region Check Methods
 
     private bool CheckSlideTime()
     {
@@ -182,40 +145,10 @@ public class PlayerController : MonoBehaviour
         return jumpInputStartTime >= inputJumpTime;
     }
     
-    private void SetStateGradient()
-    {
-        int stateIndex = (int) globalMove.CurrentState;
-        if(stateIndex == curretStateIndex) return;
-
-        switch(stateIndex)
-        {
-            case 0:
-                colorOverLifeTime.color = globalMove.baseStateGradient;
-                emissionModule.rateOverTime = 50f;
-                break;
-            case 1:
-                colorOverLifeTime.color = globalMove.highStateGradient;
-                emissionModule.rateOverTime = 150f;
-                Camera.main.DOFieldOfView(45f, 2f).SetEase(Ease.OutCubic);
-                break;
-            case 2:
-                colorOverLifeTime.color = globalMove.maxStateGradient;
-                emissionModule.rateOverTime = 450f;
-                Camera.main.DOFieldOfView(50f, 2f).SetEase(Ease.OutCubic);
-                break;
-        }
-
-        curretStateIndex = stateIndex;
-    }
-
-    private void OnBecameInvisible() => DisableAndShowRestartScreen();
-
-    private void DisableAndShowRestartScreen()
+    private void Death()
     {
         gameObject.SetActive(false);
-        
-        globalMove.ShowRestartScreen();
-        globalMove.SetAsIdle();
     }
-    #endregion
+
+    private void OnBecameInvisible() => deathEvent.Invoke();
 }

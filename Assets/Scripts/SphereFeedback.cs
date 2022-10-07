@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class SphereFeedback : MonoBehaviour
 {
-	private GlobalMovement globalData => DataManager.GlobalMovement;
+	private Gradient[] grads => DataManager.GlobalMovement.velocityGradients;
+	private VelocityState currentState => DataManager.GlobalMovement.CurrentState;
 
 	private Renderer sphere;
 
@@ -15,8 +16,8 @@ public class SphereFeedback : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		if (globalData.CurrentState == VelocityState.Maximun) sphere.material.color = globalData.maxStateGradient.colorKeys[1].color;
-		else if (globalData.CurrentState == VelocityState.High) sphere.material.color = globalData.highStateGradient.colorKeys[1].color;
-		else if (globalData.CurrentState == VelocityState.Base) sphere.material.color = globalData.baseStateGradient.colorKeys[1].color;
+		if (currentState == VelocityState.Maximun) sphere.material.color = grads[0].colorKeys[1].color;
+		else if (currentState == VelocityState.High) sphere.material.color = grads[1].colorKeys[1].color;
+		else if (currentState == VelocityState.Base) sphere.material.color = grads[2].colorKeys[1].color;
 	}
 }

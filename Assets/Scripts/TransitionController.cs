@@ -4,9 +4,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class TransitionController : MonoBehaviour
 {   
+    [SerializeField] private GameObject restartScreen;
+
+    public UnityEvent OnPlayerDeath = new UnityEvent();
+
     public Animator transition;
     public float transitionDuration;
 
@@ -19,4 +24,10 @@ public class TransitionController : MonoBehaviour
     }
 
     public void LoadLevel(SceneOrder desiredScene) => StartCoroutine( loadCoroutine(desiredScene));
+    
+
+    private void DisableAndShowRestartScreen()
+    {
+        restartScreen.SetActive(true);
+    }
 }

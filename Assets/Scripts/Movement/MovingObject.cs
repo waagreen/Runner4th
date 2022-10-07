@@ -6,7 +6,7 @@ using MyBox;
 [RequireComponent(typeof(BoxCollider))]
 public class MovingObject : PoolingObjectReturner
 {   
-    private float speed => DataManager.GlobalMovement.ActualSpeed;
+    private float speed => DataManager.GlobalMovement.CurrentSpeed;
     
     private Camera principalCamera;
     private BoxCollider myExtension;

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6977278632999465987}
   - component: {fileID: 6977278632999465985}
   - component: {fileID: 6977278632999465986}
+  - component: {fileID: 1064112729}
   m_Layer: 0
   m_Name: Particle System
   m_TagString: Untagged
@@ -4812,6 +4813,18 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &1064112729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6977278632999465988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08ace0c8d918dbe41912f14dfe659778, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6977278634281835148
 GameObject:
   m_ObjectHideFlags: 0
@@ -4914,9 +4927,9 @@ MonoBehaviour:
   jumpButtonGracePeriod: 0.1
   reducedHeight: 0.35
   inputHoldTime: 0.5
-  particles: {fileID: 6977278632999465985}
-  playerAnim: {fileID: 5866666021025700458}
   mCollider: {fileID: 1266701169}
+  playerAnim: {fileID: 5866666021025700458}
+  trail: {fileID: 1064112729}
 --- !u!54 &6977278634281835142
 Rigidbody:
   m_ObjectHideFlags: 0

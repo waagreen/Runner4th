@@ -15,27 +15,24 @@ public enum VelocityState : int
 
 public class GlobalMovement : MonoBehaviour, ISaveble
 {
-    [SerializeField] private GameObject restartScreen;
     [SerializeField] private PlayerGameData gameData;
 
     [Header("Speed parameters")]
     [SerializeField][Range(0.01f, 1f)] private float accelerationRate;
     [SerializeField][Range(10f, 300f)] protected float maxRunSpeed;
-    [SerializeField] protected Renderer sphereFeedback;
     [SerializeField] protected Transform PlayerTransform;
 
     [Header("State Colors")]
-    public Gradient baseStateGradient;
-    public Gradient highStateGradient;
-    public Gradient maxStateGradient;
+    public Gradient[] velocityGradients;
 
     public PlayerGameData GameData => gameData;
     public VelocityState CurrentState => GetSpeedState();
+    
     public const float kMinSpeed = 2f;
     public float distance = 0;
-    protected float runAcceleration = 1f;
-    public float ActualSpeed => _actualSpeed;
-   
+    public float CurrentSpeed => _actualSpeed;
+    
+    private float runAcceleration = 1f;
     private float _actualSpeed = kMinSpeed;
 
     private void Awake()
@@ -45,26 +42,17 @@ public class GlobalMovement : MonoBehaviour, ISaveble
 
     protected void FixedUpdate()
     {
-        if(CurrentState != VelocityState.Idle)
+        if(CurrentState == VelocityState.Idle) DataManager.Loader.OnPlayerDeath.Invoke();
+        else
         {
             //move forward
             _actualSpeed += runAcceleration / 1.5f;
             distance += _actualSpeed * Time.deltaTime;
         }
-        
-		if (OnSlope(PlayerTransform))
-        {
-			runAcceleration = Mathf.Sqrt((accelerationRate * 5f) * Time.fixedDeltaTime);
-		}
-        else runAcceleration = Mathf.Sqrt(accelerationRate * Time.fixedDeltaTime); 
 
-		if (CurrentState == VelocityState.Maximun)
-        { 
-            _actualSpeed = maxRunSpeed;
-            sphereFeedback.material.color = maxStateGradient.colorKeys[1].color;
-        }
-        else if (CurrentState == VelocityState.High) sphereFeedback.material.color = highStateGradient.colorKeys[1].color;
-        else  if (CurrentState == VelocityState.Base) sphereFeedback.material.color = baseStateGradient.colorKeys[1].color;
+        runAcceleration = OnSlope(PlayerTransform) ? Mathf.Sqrt((accelerationRate * 6f) * Time.fixedDeltaTime) : runAcceleration = Mathf.Sqrt(accelerationRate * Time.fixedDeltaTime);
+
+		if (CurrentState == VelocityState.Maximun) _actualSpeed = maxRunSpeed;
     }
     
     public VelocityState GetSpeedState()
@@ -72,18 +60,15 @@ public class GlobalMovement : MonoBehaviour, ISaveble
         //Switch btween the states of velocity
         VelocityState inState;
 
-        if(ActualSpeed >= maxRunSpeed) inState = VelocityState.Maximun;
-        else if(ActualSpeed >= maxRunSpeed / 2f) inState = VelocityState.High;
-        else if(ActualSpeed < kMinSpeed) inState = VelocityState.Idle;
+        if(CurrentSpeed >= maxRunSpeed) inState = VelocityState.Maximun;
+        else if(CurrentSpeed >= maxRunSpeed / 2f) inState = VelocityState.High;
+        else if(CurrentSpeed < kMinSpeed) inState = VelocityState.Idle;
         else inState = VelocityState.Base;
 
         return inState;
     }
 
     public void ReduceSpeed() => _actualSpeed /= 2f;
-    public void SetAsIdle() => _actualSpeed = 0f;
-    
-    public void ShowRestartScreen() => restartScreen?.SetActive(true);
     
     private bool OnSlope(Transform t)
     {
