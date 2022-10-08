@@ -414,7 +414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a8fe17c9502e4a4698c8a2ee00815fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  restartScreen: {fileID: 7304490618629145246}
+  deathScreen: {fileID: 7304490618629145246}
   OnPlayerDeath:
     m_PersistentCalls:
       m_Calls: []

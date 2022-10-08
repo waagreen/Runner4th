@@ -148,9 +148,5 @@ public class PlayerController : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    private void OnBecameInvisible() 
-    {
-        deathEvent.Invoke();
-        Debug.Log("MORREU");
-    }
+    private void OnBecameInvisible() => deathEvent.Invoke();
 }

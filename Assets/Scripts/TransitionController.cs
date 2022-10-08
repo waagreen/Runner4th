@@ -8,7 +8,7 @@ using UnityEngine.Events;
 
 public class TransitionController : MonoBehaviour
 {   
-    [SerializeField] private GameObject restartScreen;
+    [SerializeField] private GameObject deathScreen;
 
     public UnityEvent OnPlayerDeath = new UnityEvent();
 
@@ -16,7 +16,7 @@ public class TransitionController : MonoBehaviour
     public float transitionDuration;
 
     private void Awake() {
-        OnPlayerDeath.AddListener(ShowRestartScreen);
+        OnPlayerDeath.AddListener(ShowDeathScreen);
     }
 
     IEnumerator loadCoroutine(SceneOrder desiredScene)
@@ -30,12 +30,9 @@ public class TransitionController : MonoBehaviour
     public void LoadLevel(SceneOrder desiredScene) => StartCoroutine( loadCoroutine(desiredScene));
     
 
-    private void ShowRestartScreen()
-    {
-        restartScreen.SetActive(true);
-    }
+    private void ShowDeathScreen() => deathScreen.SetActive(true);
 
     private void OnDestroy() {
-        OnPlayerDeath.RemoveListener(ShowRestartScreen);
+        OnPlayerDeath.RemoveListener(ShowDeathScreen);
     }
 }

@@ -8,10 +8,7 @@ public class Coins : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) 
     {
-        if(other.gameObject.tag == "Player")
-        {
-            skillPoints.value++;
-            gameObject.SetActive(false);
-        }
+        skillPoints.value++;
+        gameObject.SetActive(false);
     }
 }
