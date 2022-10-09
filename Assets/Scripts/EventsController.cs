@@ -17,6 +17,7 @@ public class EventsController : MonoBehaviour, ISaveble
     {
         LoadJsonData(this);
         OnCollectCoin.AddListener(AddCoinOnData);
+        Debug.Log("Total Coins: " + gameplayData.TotalCoins);
     }
 
     private void AddCoinOnData(int coinsToAdd) => gameplayData.currentReservedCoins += coinsToAdd;

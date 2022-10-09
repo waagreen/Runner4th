@@ -10,7 +10,7 @@ public class UiController : MonoBehaviour
 {   
     [SerializeField] private GameObject deathScreen;
     
-    private UnityEvent deathEvent => DataManager.Events.OnPlayerDeath;
+    private UnityEvent deathEvent => DataManager.Events?.OnPlayerDeath;
     public Animator transition;
     public float transitionDuration;
 
