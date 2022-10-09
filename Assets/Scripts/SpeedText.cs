@@ -12,7 +12,7 @@ public class SpeedText : MonoBehaviour
 
     private float _velocity => DataManager.GlobalMovement.CurrentSpeed;
     private float _distance => DataManager.GlobalMovement.distance;
-    private int _bestDist => DataManager.GlobalMovement.gameplayData.currentBestDistance;
+    private int _bestDist => DataManager.GlobalMovement.gameplayData.BestDistance;
     private int _currentCoins => DataManager.Events.GameplayData.currentReservedCoins;
 
     private void Awake() 
