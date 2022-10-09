@@ -13,7 +13,7 @@ public enum VelocityState : int
     Immovable = 3,
 }
 
-public class GlobalMovement : MonoBehaviour, ISaveble
+public class GlobalMovement : MonoBehaviour
 {
 
     [Header("Speed parameters")]
@@ -37,7 +37,6 @@ public class GlobalMovement : MonoBehaviour, ISaveble
 
     private void Awake()
     {
-        LoadJsonData(this);
         deathEvent.AddListener(SetSpeedToZero);
     }
 
@@ -85,46 +84,8 @@ public class GlobalMovement : MonoBehaviour, ISaveble
         else return false;
     }
 
-    private static void SaveJsonData(GlobalMovement gMove)
-    {
-        SaveData sd = new SaveData();
-        gMove.PopulateSaveData(sd);
-
-        if(FileManager.WriteToFile("SaveData.dat", sd.ToJson()))
-        {
-            Debug.Log("Save Succesful");
-        }
-    }
-
-    private static void LoadJsonData(GlobalMovement gMove)
-    {
-        if(FileManager.LoadFromFile("SaveData.dat", out var json))
-        {
-            SaveData sd = new SaveData();
-            sd.LoadFromJson(json);
-
-            gMove.LoadFromSaveData(sd);
-            Debug.Log("Load Succesful");
-        }
-    }
-
-    public void PopulateSaveData(SaveData a_SaveData)
-    {
-        if(distance > gameplayData.currentBestDistance) gameplayData.currentBestDistance = Mathf.RoundToInt(distance);
-
-        a_SaveData.myCoins = gameplayData.totalCoins;
-        a_SaveData.bestDistance = gameplayData.currentBestDistance;
-    }
-    
-    public void LoadFromSaveData(SaveData a_SaveData)
-    {
-        gameplayData.totalCoins = a_SaveData.myCoins;
-        gameplayData.currentBestDistance = a_SaveData.bestDistance;
-    }
-
     private void OnDestroy()
     {
-        SaveJsonData(this);
         deathEvent.RemoveListener(SetSpeedToZero);
     }
 }

@@ -7,9 +7,22 @@ using UnityEngine;
 
 public class PlayerGameplayData : ScriptableObject
 {
+    public int TotalCoins => totalCoins;
     public int currentReservedCoins;
-    public int totalCoins;
+    private int totalCoins;
 
-    public int currentBestDistance;
+    public int BestDistance;
 
+
+    public void ResetAndSaveReservedCoins()
+    {
+        totalCoins += currentReservedCoins;
+        currentReservedCoins = 0;
+    }
+
+    public void SyncTotalCoins(int coinValue)
+    {
+        if(coinValue < totalCoins) return;
+        totalCoins = coinValue;
+    }
 }
