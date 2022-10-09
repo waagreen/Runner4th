@@ -13,7 +13,7 @@ public class ResetPoints : MonoBehaviour
         {
             int points = skillTree.skillLevels[i];
             skillTree.skillLevels[i] = 0;
-            skillTree.skillPoints.value += points;
+            skillTree.skillPoints += points;
         }
 
         skillHolder.UpdateAllSkillUI();

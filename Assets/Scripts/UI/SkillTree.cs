@@ -6,8 +6,9 @@ using UnityEngine;
 public class SkillTree : ScriptableObject
 {
     //DOTO: salvar pontos de skill restantes no json
-    public IntValue skillPoints;
     
+    public int skillPoints;
+
     public int[] skillCaps;
     public int[] skillLevels;
     public string[] skillNames;

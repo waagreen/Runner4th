@@ -4,11 +4,17 @@ using UnityEngine;
 
 public class Coins : MonoBehaviour
 {
-    [SerializeField] private IntValue skillPoints;
+    public int coinValue = 1;
+
+    private const string playerTag = "Player";
+    private const string addCoinMethod = "AddCoin";
 
     private void OnTriggerEnter(Collider other) 
     {
-        skillPoints.value++;
-        gameObject.SetActive(false);
+        if(other.tag == playerTag)
+        {
+            gameObject.SetActive(false);
+            DataManager.Events.OnCollectCoin.Invoke(coinValue);
+        }
     }
 }

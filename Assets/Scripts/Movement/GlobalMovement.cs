@@ -15,7 +15,6 @@ public enum VelocityState : int
 
 public class GlobalMovement : MonoBehaviour, ISaveble
 {
-    [SerializeField] private PlayerGameData gameData;
 
     [Header("Speed parameters")]
     [SerializeField][Range(0.01f, 1f)] private float accelerationRate;
@@ -25,14 +24,14 @@ public class GlobalMovement : MonoBehaviour, ISaveble
     [Header("State Colors")]
     public Gradient[] velocityGradients;
 
-    public PlayerGameData GameData => gameData;
+    public PlayerGameplayData gameplayData => DataManager.Events.GameplayData;
     public VelocityState CurrentState => GetSpeedState();
     
     public const float kMinSpeed = 2f;
     public float distance = 0;
     public float CurrentSpeed => _currentlSpeed;
     
-    private UnityEvent deathEvent => DataManager.Loader.OnPlayerDeath;
+    private UnityEvent deathEvent => DataManager.Events.OnPlayerDeath;
     private float runAcceleration = 1f;
     private float _currentlSpeed = kMinSpeed;
 
@@ -111,16 +110,16 @@ public class GlobalMovement : MonoBehaviour, ISaveble
 
     public void PopulateSaveData(SaveData a_SaveData)
     {
-        if(distance > gameData.currentBestDistance) gameData.currentBestDistance = Mathf.RoundToInt(distance);
+        if(distance > gameplayData.currentBestDistance) gameplayData.currentBestDistance = Mathf.RoundToInt(distance);
 
-        a_SaveData.myCoins = gameData.totalCoins;
-        a_SaveData.bestDistance = gameData.currentBestDistance;
+        a_SaveData.myCoins = gameplayData.totalCoins;
+        a_SaveData.bestDistance = gameplayData.currentBestDistance;
     }
     
     public void LoadFromSaveData(SaveData a_SaveData)
     {
-        gameData.totalCoins = a_SaveData.myCoins;
-        gameData.currentBestDistance = a_SaveData.bestDistance;
+        gameplayData.totalCoins = a_SaveData.myCoins;
+        gameplayData.currentBestDistance = a_SaveData.bestDistance;
     }
 
     private void OnDestroy()

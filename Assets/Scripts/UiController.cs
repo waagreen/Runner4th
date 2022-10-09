@@ -6,17 +6,16 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
-public class TransitionController : MonoBehaviour
+public class UiController : MonoBehaviour
 {   
     [SerializeField] private GameObject deathScreen;
-
-    public UnityEvent OnPlayerDeath = new UnityEvent();
-
+    
+    private UnityEvent deathEvent => DataManager.Events.OnPlayerDeath;
     public Animator transition;
     public float transitionDuration;
 
     private void Awake() {
-        OnPlayerDeath.AddListener(ShowDeathScreen);
+        deathEvent.AddListener(ShowDeathScreen);
     }
 
     IEnumerator loadCoroutine(SceneOrder desiredScene)
@@ -33,6 +32,6 @@ public class TransitionController : MonoBehaviour
     private void ShowDeathScreen() => deathScreen.SetActive(true);
 
     private void OnDestroy() {
-        OnPlayerDeath.RemoveListener(ShowDeathScreen);
+        deathEvent.RemoveListener(ShowDeathScreen);
     }
 }

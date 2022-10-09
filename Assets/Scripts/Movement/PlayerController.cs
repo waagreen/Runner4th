@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator playerAnim;
     [SerializeField] private TrailController trail;
 
-    private UnityEvent deathEvent => DataManager.Loader.OnPlayerDeath;
+    private UnityEvent deathEvent => DataManager.Events.OnPlayerDeath;
     private Rigidbody rb;
     private PlayerInput inputMap;
     private Vector3 desiredGravity;

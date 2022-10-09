@@ -249,6 +249,7 @@ GameObject:
   - component: {fileID: 5538513433596692030}
   - component: {fileID: 5538513433596692031}
   - component: {fileID: 1976457516205573360}
+  - component: {fileID: 204613497793834942}
   m_Layer: 0
   m_Name: -- MANAGER --
   m_TagString: LevelManager
@@ -287,7 +288,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   globalMovement: {fileID: 5538513433596692030}
   poolingMaster: {fileID: 5538513433596692031}
-  loader: {fileID: 1976457516205573360}
+  ui: {fileID: 1976457516205573360}
+  events: {fileID: 204613497793834942}
 --- !u!114 &5538513433596692030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,7 +302,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df052f029cdb746ad90f740a133c289e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameData: {fileID: 11400000, guid: c7473cd3504f9a74785633cb30287a5b, type: 2}
   accelerationRate: 0.04
   maxRunSpeed: 15
   PlayerTransform: {fileID: 0}
@@ -415,11 +416,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathScreen: {fileID: 7304490618629145246}
+  transition: {fileID: 3325096209014056556}
+  transitionDuration: 0.5
+--- !u!114 &204613497793834942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5538513433596692024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4953b173cef19a546bc9ced1fc0e4026, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameData: {fileID: 11400000, guid: c7473cd3504f9a74785633cb30287a5b, type: 2}
   OnPlayerDeath:
     m_PersistentCalls:
       m_Calls: []
-  transition: {fileID: 3325096209014056556}
-  transitionDuration: 0.5
+  OnCollectCoin:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5538513433624000094
 GameObject:
   m_ObjectHideFlags: 0
