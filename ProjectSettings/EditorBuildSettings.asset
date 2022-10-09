@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FirstLevel.unity
     guid: 11a698397fdbef54c974f7e55e9c15fe
+  - enabled: 1
+    path: Assets/Scenes/MenuScenes/Lab.unity
+    guid: e66f89c64fa47a34585cb3a6a8730560
   m_configObjects: {}

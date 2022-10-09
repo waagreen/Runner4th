@@ -6,6 +6,15 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
+public enum SceneOrder
+{
+    MainMenu,
+    Lab,
+    FirstLevel,
+    SecondLevel,
+    ThirdLevel,
+}
+
 public class UiController : MonoBehaviour
 {   
     [Header("UI Screens")]
