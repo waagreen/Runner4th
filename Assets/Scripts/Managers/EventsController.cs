@@ -12,7 +12,6 @@ public class EventsController : MonoBehaviour, ISaveble
 
     public PlayerGameplayData GameplayData => gameplayData; 
 
-
     private void Awake() 
     {
         LoadJsonData(this);
