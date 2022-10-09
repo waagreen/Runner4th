@@ -8,18 +8,29 @@ using UnityEngine.Events;
 
 public class UiController : MonoBehaviour
 {   
+    [Header("UI Screens")]
     [SerializeField] private GameObject deathScreen;
-    
-    private UnityEvent deathEvent => DataManager.Events?.OnPlayerDeath;
+    [SerializeField] private GameObject pauseScreen;
+
+    [Header("Trasition Stuff")]
     public Animator transition;
     public float transitionDuration;
+    
+    private UnityEvent deathEvent;
+    private UnityEvent<bool> pauseEvent;
 
-    private void Awake() {
+    private void Start() 
+    {   
+        deathEvent = DataManager.Events.OnPlayerDeath;
+        pauseEvent = DataManager.Events.OnPauseGame;
+
         deathEvent.AddListener(ShowDeathScreen);
+        pauseEvent.AddListener(ShowPauseScreen);
     }
 
     IEnumerator loadCoroutine(SceneOrder desiredScene)
     {
+        Time.timeScale = 1f;
         transition.SetTrigger("Start");
         yield return new WaitForSeconds(transitionDuration);
 
@@ -30,8 +41,5 @@ public class UiController : MonoBehaviour
     
 
     private void ShowDeathScreen() => deathScreen.SetActive(true);
-
-    private void OnDestroy() {
-        deathEvent.RemoveListener(ShowDeathScreen);
-    }
+    private void ShowPauseScreen(bool isPaused) => pauseScreen.SetActive(isPaused); 
 }

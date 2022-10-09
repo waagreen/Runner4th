@@ -10,20 +10,26 @@ public class SpeedText : MonoBehaviour
     [SerializeField] private TMP_Text bestDistance;
     [SerializeField] private TMP_Text coins;
 
-    private float _velocity => DataManager.GlobalMovement.CurrentSpeed;
-    private float _distance => DataManager.GlobalMovement.distance;
-    private int _bestDist => DataManager.GlobalMovement.gameplayData.BestDistance;
-    private int _currentCoins => DataManager.Events.GameplayData.currentReservedCoins;
-
-    private void Awake() 
+    private GlobalMovement globalMove;
+    private EventsController events;
+    
+    private void Start() 
     {
-        bestDistance.SetText($"Best distance: <b>{_bestDist}m</b>");    
+        globalMove = DataManager.GlobalMovement;
+        events = DataManager.Events;
+
+        float _bestDist = events.GameplayData.BestDistance;
+        bestDistance.SetText($"Best distance: <b>{_bestDist}m</b>");   
     }
     
     private void FixedUpdate()
     {
+        float _velocity = globalMove.CurrentSpeed;
+        float _distance = globalMove.distance;
+        int _coins = events.GameplayData.currentReservedCoins;
+
         speed.SetText($"{Mathf.Floor(_velocity * 3.6f)}km/h");
         distance.SetText($"{Mathf.Floor(_distance)} m");
-        coins.SetText($"Coins: <b>{_currentCoins}</b>");
+        coins.SetText($"Coins: <b>{_coins}</b>");
     }
 }

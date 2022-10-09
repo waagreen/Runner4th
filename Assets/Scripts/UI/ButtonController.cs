@@ -10,8 +10,7 @@ public class ButtonController : MonoBehaviour
     
     public SceneOrder desiredScene;
 
-
-    private void Awake() {
+    private void Start() {
         bt.onClick.AddListener(LoadScene);
     }
 

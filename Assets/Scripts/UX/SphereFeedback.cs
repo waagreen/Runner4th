@@ -9,7 +9,7 @@ public class SphereFeedback : MonoBehaviour
 
 	private Renderer sphere;
 
-	private void Awake()
+	private void Start()
 	{
 		sphere = GetComponent<Renderer>();
 	}

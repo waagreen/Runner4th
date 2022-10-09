@@ -24,19 +24,20 @@ public class GlobalMovement : MonoBehaviour
     [Header("State Colors")]
     public Gradient[] velocityGradients;
 
-    public PlayerGameplayData gameplayData => DataManager.Events.GameplayData;
     public VelocityState CurrentState => GetSpeedState();
     
     public const float kMinSpeed = 2f;
     public float distance = 0;
     public float CurrentSpeed => _currentlSpeed;
     
-    private UnityEvent deathEvent => DataManager.Events.OnPlayerDeath;
+    private UnityEvent deathEvent;
     private float runAcceleration = 1f;
     private float _currentlSpeed = kMinSpeed;
 
-    private void Awake()
+    private void Start()
     {
+        deathEvent = DataManager.Events.OnPlayerDeath;
+
         deathEvent.AddListener(SetSpeedToZero);
     }
 
@@ -82,10 +83,5 @@ public class GlobalMovement : MonoBehaviour
             return slopeHit.normal != Vector3.up ? true : false;
         }
         else return false;
-    }
-
-    private void OnDestroy()
-    {
-        deathEvent.RemoveListener(SetSpeedToZero);
     }
 }

@@ -32,18 +32,26 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator playerAnim;
     [SerializeField] private TrailController trail;
 
-    private UnityEvent deathEvent => DataManager.Events?.OnPlayerDeath;
+    private UnityEvent deathEvent;
     private Rigidbody rb;
     private PlayerInput inputMap;
     private Vector3 desiredGravity;
     private float gravity => desiredGravity.y > 0f ? inputGravity : inputGravity * 3f;
+    private bool pauseWasPressed = false;
 
-
-    void Awake()
-    {
-        rb = GetComponent<Rigidbody>();
-        
+    void Start()
+    {   
         inputMap = new PlayerInput();
+        inputMap.Enable();
+
+        inputMap.Keyboard.Jump.performed += Jump;
+        inputMap.Keyboard.Slide.started += Sliding;
+        inputMap.Keyboard.Pause.started += Pause;
+        
+        deathEvent = DataManager.Events.OnPlayerDeath;
+        deathEvent.AddListener(Death);
+        
+        rb = GetComponent<Rigidbody>();
 
         originalColliderCenter = mCollider.center;
         originalColliderHeight = mCollider.height;
@@ -113,26 +121,6 @@ public class PlayerController : MonoBehaviour
         slideInputStartTime = 0;
         CameraManager.SetNoise(ShakeMode.weak);
     }
-    
-    private void OnEnable()
-    {
-        inputMap.Enable();
-
-        deathEvent.AddListener(Death);
-
-        inputMap.Keyboard.Jump.performed += Jump;
-        inputMap.Keyboard.Slide.started += Sliding;
-    }
-    
-    private void OnDisable()
-    {
-        inputMap.Disable();
-
-        deathEvent.RemoveListener(Death);
-
-        inputMap.Keyboard.Jump.performed -= Jump;
-        inputMap.Keyboard.Slide.started -= Sliding;
-    }
 
     private bool CheckSlideTime()
     {
@@ -143,10 +131,25 @@ public class PlayerController : MonoBehaviour
         return jumpInputStartTime >= inputJumpTime;
     }
     
-    private void Death()
-    {
-        gameObject.SetActive(false);
+    private void Death() => gameObject.SetActive(false);
+    
+    private void Pause(InputAction.CallbackContext context)
+    { 
+        pauseWasPressed = pauseWasPressed ? false : true ;
+        DataManager.Events.OnPauseGame.Invoke(pauseWasPressed);
     }
 
     private void OnBecameInvisible() => deathEvent.Invoke();
+    
+    private void OnDestroy()
+    {
+        if(inputMap != null)
+        {
+            inputMap.Disable();
+
+            inputMap.Keyboard.Jump.performed -= Jump;
+            inputMap.Keyboard.Slide.started -= Sliding;
+            inputMap.Keyboard.Pause.started -= Pause;
+        }
+    }
 }

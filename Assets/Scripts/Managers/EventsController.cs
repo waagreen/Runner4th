@@ -7,19 +7,27 @@ public class EventsController : MonoBehaviour, ISaveble
 {
     [SerializeField] private PlayerGameplayData gameplayData;
 
-    [HideInInspector] public UnityEvent OnPlayerDeath = new UnityEvent();
-    [HideInInspector] public UnityEvent<int> OnCollectCoin = new UnityEvent<int>();
+    [HideInInspector] public UnityEvent OnPlayerDeath;
+    [HideInInspector] public UnityEvent<int> OnCollectCoin;
+    [HideInInspector] public UnityEvent<bool> OnPauseGame;
 
     public PlayerGameplayData GameplayData => gameplayData; 
 
     private void Awake() 
     {
+        OnPlayerDeath = new UnityEvent();
+        OnCollectCoin = new UnityEvent<int>();
+        OnPauseGame = new UnityEvent<bool>();
+
         LoadJsonData(this);
+    
         OnCollectCoin.AddListener(AddCoinOnData);
-        Debug.Log("Total Coins: " + gameplayData.TotalCoins);
+        OnPauseGame.AddListener(FreezeTime);
     }
 
     private void AddCoinOnData(int coinsToAdd) => gameplayData.currentReservedCoins += coinsToAdd;
+
+    private void FreezeTime(bool shouldFreeze) => Time.timeScale = shouldFreeze ? 0f : 1f;
 
     private static void SaveJsonData(EventsController eController)
     {
@@ -67,6 +75,9 @@ public class EventsController : MonoBehaviour, ISaveble
     private void OnDestroy() 
     {
         SaveJsonData(this);
-        OnCollectCoin.RemoveListener(AddCoinOnData);
+
+        OnCollectCoin.RemoveAllListeners();
+        OnPauseGame.RemoveAllListeners();
+        OnPlayerDeath.RemoveAllListeners();
     }
 }

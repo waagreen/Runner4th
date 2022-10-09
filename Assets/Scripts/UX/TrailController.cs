@@ -15,7 +15,7 @@ public class TrailController : MonoBehaviour
     private Gradient[] grads => DataManager.GlobalMovement.velocityGradients;
     private int currentStateIndex;
    
-    private void Awake()
+    private void Start()
     {
         particles = GetComponent<ParticleSystem>();
 

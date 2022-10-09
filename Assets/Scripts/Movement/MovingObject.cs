@@ -12,7 +12,7 @@ public class MovingObject : PoolingObjectReturner
     private BoxCollider myExtension;
     Vector3 leftBorder;
 
-    private void Awake() {
+    private void Start() {
         if(principalCamera == null) principalCamera = Camera.main;
         if(myExtension == null) myExtension = GetComponent<BoxCollider>();
         
