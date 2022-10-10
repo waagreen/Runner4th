@@ -12,6 +12,7 @@ public class EventsController : MonoBehaviour, ISaveble
     [HideInInspector] public UnityEvent<bool> OnPauseGame;
 
     public PlayerGameplayData GameplayData => gameplayData; 
+    private bool pauseWasPressed = false;
 
     private void Awake() 
     {
@@ -70,6 +71,13 @@ public class EventsController : MonoBehaviour, ISaveble
     {
         gameplayData.SyncTotalCoins(a_SaveData.myCoins);
         gameplayData.BestDistance = a_SaveData.bestDistance;
+    }
+
+    public void HandlePause()
+    {
+        pauseWasPressed = pauseWasPressed ? false : true ;
+        Debug.Log("PAUSED: " + pauseWasPressed);
+        DataManager.Events.OnPauseGame.Invoke(pauseWasPressed);
     }
 
     private void OnDestroy() 

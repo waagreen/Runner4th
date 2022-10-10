@@ -37,7 +37,6 @@ public class PlayerController : MonoBehaviour
     private PlayerInput inputMap;
     private Vector3 desiredGravity;
     private float gravity => desiredGravity.y > 0f ? inputGravity : inputGravity * 3f;
-    private bool pauseWasPressed = false;
 
     void Start()
     {   
@@ -133,11 +132,7 @@ public class PlayerController : MonoBehaviour
     
     private void Death() => gameObject.SetActive(false);
     
-    private void Pause(InputAction.CallbackContext context)
-    { 
-        pauseWasPressed = pauseWasPressed ? false : true ;
-        DataManager.Events.OnPauseGame.Invoke(pauseWasPressed);
-    }
+    private void Pause(InputAction.CallbackContext context) => DataManager.Events.HandlePause();
 
     private void OnBecameInvisible() => deathEvent.Invoke();
     

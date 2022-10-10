@@ -827,7 +827,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bt: {fileID: 507983496}
-  desiredScene: 1
+  desiredScene: 2
 --- !u!1 &615771356
 GameObject:
   m_ObjectHideFlags: 0

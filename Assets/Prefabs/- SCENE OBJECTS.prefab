@@ -147,7 +147,6 @@ GameObject:
   - component: {fileID: 5077935623894543452}
   - component: {fileID: 6760136767312428109}
   - component: {fileID: 7542720422830688425}
-  - component: {fileID: 8988448851824213947}
   m_Layer: 5
   m_Name: RestartButton
   m_TagString: Untagged
@@ -258,20 +257,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &8988448851824213947
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 357702466113886302}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d665c9f0a256b4942a788f16aed2cb00, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bt: {fileID: 7542720422830688425}
-  desiredScene: 1
 --- !u!1 &1113970992274351605
 GameObject:
   m_ObjectHideFlags: 0
@@ -1095,6 +1080,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1960222099510341429}
+  - component: {fileID: 477579266964449537}
   m_Layer: 5
   m_Name: PauseScreen
   m_TagString: RestartScreen
@@ -1125,6 +1111,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &477579266964449537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3996815366148194535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcff0a8f40b296b4ab2caf6d3000b27e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resumeButton: {fileID: 7542720422830688425}
 --- !u!1 &5362511340846940461
 GameObject:
   m_ObjectHideFlags: 0
@@ -3186,6 +3185,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7304490618629145247}
+  - component: {fileID: 7089353752469019177}
   m_Layer: 5
   m_Name: RestartScreen
   m_TagString: RestartScreen
@@ -3216,6 +3216,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7089353752469019177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7304490618629145246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ac67ad7a7cf23f4fb96638773a03b25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7304490619165623593
 GameObject:
   m_ObjectHideFlags: 0

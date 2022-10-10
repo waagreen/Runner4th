@@ -21701,6 +21701,16 @@ PrefabInstance:
       propertyPath: PlayerTransform
       value: 
       objectReference: {fileID: 2002236566}
+    - target: {fileID: 7157282451831429862, guid: a1a7c8b1c3dd3434f827b58323c528f1,
+        type: 3}
+      propertyPath: desiredScene
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8988448851824213947, guid: a1a7c8b1c3dd3434f827b58323c528f1,
+        type: 3}
+      propertyPath: desiredScene
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a1a7c8b1c3dd3434f827b58323c528f1, type: 3}
 --- !u!1001 &5920937453409929273

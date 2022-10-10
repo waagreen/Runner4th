@@ -5,16 +5,16 @@ using UnityEngine.UI;
 
 public class PauseScreen : MonoBehaviour
 {
-    [SerializeField] private Button ResumeButton;
-    // Start is called before the first frame update
+    [SerializeField] private Button resumeButton;
+
+
     void Start()
     {
-        
+        resumeButton.onClick.AddListener(DataManager.Events.HandlePause);
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnDestroy() 
     {
-        
+        resumeButton.onClick.RemoveListener(DataManager.Events.HandlePause);
     }
 }
