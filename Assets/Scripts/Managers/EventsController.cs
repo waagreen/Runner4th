@@ -65,6 +65,7 @@ public class EventsController : MonoBehaviour, ISaveble
             gameplayData.BestDistance = Mathf.RoundToInt(distance);
             a_SaveData.bestDistance = gameplayData.BestDistance;
         }
+        else a_SaveData.bestDistance = gameplayData.BestDistance;
     }
     
     public void LoadFromSaveData(SaveData a_SaveData)
@@ -76,7 +77,6 @@ public class EventsController : MonoBehaviour, ISaveble
     public void HandlePause()
     {
         pauseWasPressed = pauseWasPressed ? false : true ;
-        Debug.Log("PAUSED: " + pauseWasPressed);
         DataManager.Events.OnPauseGame.Invoke(pauseWasPressed);
     }
 

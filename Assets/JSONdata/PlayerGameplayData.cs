@@ -4,7 +4,6 @@ using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "PlayerGameData", menuName = "UntitledEndlessRunner/PlayerGameData", order = 0)]
-
 public class PlayerGameplayData : ScriptableObject
 {
     public int TotalCoins => totalCoins;
@@ -12,7 +11,6 @@ public class PlayerGameplayData : ScriptableObject
     private int totalCoins;
 
     public int BestDistance;
-
 
     public void ResetAndSaveReservedCoins()
     {

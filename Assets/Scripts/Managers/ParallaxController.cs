@@ -10,7 +10,7 @@ public class ParallaxController : MonoBehaviour
     private float startX;
     private float increment;
    
-    private float speed => DataManager.GlobalMovement.CurrentSpeed * 5;
+    private float speed => DataManager.GlobalMovement.CurrentSpeed;
     private List<Vector3> startPositions;
 
     void Start()
