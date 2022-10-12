@@ -7,7 +7,6 @@ public class Coins : MonoBehaviour
     public int coinValue = 1;
 
     private const string playerTag = "Player";
-    private const string addCoinMethod = "AddCoin";
 
     private void OnTriggerEnter(Collider other) 
     {

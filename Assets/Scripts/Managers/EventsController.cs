@@ -10,6 +10,8 @@ public class EventsController : MonoBehaviour, ISaveble
     [HideInInspector] public UnityEvent OnPlayerDeath;
     [HideInInspector] public UnityEvent<int> OnCollectCoin;
     [HideInInspector] public UnityEvent<bool> OnPauseGame;
+    [HideInInspector] public UnityEvent<float> OnSkillBuy;
+    [HideInInspector] public UnityEvent OnCoinsSpend;
 
     public PlayerGameplayData GameplayData => gameplayData; 
     private bool pauseWasPressed = false;
@@ -19,6 +21,8 @@ public class EventsController : MonoBehaviour, ISaveble
         OnPlayerDeath = new UnityEvent();
         OnCollectCoin = new UnityEvent<int>();
         OnPauseGame = new UnityEvent<bool>();
+        OnSkillBuy = new UnityEvent<float>();
+        OnCoinsSpend = new UnityEvent();
 
         LoadJsonData(this);
     
@@ -79,7 +83,7 @@ public class EventsController : MonoBehaviour, ISaveble
         pauseWasPressed = pauseWasPressed ? false : true ;
         DataManager.Events.OnPauseGame.Invoke(pauseWasPressed);
     }
-
+    
     private void OnDestroy() 
     {
         SaveJsonData(this);
@@ -87,5 +91,7 @@ public class EventsController : MonoBehaviour, ISaveble
         OnCollectCoin.RemoveAllListeners();
         OnPauseGame.RemoveAllListeners();
         OnPlayerDeath.RemoveAllListeners();
+        OnSkillBuy.RemoveAllListeners();
+        OnCoinsSpend.RemoveAllListeners();
     }
 }
