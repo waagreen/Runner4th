@@ -61,8 +61,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(!isGrounded && trail.IsPlaying) trail.StopEmission();
-        else if (isGrounded && trail.IsStopped) trail.StartEmission();
+        trail.ControlEmission(isGrounded);
+        if(isGrounded && !cAudio.isPlaying) cAudio.PlaySound(SoundType.running);
 
         // handle slide cooldown
         slideInputStartTime += Time.deltaTime;

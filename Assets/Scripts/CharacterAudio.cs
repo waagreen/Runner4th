@@ -13,6 +13,8 @@ public enum SoundType
 [RequireComponent(typeof(AudioSource))]
 public class CharacterAudio : MonoBehaviour
 {
+    public bool isPlaying => audioPlayer.isPlaying;
+
     public List<AudioClip> collisionSounds = new List<AudioClip>();
     public List<AudioClip> runningSounds = new List<AudioClip>();
     public List<AudioClip> jumpSounds = new List<AudioClip>();

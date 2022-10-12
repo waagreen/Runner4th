@@ -51,6 +51,9 @@ public class TrailController : MonoBehaviour
         currentStateIndex = stateIndex;
     }
 
-    public void StartEmission() => particles.Play();
-    public void StopEmission() => particles.Stop();
+    public void ControlEmission(bool isGrounded)
+    {
+        if(isGrounded && IsStopped) particles.Play();
+        else if(!isGrounded && IsPlaying) particles.Stop();
+    }
 }
