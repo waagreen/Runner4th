@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     [Header("Animation & Particles")]
     [SerializeField] private Animator playerAnim;
     [SerializeField] private TrailController trail;
+    [SerializeField] private CharacterAudio cAudio;
 
     private UnityEvent deathEvent;
     private Rigidbody rb;
@@ -108,6 +109,8 @@ public class PlayerController : MonoBehaviour
 
             jumpButtonPressedTime = null;
             lastGroundedTime = null;
+            
+            cAudio.PlaySound(SoundType.jump);
         }
     }
 
@@ -120,6 +123,7 @@ public class PlayerController : MonoBehaviour
         playerAnim.Play("Female Action Pose");
         slideInputStartTime = 0;
         CameraManager.SetNoise(ShakeMode.weak);
+        cAudio.PlaySound(SoundType.slide);
     }
 
     private bool CheckSlideTime()
@@ -137,6 +141,10 @@ public class PlayerController : MonoBehaviour
 
     private void OnBecameInvisible() => deathEvent.Invoke();
     
+    private void OnCollisionEnter(Collision other) {
+        if(other.transform.tag == "Obstacle") cAudio.PlaySound(SoundType.collision);    
+    }
+
     private void OnDestroy()
     {
         if(inputMap != null)

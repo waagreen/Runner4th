@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Button))]
+[RequireComponent(typeof(Button), typeof(AudioSource))]
 public class ButtonController : MonoBehaviour
 {
     [SerializeField] private Button bt;
