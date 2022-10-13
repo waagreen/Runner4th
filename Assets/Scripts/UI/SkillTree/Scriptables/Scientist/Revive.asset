@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 2
   icon: {fileID: 21300000, guid: d112dc9a938ea094896aee6a8fe3c7c1, type: 3}
-  title: generic skill
+  title: Life stabilizer
   description: Come back from the dead. Grants one charge per level.
   cost: 500
   currentLevel: 1

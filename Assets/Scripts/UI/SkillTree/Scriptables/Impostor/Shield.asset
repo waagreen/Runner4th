@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 5
   icon: {fileID: 21300000, guid: 4c10c845d70209e44bff6a4ae96e0644, type: 3}
-  title: generic skill
+  title: Force shield
   description: 'You can break through an a obstacle even if you don''t have the necessary
     speed. Grants one charge per level. '
   cost: 500

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   icon: {fileID: 21300000, guid: 0520efb5f02d9924bb086559f77c60ff, type: 3}
-  title: generic skill
+  title: Acceleration boost
   description: Break the acceleration limits! Each level increases your max acceleration.
   cost: 250
   currentLevel: 0

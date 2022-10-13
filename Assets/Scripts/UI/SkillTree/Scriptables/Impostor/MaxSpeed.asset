@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 4
   icon: {fileID: 21300000, guid: cc08a2cd97067a64389e181fc5c5544f, type: 3}
-  title: generic skill
+  title: Speed boost
   description: Break the speed limits! Each level increases your max speed.
   cost: 250
   currentLevel: 0
