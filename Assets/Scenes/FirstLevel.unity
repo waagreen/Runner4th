@@ -21826,9 +21826,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5538513433596692030, guid: a1a7c8b1c3dd3434f827b58323c528f1,
         type: 3}
+      propertyPath: maxRunSpeed
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5538513433596692030, guid: a1a7c8b1c3dd3434f827b58323c528f1,
+        type: 3}
       propertyPath: PlayerTransform
       value: 
       objectReference: {fileID: 2002236566}
+    - target: {fileID: 5538513433596692030, guid: a1a7c8b1c3dd3434f827b58323c528f1,
+        type: 3}
+      propertyPath: accelerationRate
+      value: 0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 7157282451831429862, guid: a1a7c8b1c3dd3434f827b58323c528f1,
         type: 3}
       propertyPath: desiredScene
