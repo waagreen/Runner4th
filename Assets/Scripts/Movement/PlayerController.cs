@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
     private PlayerInput inputMap;
     private Vector3 desiredGravity;
     private float gravity => desiredGravity.y > 0f ? inputGravity : inputGravity * 3f;
+    private bool isDead = false;
 
     void Start()
     {   
@@ -135,9 +136,17 @@ public class PlayerController : MonoBehaviour
         return jumpInputStartTime >= inputJumpTime;
     }
     
-    private void Death() => gameObject.SetActive(false);
+    private void Death()
+    {
+        isDead = true;
+        gameObject.SetActive(false);
+    }
     
-    private void Pause(InputAction.CallbackContext context) => DataManager.Events.HandlePause();
+    private void Pause(InputAction.CallbackContext context)
+    {
+        if(isDead) return;
+        DataManager.Events.HandlePause();
+    }
 
     private void OnBecameInvisible() => deathEvent.Invoke();
     
