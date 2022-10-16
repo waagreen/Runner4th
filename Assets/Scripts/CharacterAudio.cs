@@ -7,7 +7,7 @@ public enum SoundType
     collision,
     running,
     jump,
-    slide
+    slide,
 }
 
 [RequireComponent(typeof(AudioSource))]

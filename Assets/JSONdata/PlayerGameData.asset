@@ -13,6 +13,4 @@ MonoBehaviour:
   m_Name: PlayerGameData
   m_EditorClassIdentifier: 
   currentReservedCoins: 0
-  totaCoins: 0
-  currentBestDistance: 0
-  allTimeBestDistance: 0
+  BestDistance: 0

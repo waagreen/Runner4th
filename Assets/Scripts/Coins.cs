@@ -1,19 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading.Tasks;
 
 public class Coins : MonoBehaviour
 {
-    public int coinValue = 1;
+    public AudioSource audioScr;
 
+    public int coinValue = 1;
     private const string playerTag = "Player";
 
-    private void OnTriggerEnter(Collider other) 
+    private async void OnTriggerEnter(Collider other) 
     {
         if(other.tag == playerTag)
         {
-            gameObject.SetActive(false);
+            audioScr.Play();
             DataManager.Events.OnCollectCoin.Invoke(coinValue);
+            await Task.Delay(150);
+            gameObject.SetActive(false);
         }
     }
 }
