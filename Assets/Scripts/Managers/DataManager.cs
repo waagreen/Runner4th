@@ -15,4 +15,6 @@ public class DataManager : Singleton<DataManager>
     public static EventsController Events => Instance.events;
 
     public static bool isGameplay => UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex > 1;
+    
+    public const string playerTag = "Player";
 }

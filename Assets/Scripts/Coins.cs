@@ -8,15 +8,14 @@ public class Coins : MonoBehaviour
     public AudioSource audioScr;
 
     public int coinValue = 1;
-    private const string playerTag = "Player";
 
     private async void OnTriggerEnter(Collider other) 
     {
-        if(other.tag == playerTag)
+        if(other.tag == DataManager.playerTag)
         {
             audioScr.Play();
             DataManager.Events.OnCollectCoin.Invoke(coinValue);
-            await Task.Delay(150);
+            await Task.Delay(115);
             gameObject.SetActive(false);
         }
     }
