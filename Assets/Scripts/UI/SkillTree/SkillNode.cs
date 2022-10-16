@@ -29,6 +29,7 @@ public class SkillNode : MonoBehaviour
     private void Start() {
         SetupNode();
         nodeBt.onClick.AddListener(Buy);
+        events.OnCoinsSpend.AddListener(UpdateNode);
     }
 
     public void SetupNode()

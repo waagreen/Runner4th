@@ -36,22 +36,25 @@ public class GlobalMovement : MonoBehaviour
 
     private void Start()
     {
-        deathEvent = DataManager.Events.OnPlayerDeath;
+        if(!DataManager.isGameplay) return;
 
+        deathEvent = DataManager.Events.OnPlayerDeath;
         deathEvent.AddListener(SetSpeedToZero);
     }
 
     protected void FixedUpdate()
     {
+        if(!DataManager.isGameplay) return;
+
         if(CurrentState == VelocityState.Idle) deathEvent.Invoke();
         else
         {
             //move forward
-            _currentlSpeed += runAcceleration / 1.5f;
+            _currentlSpeed += runAcceleration / 3f;
             distance += _currentlSpeed * Time.deltaTime;
         }
 
-        runAcceleration = OnSlope(PlayerTransform) ? Mathf.Sqrt((accelerationRate * 6f) * Time.fixedDeltaTime) : runAcceleration = Mathf.Sqrt(accelerationRate * Time.fixedDeltaTime);
+        runAcceleration = OnSlope(PlayerTransform) ? Mathf.Sqrt((accelerationRate * 10f) * Time.fixedDeltaTime) : runAcceleration = Mathf.Sqrt(accelerationRate * Time.fixedDeltaTime);
 
 		if (CurrentState == VelocityState.Maximun) _currentlSpeed = maxRunSpeed;
     }
