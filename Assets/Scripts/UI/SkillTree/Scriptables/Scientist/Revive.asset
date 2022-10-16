@@ -17,6 +17,6 @@ MonoBehaviour:
   title: Life stabilizer
   description: Come back from the dead. Grants one charge per level.
   cost: 500
-  currentLevel: 1
+  currentLevel: 0
   mxLevel: 2
   increaseAmount: 1

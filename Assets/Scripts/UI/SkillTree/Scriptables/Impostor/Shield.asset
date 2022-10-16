@@ -18,6 +18,6 @@ MonoBehaviour:
   description: 'You can break through an a obstacle even if you don''t have the necessary
     speed. Grants one charge per level. '
   cost: 500
-  currentLevel: 1
+  currentLevel: 0
   mxLevel: 2
   increaseAmount: 1
