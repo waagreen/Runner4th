@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8756466646344184373}
-  - component: {fileID: 263372503406378738}
   m_Layer: 3
   m_Name: Ground
   m_TagString: Untagged
@@ -33,19 +32,6 @@ Transform:
   m_Father: {fileID: 3846281080464223835}
   m_RootOrder: 40
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &263372503406378738
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 778556734080767055}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 28, y: 5, z: 2}
-  m_Center: {x: -5, y: -2.5, z: 1}
 --- !u!1 &3292452677037153498
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,7 +464,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2023075381075600568}
-  - component: {fileID: 2798425603317338042}
   m_Layer: 3
   m_Name: Plataforma
   m_TagString: Untagged
@@ -503,19 +488,6 @@ Transform:
   m_Father: {fileID: 3846281080464223835}
   m_RootOrder: 41
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &2798425603317338042
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7898525172862807102}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 28, y: 5, z: 2}
-  m_Center: {x: -5, y: -2.5, z: 1}
 --- !u!1 &8628897157142103771
 GameObject:
   m_ObjectHideFlags: 0
