@@ -12,7 +12,7 @@ public class EnemiePlataform : MonoBehaviour
     void Awake() => currentPosition = transform.position;
 
     void Update(){
-        transform.position = new Vector3(currentPosition.x, Mathf.Sin(Time.deltaTime * frequency) * amplification + currentPosition.y, currentPosition.z);
+        transform.position = new Vector3(currentPosition.x, Mathf.Sin(Time.time * frequency) * amplification + currentPosition.y, currentPosition.z);
     }
     
 }
