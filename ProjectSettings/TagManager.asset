@@ -9,6 +9,7 @@ TagManager:
   - Feedback
   - Obstacle
   - RestartScreen
+  - Target
   layers:
   - Default
   - TransparentFX
