@@ -7,7 +7,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public class SkillNode : MonoBehaviour
 {
-    private EventsController events => DataManager.Events;
+    private EventsController events;
     int currentCoins => events.GameplayData.TotalCoins;
 
     [SerializeField] private Skill skill;
@@ -26,7 +26,10 @@ public class SkillNode : MonoBehaviour
     public Color32 impostorColor;
     public Color32 scientistColor;
 
-    private void Start() {
+    private void Start() 
+    {
+        events = DataManager.Events;
+
         SetupNode();
         nodeBt.onClick.AddListener(Buy);
         events.OnCoinsSpend.AddListener(UpdateNode);
