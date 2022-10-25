@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 1422883704385245208}
   - component: {fileID: 6804149899900462659}
   - component: {fileID: 6741430319665747793}
+  - component: {fileID: 1568401313}
+  - component: {fileID: 1568401314}
   m_Layer: 0
   m_Name: Slider Alto
   m_TagString: Untagged
@@ -729,3 +731,31 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!65 &1568401313
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3830595472121212891}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 5.0264044, z: 2.00004}
+  m_Center: {x: 0.5, y: 3.4867778, z: 1.00002}
+--- !u!114 &1568401314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3830595472121212891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b589bf6f0667841e6b6d4e2abb4510e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetA: {fileID: 0}
+  targetB: {fileID: 0}
+  speed: 3

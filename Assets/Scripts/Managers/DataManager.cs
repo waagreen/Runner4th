@@ -17,4 +17,5 @@ public class DataManager : Singleton<DataManager>
     public static bool isGameplay => UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex > 1;
     
     public const string playerTag = "Player";
+    public const string target = "Target";
 }
