@@ -437,6 +437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4953b173cef19a546bc9ced1fc0e4026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rendererData: {fileID: 11400000, guid: e9f645cdc1541f7478ef484690562b28, type: 2}
   gameplayData: {fileID: 11400000, guid: c7473cd3504f9a74785633cb30287a5b, type: 2}
   OnPlayerDeath:
     m_PersistentCalls:
@@ -445,5 +446,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnPauseGame:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSkillBuy:
+    m_PersistentCalls:
+      m_Calls: []
+  OnCoinsSpend:
     m_PersistentCalls:
       m_Calls: []

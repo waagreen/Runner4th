@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-
+using UnityEngine.Rendering.Universal;
 public class EventsController : MonoBehaviour, ISaveble
 {
+    [SerializeField] private UniversalRendererData rendererData;
     [SerializeField] private PlayerGameplayData gameplayData;
 
     [HideInInspector] public UnityEvent OnPlayerDeath;
@@ -15,9 +16,13 @@ public class EventsController : MonoBehaviour, ISaveble
 
     public PlayerGameplayData GameplayData => gameplayData; 
     private bool pauseWasPressed = false;
+    private ScriptableRendererFeature blitFeature;
 
     private void Awake() 
     {
+        blitFeature = rendererData.rendererFeatures[0];
+        blitFeature.SetActive(DataManager.isGameplay);
+
         OnPlayerDeath = new UnityEvent();
         OnCollectCoin = new UnityEvent<int>();
         OnPauseGame = new UnityEvent<bool>();

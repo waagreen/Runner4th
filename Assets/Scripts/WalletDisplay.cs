@@ -9,7 +9,6 @@ public class WalletDisplay : MonoBehaviour
     [SerializeField] private TMP_Text coins;
     [SerializeField] private TMP_Text bestDistance;
 
-
     private void Start() {
         UpdateValues();
         DataManager.Events.OnCoinsSpend.AddListener(UpdateValues);
