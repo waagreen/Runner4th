@@ -10,7 +10,7 @@ public class DestructableObject : PoolingObjectReturner
     public bool isDestructable = false;
     [ConditionalField(nameof(isDestructable))] public VelocityState desiredVelocity;
 
-    private void OnCollisionEnter(Collision other) 
+    private void OnCollisionEnter(Collision other)
     {
         if(isDestructable)
         {
@@ -21,6 +21,7 @@ public class DestructableObject : PoolingObjectReturner
             else if(other.transform.tag == "Player" && (int)desiredVelocity > (int)globalMove.CurrentState)
             {
                 globalMove.ReduceSpeed();
+                gameObject.SetActive(false);
             }
         }
     }
