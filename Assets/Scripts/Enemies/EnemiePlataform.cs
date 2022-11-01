@@ -9,6 +9,8 @@ public class EnemiePlataform : MonoBehaviour
     private bool switching = false;
     void FixedUpdate()
     {
+        if(targetA == null || targetB == null) return;
+
         if (!switching)
         {
             transform.position = Vector3.MoveTowards(transform.position, targetA.position, speed * Time.deltaTime); 

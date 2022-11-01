@@ -20,11 +20,14 @@ public class SkillNode : MonoBehaviour
     public TMP_Text level;
     public Image bg;
     public Image icon;
+    public Image frame;
     public int id => skill.id; 
 
-    [Header("Node Colors")]
+    [Header("Node Colors & Sprites")]
     public Color32 impostorColor;
     public Color32 scientistColor;
+    public Sprite impostorIcon;
+    public Sprite scientistIcon;
 
     private void Start() 
     {
@@ -55,8 +58,11 @@ public class SkillNode : MonoBehaviour
         }
         else
         {
+            bool isScientist = id < 3 ;
             nodeBt.interactable = true;
-            bg.color = id < 3 ? scientistColor : impostorColor;
+
+            bg.color = isScientist ? scientistColor : impostorColor;
+            frame.sprite = isScientist ? scientistIcon : impostorIcon;
         }
 
         title.SetText(skill.title);
