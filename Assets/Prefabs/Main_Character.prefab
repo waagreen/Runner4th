@@ -5102,8 +5102,8 @@ MonoBehaviour:
   jumpButtonGracePeriod: 0.1
   reducedHeight: 0.35
   inputHoldTime: 0.5
-  mCollider: {fileID: 0}
-  playerAnim: {fileID: 0}
+  mCollider: {fileID: 1806503444}
+  playerAnim: {fileID: 5609211602285801454}
   trail: {fileID: 916423943014411546}
   cAudio: {fileID: 6352440473234375320}
 --- !u!54 &6977278634281835142
@@ -5178,13 +5178,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7c8ea62ee46df4aa0895ee165545de84,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7c8ea62ee46df4aa0895ee165545de84,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7c8ea62ee46df4aa0895ee165545de84,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7c8ea62ee46df4aa0895ee165545de84,
+        type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.16
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7c8ea62ee46df4aa0895ee165545de84,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.03
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7c8ea62ee46df4aa0895ee165545de84,
         type: 3}
@@ -5194,7 +5209,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 7c8ea62ee46df4aa0895ee165545de84,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7c8ea62ee46df4aa0895ee165545de84,
         type: 3}
@@ -5204,7 +5219,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 7c8ea62ee46df4aa0895ee165545de84,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7c8ea62ee46df4aa0895ee165545de84,
         type: 3}
@@ -5219,7 +5234,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 7c8ea62ee46df4aa0895ee165545de84,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7c8ea62ee46df4aa0895ee165545de84,
         type: 3}
@@ -5231,11 +5246,42 @@ PrefabInstance:
       propertyPath: m_Name
       value: Protagonista@T-Pose
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 7c8ea62ee46df4aa0895ee165545de84,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: dfb84e4cad5fa4b7d8798f0b01102bfe, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c8ea62ee46df4aa0895ee165545de84, type: 3}
+--- !u!1 &1187842285425078062 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7c8ea62ee46df4aa0895ee165545de84,
+    type: 3}
+  m_PrefabInstance: {fileID: 2070945072638988927}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &1806503444
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1187842285425078062}
+  m_Material: {fileID: 13400000, guid: 2d1b92c8292f3234baa92e29f307a81d, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.7509426
+  m_Height: 4.335556
+  m_Direction: 1
+  m_Center: {x: -0.009999978, y: 1.9518069, z: -0.009999978}
 --- !u!4 &1961248296634906004 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7c8ea62ee46df4aa0895ee165545de84,
+    type: 3}
+  m_PrefabInstance: {fileID: 2070945072638988927}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &5609211602285801454 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 7c8ea62ee46df4aa0895ee165545de84,
     type: 3}
   m_PrefabInstance: {fileID: 2070945072638988927}
   m_PrefabAsset: {fileID: 0}
