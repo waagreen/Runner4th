@@ -63,7 +63,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDestructable: 1
-  desiredVelocity: 0
+  desiredVelocity: 3
 --- !u!1 &431139147289381874
 GameObject:
   m_ObjectHideFlags: 0
