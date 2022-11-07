@@ -72,7 +72,7 @@ public class GlobalMovement : MonoBehaviour
         return inState;
     }
 
-    private void SetSpeedToZero() => _currentlSpeed = 0f;
+    public void SetSpeedToZero() => _currentlSpeed = 0f;
     public void ReduceSpeed() => _currentlSpeed /= 2f;
     
     private bool OnSlope(Transform t)
