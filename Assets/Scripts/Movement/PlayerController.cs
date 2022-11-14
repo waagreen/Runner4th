@@ -121,7 +121,7 @@ public class PlayerController : MonoBehaviour
         mCollider.height = 0.5f;
 
         doingSlide = true;
-        playerAnim.Play("Female Action Pose");
+        playerAnim.Play("Slide_Dalla");
         slideInputStartTime = 0;
         CameraManager.SetNoise(ShakeMode.weak);
         cAudio.PlaySound(SoundType.slide);
