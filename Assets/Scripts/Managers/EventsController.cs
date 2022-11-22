@@ -69,10 +69,11 @@ public class EventsController : MonoBehaviour, ISaveble
     {
         gameplayData.ResetAndSaveReservedCoins();
         a_SaveData.myCoins = gameplayData.TotalCoins;
+        a_SaveData.currentPassiveSkills = gameplayData.PassiveSkills;
 
         float distance = DataManager.GlobalMovement.distance;
 
-        if(distance > gameplayData.BestDistance)
+        if (distance > gameplayData.BestDistance)
         { 
             gameplayData.BestDistance = Mathf.RoundToInt(distance);
             a_SaveData.bestDistance = gameplayData.BestDistance;
@@ -82,6 +83,7 @@ public class EventsController : MonoBehaviour, ISaveble
     
     public void LoadFromSaveData(SaveData a_SaveData)
     {
+        if (a_SaveData.currentPassiveSkills != null) gameplayData.SyncPassiveSkills(a_SaveData.currentPassiveSkills);
         gameplayData.SyncTotalCoins(a_SaveData.myCoins);
         gameplayData.BestDistance = a_SaveData.bestDistance;
     }

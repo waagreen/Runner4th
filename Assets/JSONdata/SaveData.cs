@@ -7,6 +7,7 @@ public class SaveData
 {
     public int myCoins;
     public int bestDistance;
+    public Dictionary<int, float> currentPassiveSkills;
 
     public string ToJson() => JsonUtility.ToJson(this);
 

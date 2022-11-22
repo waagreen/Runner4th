@@ -4,9 +4,20 @@ using UnityEngine;
 using MyBox;
 using System.Linq;
 
+public struct CharacterSheet
+{
+    public float maxSpeed;
+    public float maxAcceleration;   
+    public float redCoinChance;
+    public float magForce;
+    public float shieldCharges;
+    public float reviveCharges;
+}
+
 [CreateAssetMenu(fileName = "PlayerGameData", menuName = "Data/ New gameplay data", order = 0)]
 public class PlayerGameplayData : ScriptableObject
 {
+    public Dictionary<int, float> PassiveSkills => passiveSkills;
     public int TotalCoins => totalCoins;
     public int currentReservedCoins;
     public int BestDistance;
@@ -21,30 +32,13 @@ public class PlayerGameplayData : ScriptableObject
     public bool PlayerIsImpostor => passiveSkills.Keys.ToList().TrueForAll(k => k > 2);
     public bool PlayerHasNoSkills => passiveSkills.IsNullOrEmpty();
 
-    public struct CharacterSheet
-    {
-        public float maxSpeed;
-        public float maxAcceleration;   
-        public float redCoinChance;
-        public float magForce;
-        public float shieldCharges;
-        public float reviveCharges;
-    }
-
+    public void ClearSkills() => passiveSkills.Clear();
+    public void SyncPassiveSkills(Dictionary<int, float> skillsToSync) => passiveSkills = skillsToSync;
     public void UpdateSkillDictionary(PassiveSkill skill) 
     {
         if (passiveSkills.ContainsKey(skill.id)) passiveSkills[skill.id] = skill.increaseAmount;
         else passiveSkills.Add(skill.id, skill.increaseAmount);
     }
-    public void ClearSkills() => passiveSkills.Clear();
-    public void DebugDictionary()
-    {
-        foreach (var item in passiveSkills)
-        {   
-            Debug.Log(item.Key + " " + item.Value);
-        }
-    }
-
     public void SetupPassiveSkills()
     {
         CharacterSheet sheet = new CharacterSheet();
@@ -91,5 +85,13 @@ public class PlayerGameplayData : ScriptableObject
     protected void ResetSkillTree()
     {
         ClearSkills();
+    }
+    public void DebugDictionary()
+    {
+        Debug.Log("got on debug dictoinary");
+        foreach (var item in passiveSkills)
+        {   
+            Debug.Log(item.Key + " " + item.Value);
+        }
     }
 }
