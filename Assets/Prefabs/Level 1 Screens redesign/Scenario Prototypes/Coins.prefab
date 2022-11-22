@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 8960037952498085096}
   - component: {fileID: 1625457771580683448}
   - component: {fileID: 1083425319512516979}
-  - component: {fileID: 2167058936833115345}
-  - component: {fileID: 6792672636295823308}
   - component: {fileID: 1824024639032107638}
   m_Layer: 0
   m_Name: Sphere
@@ -86,33 +84,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &2167058936833115345
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5291570275196299555}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6792672636295823308
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5291570275196299555}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c64f567b4059a0419549416c01a41e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioScr: {fileID: 1824024639032107638}
-  coinValue: 1
 --- !u!82 &1824024639032107638
 AudioSource:
   m_ObjectHideFlags: 0
@@ -218,6 +189,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1600336547546190471}
+  - component: {fileID: 4794581545395912772}
+  - component: {fileID: 2001003852075705426}
   m_Layer: 0
   m_Name: Coins
   m_TagString: Untagged
@@ -241,3 +214,30 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4794581545395912772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8736591698622044958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c64f567b4059a0419549416c01a41e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioScr: {fileID: 1824024639032107638}
+  coinValue: 1
+--- !u!135 &2001003852075705426
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8736591698622044958}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.25
+  m_Center: {x: 0, y: 0.25, z: 0}
