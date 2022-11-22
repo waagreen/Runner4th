@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4e23204a16fcc2249afbbb827741d180
+guid: ddc4b4d8d8792cd40a505d8dd98a5a5d
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -66,7 +66,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -116,13 +116,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: skill_base_0
+      name: BadIconHolder_0
       rect:
         serializedVersion: 2
-        x: 80
-        y: 513
-        width: 286
-        height: 90
+        x: 54
+        y: 16
+        width: 400
+        height: 440
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -130,29 +130,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 03b430c00476ef74cad7bb89ee8deadb
-      internalID: -1494849854
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: skill_base_1
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 1
-        width: 447
-        height: 488
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 1}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5cff2ac74aa6a8342bd5ea5e8503e5dd
-      internalID: 2088214895
+      spriteID: 827511f63e84f4742a37039c0d27fb99
+      internalID: 1362734393
       vertices: []
       indices: 
       edges: []
@@ -161,16 +140,14 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      skill_base_0: -1494849854
-      skill_base_2: -203609309
-      skill_base_1: 2088214895
+      BadIconHolder_0: 1362734393
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

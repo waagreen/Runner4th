@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 5b4f2ab080863f143b872d87c34cc3a7
+guid: 4aedf96eda8c3ee4490fcae1856b8c9a
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -66,7 +66,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 1024
+    maxTextureSize: 512
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -116,22 +116,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: goodskill_base_1
+      name: GodIconHolder_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 363
-        height: 440
+        x: 83
+        y: 33
+        width: 345
+        height: 405
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6412ba45413642947bf60cf215627a24
-      internalID: -1387480592
+      spriteID: 9d6484c68e37db344a3c5b9b7d693ccd
+      internalID: -1933992034
       vertices: []
       indices: 
       edges: []
@@ -140,15 +140,14 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      goodskill_base_0: -1054781206
-      goodskill_base_1: -1387480592
+      GodIconHolder_0: -1933992034
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

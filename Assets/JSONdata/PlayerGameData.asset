@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: PlayerGameData
   m_EditorClassIdentifier: 
   currentReservedCoins: 0
-  BestDistance: 0
+  BestDistance: 232
+  coinsToAdd: 0

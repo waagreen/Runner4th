@@ -4,6 +4,12 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
+public struct PassiveSkill
+{
+    public int id;
+    public float increaseAmount;
+}
+
 [RequireComponent(typeof(Button))]
 public class SkillNode : MonoBehaviour
 {
@@ -51,18 +57,16 @@ public class SkillNode : MonoBehaviour
 
     private void UpdateNode()
     {
-        if(currentCoins < skill.cost)
-        {
-            nodeBt.interactable = false;
-            bg.color = Color.grey;
-        }
+        bool isScientist = id < 3 ;
+        frame.sprite = isScientist ? scientistIcon : impostorIcon;
+        
+        if(currentCoins < skill.cost) DisableNode();
         else
         {
-            bool isScientist = id < 3 ;
             nodeBt.interactable = true;
 
             bg.color = isScientist ? scientistColor : impostorColor;
-            frame.sprite = isScientist ? scientistIcon : impostorIcon;
+            frame.color = Color.white;
         }
 
         title.SetText(skill.title);
@@ -78,7 +82,11 @@ public class SkillNode : MonoBehaviour
     {
         if(currentCoins >= skill.cost)
         {
-            events.OnSkillBuy.Invoke(skill.increaseAmount);
+            PassiveSkill passiveSkill = new PassiveSkill();
+            passiveSkill.id = skill.id;
+            passiveSkill.increaseAmount = skill.increaseAmount;
+
+            events.OnSkillBuy.Invoke(passiveSkill);
             events.GameplayData.SpendCoins(skill.cost);
             
             skill.currentLevel++;
@@ -86,6 +94,13 @@ public class SkillNode : MonoBehaviour
             UpdateNode();
         }
         else Debug.Log("NOT ENOUGH COINS!");
+    }
+
+    public void DisableNode()
+    {
+        nodeBt.interactable = false;
+        bg.color = Color.grey;
+        frame.color = Color.grey;
     }
 
     private void OnDestroy() {

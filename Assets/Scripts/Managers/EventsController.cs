@@ -11,7 +11,8 @@ public class EventsController : MonoBehaviour, ISaveble
     [HideInInspector] public UnityEvent OnPlayerDeath;
     [HideInInspector] public UnityEvent<int> OnCollectCoin;
     [HideInInspector] public UnityEvent<bool> OnPauseGame;
-    [HideInInspector] public UnityEvent<float> OnSkillBuy;
+    [HideInInspector] public UnityEvent<PassiveSkill> OnSkillBuy;
+    [HideInInspector] public UnityEvent OnUpdateSkillTree;
     [HideInInspector] public UnityEvent OnCoinsSpend;
 
     public PlayerGameplayData GameplayData => gameplayData; 
@@ -26,17 +27,19 @@ public class EventsController : MonoBehaviour, ISaveble
         OnPlayerDeath = new UnityEvent();
         OnCollectCoin = new UnityEvent<int>();
         OnPauseGame = new UnityEvent<bool>();
-        OnSkillBuy = new UnityEvent<float>();
+        OnSkillBuy = new UnityEvent<PassiveSkill>();
         OnCoinsSpend = new UnityEvent();
+        OnUpdateSkillTree = new UnityEvent();
 
         LoadJsonData(this);
     
+        OnSkillBuy.AddListener(UpdateSkill);
         OnCollectCoin.AddListener(AddCoinOnData);
         OnPauseGame.AddListener(FreezeTime);
     }
 
+    private void UpdateSkill(PassiveSkill skill) => gameplayData.UpdateSkillDictionary(skill);
     private void AddCoinOnData(int coinsToAdd) => gameplayData.currentReservedCoins += coinsToAdd;
-
     private void FreezeTime(bool shouldFreeze) => Time.timeScale = shouldFreeze ? 0f : 1f;
 
     private static void SaveJsonData(EventsController eController)
