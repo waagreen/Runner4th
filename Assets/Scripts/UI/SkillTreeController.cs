@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class SkillTreeController : MonoBehaviour
 {
-    private List<SkillNode> goodSkills = new List<SkillNode>();
-    private List<SkillNode> badSkills = new List<SkillNode>();
+    public List<SkillNode> goodSkills = new List<SkillNode>();
+    public List<SkillNode> badSkills = new List<SkillNode>();
     private EventsController events;
 
     [SerializeField] private RectTransform gHolder;
@@ -21,17 +21,17 @@ public class SkillTreeController : MonoBehaviour
         foreach (Transform child in gHolder.transform)
         {
             var newSkill = child.GetComponent<SkillNode>();
+            child.name = newSkill.name;
             goodSkills.Add(newSkill);
         }        
         
         foreach (Transform child in bHolder.transform)
         {
             var newSkill = child.GetComponent<SkillNode>();
+            child.name = newSkill.name;
             badSkills.Add(newSkill);
         }
 
-        Debug.Log(events.GameplayData.PlayerHasNoSkills);
-        events.GameplayData.DebugDictionary();
         UpdateTree();
     }
 

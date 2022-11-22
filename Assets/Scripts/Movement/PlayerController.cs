@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private TrailController trail;
     [SerializeField] private CharacterAudio cAudio;
 
+    private CharacterSheet passiveSkills => DataManager.Events.passiveSkills;
     private UnityEvent deathEvent;
     private Rigidbody rb;
     private PlayerInput inputMap;
@@ -57,6 +58,8 @@ public class PlayerController : MonoBehaviour
 
         originalColliderCenter = mCollider.center;
         originalColliderHeight = mCollider.height;
+
+        Debug.Log("revives: " + passiveSkills.reviveCharges);
     }
 
 
@@ -138,8 +141,13 @@ public class PlayerController : MonoBehaviour
     
     private void Death()
     {
-        isDead = true;
-        gameObject.SetActive(false);
+        if(passiveSkills.reviveCharges < 1)
+        {
+            isDead = true;
+            gameObject.SetActive(false);
+            Debug.Log("dead");
+        }
+
     }
     
     private void Pause(InputAction.CallbackContext context)

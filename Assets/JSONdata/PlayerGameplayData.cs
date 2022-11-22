@@ -17,7 +17,6 @@ public struct CharacterSheet
 [CreateAssetMenu(fileName = "PlayerGameData", menuName = "Data/ New gameplay data", order = 0)]
 public class PlayerGameplayData : ScriptableObject
 {
-    public Dictionary<int, float> PassiveSkills => passiveSkills;
     public int TotalCoins => totalCoins;
     public int currentReservedCoins;
     public int BestDistance;
@@ -27,28 +26,28 @@ public class PlayerGameplayData : ScriptableObject
     public int coinsToAdd;
     
     private int totalCoins;
-    private Dictionary<int, float> passiveSkills = new Dictionary<int, float>( capacity: 6 );
+    private List<PassiveSkill> passiveSkills;
+    public List<PassiveSkill> PassiveSkills => passiveSkills;
     
-    public bool PlayerIsImpostor => passiveSkills.Keys.ToList().TrueForAll(k => k > 2);
+    public bool PlayerIsImpostor => passiveSkills.TrueForAll(k => k.id > 2);
     public bool PlayerHasNoSkills => passiveSkills.IsNullOrEmpty();
 
     public void ClearSkills() => passiveSkills.Clear();
-    public void SyncPassiveSkills(Dictionary<int, float> skillsToSync) => passiveSkills = skillsToSync;
+    public void SyncPassiveSkills(List<PassiveSkill> skillsToSync)
+    {
+        foreach (var skill in skillsToSync)
+        {
+            UpdateSkillDictionary(skill);
+        }
+    }
     public void UpdateSkillDictionary(PassiveSkill skill) 
     {
-        if (passiveSkills.ContainsKey(skill.id)) passiveSkills[skill.id] = skill.increaseAmount;
-        else passiveSkills.Add(skill.id, skill.increaseAmount);
-    }
-    public void SetupPassiveSkills()
-    {
-        CharacterSheet sheet = new CharacterSheet();
-
-        sheet.maxSpeed = passiveSkills[0];
-        sheet.maxAcceleration = passiveSkills[1];
-        sheet.redCoinChance = passiveSkills[2];
-        sheet.magForce = passiveSkills[3];
-        sheet.shieldCharges = passiveSkills[4];
-        sheet.reviveCharges = passiveSkills[5];
+        if (passiveSkills.Contains(skill)) 
+        {
+           var skillToModify = passiveSkills.Find(s => s.id == skill.id);
+           skillToModify.increaseAmount += skill.increaseAmount;
+        }
+        else passiveSkills.Add(skill);
     }
 
     public void ResetAndSaveReservedCoins()
@@ -85,13 +84,5 @@ public class PlayerGameplayData : ScriptableObject
     protected void ResetSkillTree()
     {
         ClearSkills();
-    }
-    public void DebugDictionary()
-    {
-        Debug.Log("got on debug dictoinary");
-        foreach (var item in passiveSkills)
-        {   
-            Debug.Log(item.Key + " " + item.Value);
-        }
     }
 }

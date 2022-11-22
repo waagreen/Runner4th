@@ -4,12 +4,6 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public struct PassiveSkill
-{
-    public int id;
-    public float increaseAmount;
-}
-
 [RequireComponent(typeof(Button))]
 public class SkillNode : MonoBehaviour
 {

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
+using System.Linq;
+
 public class EventsController : MonoBehaviour, ISaveble
 {
     [SerializeField] private UniversalRendererData rendererData;
@@ -18,6 +20,7 @@ public class EventsController : MonoBehaviour, ISaveble
     public PlayerGameplayData GameplayData => gameplayData; 
     private bool pauseWasPressed = false;
     private ScriptableRendererFeature blitFeature;
+    public CharacterSheet passiveSkills;
 
     private void Awake() 
     {
@@ -49,7 +52,7 @@ public class EventsController : MonoBehaviour, ISaveble
 
         if(FileManager.WriteToFile("SaveData.dat", sd.ToJson()))
         {
-            Debug.Log("Save Succesful");
+            // Debug.Log("Save Succesful");
         }
     }
 
@@ -61,15 +64,34 @@ public class EventsController : MonoBehaviour, ISaveble
             sd.LoadFromJson(json);
 
             eController.LoadFromSaveData(sd);
-            Debug.Log("Load Succesful");
+            // Debug.Log("Load Succesful");
         }
     }
 
     public void PopulateSaveData(SaveData a_SaveData)
     {
+        if (gameplayData.PassiveSkills != null && gameplayData.PassiveSkills.Count > 0)
+        {
+            foreach (var skill in gameplayData.PassiveSkills)
+            {        
+                if (a_SaveData.currentPassiveSkills.Contains(skill)) 
+                {
+                    var skillToModify = a_SaveData.currentPassiveSkills.Find(s => s.id == skill.id);
+                    skillToModify.increaseAmount += skill.increaseAmount;
+                }
+                else
+                { 
+                    a_SaveData.currentPassiveSkills.Add(skill);
+                    Debug.Log("adding");
+                }
+            }
+            
+            Debug.Log("saved skills: " + a_SaveData.currentPassiveSkills.Count + " " + gameplayData.PassiveSkills.Count);
+        }
+        else Debug.Log("cant save skils");
+
         gameplayData.ResetAndSaveReservedCoins();
         a_SaveData.myCoins = gameplayData.TotalCoins;
-        a_SaveData.currentPassiveSkills = gameplayData.PassiveSkills;
 
         float distance = DataManager.GlobalMovement.distance;
 
@@ -83,7 +105,9 @@ public class EventsController : MonoBehaviour, ISaveble
     
     public void LoadFromSaveData(SaveData a_SaveData)
     {
-        if (a_SaveData.currentPassiveSkills != null) gameplayData.SyncPassiveSkills(a_SaveData.currentPassiveSkills);
+        gameplayData.SyncPassiveSkills(a_SaveData.currentPassiveSkills);
+        Debug.Log("loaded skills: " + a_SaveData.currentPassiveSkills.Count + " " + gameplayData.PassiveSkills.Count);
+
         gameplayData.SyncTotalCoins(a_SaveData.myCoins);
         gameplayData.BestDistance = a_SaveData.bestDistance;
     }
