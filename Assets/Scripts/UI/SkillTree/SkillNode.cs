@@ -58,9 +58,9 @@ public class SkillNode : MonoBehaviour
         else
         {
             nodeBt.interactable = true;
-
-            bg.color = isScientist ? scientistColor : impostorColor;
-            frame.color = Color.white;
+            Color32 nodeColor = isScientist ? scientistColor : impostorColor;
+            bg.color = nodeColor;
+            frame.color = nodeColor;
         }
 
         title.SetText(skill.title);

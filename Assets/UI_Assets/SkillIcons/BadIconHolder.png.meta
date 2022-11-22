@@ -119,19 +119,19 @@ TextureImporter:
       name: BadIconHolder_0
       rect:
         serializedVersion: 2
-        x: 54
-        y: 16
+        x: 56
+        y: 39
         width: 400
-        height: 440
+        height: 435
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 827511f63e84f4742a37039c0d27fb99
-      internalID: 1362734393
+      spriteID: 76457e1bc2afdad45a233ceac3ff78b5
+      internalID: -903894518
       vertices: []
       indices: 
       edges: []
@@ -139,7 +139,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 9e3062fb378d5144abf6f12fd498c7fb
     internalID: 0
     vertices: []
     indices: 
@@ -147,7 +147,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      BadIconHolder_0: 1362734393
+      BadIconHolder_0: -903894518
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

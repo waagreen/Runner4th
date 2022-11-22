@@ -37,10 +37,10 @@ public class PlayerGameplayData : ScriptableObject
     {
         foreach (var skill in skillsToSync)
         {
-            UpdateSkillDictionary(skill);
+            UpdateSkillList(skill);
         }
     }
-    public void UpdateSkillDictionary(PassiveSkill skill) 
+    public void UpdateSkillList(PassiveSkill skill) 
     {
         if (passiveSkills.Contains(skill)) 
         {
@@ -48,6 +48,21 @@ public class PlayerGameplayData : ScriptableObject
            skillToModify.increaseAmount += skill.increaseAmount;
         }
         else passiveSkills.Add(skill);
+    }
+    public CharacterSheet GetCharacterSheet()
+    {
+        // magnet - 0 | maxAccel - 1 | revive - 2 | redCoins - 3 | maxSpeed - 4 | Shield - 5
+
+        CharacterSheet newSheet = new CharacterSheet();
+
+        newSheet.magForce = passiveSkills.Find(p => p.id == 0).id; 
+        newSheet.maxAcceleration = passiveSkills.Find(p => p.id == 1).id;
+        newSheet.reviveCharges = passiveSkills.Find(p => p.id == 2).id;
+        newSheet.redCoinChance = passiveSkills.Find(p => p.id == 3).id;
+        newSheet.maxSpeed = passiveSkills.Find(p => p.id == 4).id;
+        newSheet.shieldCharges = passiveSkills.Find(p => p.id == 5).id;
+
+        return newSheet;
     }
 
     public void ResetAndSaveReservedCoins()

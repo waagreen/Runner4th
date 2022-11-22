@@ -119,19 +119,19 @@ TextureImporter:
       name: GodIconHolder_0
       rect:
         serializedVersion: 2
-        x: 83
-        y: 33
-        width: 345
-        height: 405
+        x: 88
+        y: 80
+        width: 344
+        height: 344
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9d6484c68e37db344a3c5b9b7d693ccd
-      internalID: -1933992034
+      spriteID: 152282127904bdf4d97d7c43a72a8dbd
+      internalID: -117687447
       vertices: []
       indices: 
       edges: []
@@ -139,7 +139,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 0f291722ffba43e4a8d0780007533127
     internalID: 0
     vertices: []
     indices: 
@@ -147,7 +147,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      GodIconHolder_0: -1933992034
+      GodIconHolder_0: -117687447
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

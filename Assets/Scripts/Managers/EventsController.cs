@@ -39,9 +39,11 @@ public class EventsController : MonoBehaviour, ISaveble
         OnSkillBuy.AddListener(UpdateSkill);
         OnCollectCoin.AddListener(AddCoinOnData);
         OnPauseGame.AddListener(FreezeTime);
+
+        passiveSkills = gameplayData.GetCharacterSheet();
     }
 
-    private void UpdateSkill(PassiveSkill skill) => gameplayData.UpdateSkillDictionary(skill);
+    private void UpdateSkill(PassiveSkill skill) => gameplayData.UpdateSkillList(skill);
     private void AddCoinOnData(int coinsToAdd) => gameplayData.currentReservedCoins += coinsToAdd;
     private void FreezeTime(bool shouldFreeze) => Time.timeScale = shouldFreeze ? 0f : 1f;
 
@@ -79,16 +81,9 @@ public class EventsController : MonoBehaviour, ISaveble
                     var skillToModify = a_SaveData.currentPassiveSkills.Find(s => s.id == skill.id);
                     skillToModify.increaseAmount += skill.increaseAmount;
                 }
-                else
-                { 
-                    a_SaveData.currentPassiveSkills.Add(skill);
-                    Debug.Log("adding");
-                }
+                else a_SaveData.currentPassiveSkills.Add(skill);
             }
-            
-            Debug.Log("saved skills: " + a_SaveData.currentPassiveSkills.Count + " " + gameplayData.PassiveSkills.Count);
         }
-        else Debug.Log("cant save skils");
 
         gameplayData.ResetAndSaveReservedCoins();
         a_SaveData.myCoins = gameplayData.TotalCoins;
@@ -106,8 +101,6 @@ public class EventsController : MonoBehaviour, ISaveble
     public void LoadFromSaveData(SaveData a_SaveData)
     {
         gameplayData.SyncPassiveSkills(a_SaveData.currentPassiveSkills);
-        Debug.Log("loaded skills: " + a_SaveData.currentPassiveSkills.Count + " " + gameplayData.PassiveSkills.Count);
-
         gameplayData.SyncTotalCoins(a_SaveData.myCoins);
         gameplayData.BestDistance = a_SaveData.bestDistance;
     }
