@@ -20,7 +20,7 @@ public class Coins : MonoBehaviour
     private void Setup()
     {
         float diceThrow = Random.Range(0f, 100f);
-        if (diceThrow >= redCoinChance) SetRedCoin();
+        if (redCoinChance >= diceThrow) SetRedCoin();
         else SetGreenCoin();
     }
 
@@ -35,14 +35,14 @@ public class Coins : MonoBehaviour
     private void SetRedCoin()
     {
         coinValue = 5;
-        sphere.material.color = grads[0].colorKeys[1].color;
+        sphere.material.color = grads[2].colorKeys[1].color;
         transform.localScale = Vector3.one * 1.2f;
     }
 
     private void SetGreenCoin()
     {
         coinValue = 1;
-        sphere.material.color = grads[2].colorKeys[1].color;
+        sphere.material.color = grads[0].colorKeys[1].color;
         transform.localScale = Vector3.one;
     }
 }
