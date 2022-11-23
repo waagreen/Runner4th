@@ -26,7 +26,7 @@ public class PlayerGameplayData : ScriptableObject
     public int coinsToAdd;
     
     private int totalCoins;
-    private List<PassiveSkill> passiveSkills;
+    private List<PassiveSkill> passiveSkills = new List<PassiveSkill>(capacity: 6);
     public List<PassiveSkill> PassiveSkills => passiveSkills;
     
     public bool PlayerIsImpostor => passiveSkills.TrueForAll(k => k.id > 2);
@@ -55,12 +55,12 @@ public class PlayerGameplayData : ScriptableObject
 
         CharacterSheet newSheet = new CharacterSheet();
 
-        newSheet.magForce = passiveSkills.Find(p => p.id == 0).id; 
-        newSheet.maxAcceleration = passiveSkills.Find(p => p.id == 1).id;
-        newSheet.reviveCharges = passiveSkills.Find(p => p.id == 2).id;
-        newSheet.redCoinChance = passiveSkills.Find(p => p.id == 3).id;
-        newSheet.maxSpeed = passiveSkills.Find(p => p.id == 4).id;
-        newSheet.shieldCharges = passiveSkills.Find(p => p.id == 5).id;
+        newSheet.magForce = passiveSkills.Find(p => p.id == 0).increaseAmount; 
+        newSheet.maxAcceleration = passiveSkills.Find(p => p.id == 1).increaseAmount;
+        newSheet.reviveCharges = passiveSkills.Find(p => p.id == 2).increaseAmount;
+        newSheet.redCoinChance = passiveSkills.Find(p => p.id == 3).increaseAmount;
+        newSheet.maxSpeed = passiveSkills.Find(p => p.id == 4).increaseAmount;
+        newSheet.shieldCharges = passiveSkills.Find(p => p.id == 5).increaseAmount;
 
         return newSheet;
     }

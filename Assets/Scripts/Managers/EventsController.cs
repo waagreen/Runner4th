@@ -18,9 +18,9 @@ public class EventsController : MonoBehaviour, ISaveble
     [HideInInspector] public UnityEvent OnCoinsSpend;
 
     public PlayerGameplayData GameplayData => gameplayData; 
-    private bool pauseWasPressed = false;
     private ScriptableRendererFeature blitFeature;
     public CharacterSheet passiveSkills;
+    private bool pauseWasPressed = false;
 
     private void Awake() 
     {

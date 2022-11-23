@@ -37,7 +37,9 @@ public class SkillTreeController : MonoBehaviour
 
     public void UpdateTree()
     {
-        if(!events.GameplayData.PlayerHasNoSkills)
+        bool hasNoSkill = !events.GameplayData.PlayerHasNoSkills;
+        Debug.Log("has no skills: " + hasNoSkill);
+        if(hasNoSkill)
         {
             if(events.GameplayData.PlayerIsImpostor) foreach (SkillNode skill in goodSkills) skill.DisableNode();
             else foreach (SkillNode skill in badSkills) skill.DisableNode();
