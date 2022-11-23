@@ -98,7 +98,9 @@ public class PlayerGameplayData : ScriptableObject
     [ButtonMethod]
     protected void ResetSkillTree()
     {
-        ClearSkills();
+        ClearSkills(); // clear the local skills list
+
+        // gets the json, converts back to save data, clear the skills list and save back as json 
         if(FileManager.LoadFromFile("SaveData.dat", out var json))
         {
             SaveData _tempLoadListData = JsonUtility.FromJson<SaveData>(json);
