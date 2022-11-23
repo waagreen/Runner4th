@@ -16,7 +16,9 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: cc08a2cd97067a64389e181fc5c5544f, type: 3}
   title: Speed boost
   description: Break the speed limits! Each level increases your max speed.
-  cost: 250
+  baseCost: 250
+  baseLevel: 0
+  maxLevel: 3
+  currentCost: 250
   currentLevel: 0
-  mxLevel: 3
-  increaseAmount: 2.5
+  increaseAmount: 0.25

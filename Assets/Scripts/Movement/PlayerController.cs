@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
         originalColliderCenter = mCollider.center;
         originalColliderHeight = mCollider.height;
 
-        Debug.Log("revives: " + passiveSkills.reviveCharges);
+        Debug.Log("redCoinChance: " + passiveSkills.redCoinChance);
     }
 
 

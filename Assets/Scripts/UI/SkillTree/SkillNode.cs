@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEditor;
 
 [RequireComponent(typeof(Button))]
 public class SkillNode : MonoBehaviour
@@ -54,7 +55,8 @@ public class SkillNode : MonoBehaviour
         bool isScientist = id < 3 ;
         frame.sprite = isScientist ? scientistIcon : impostorIcon;
         
-        if(currentCoins < skill.cost) DisableNode();
+        if(currentCoins < skill.currentCost) DisableNode();
+        else if (skill.currentLevel >= skill.MaxLevel) DisableNode();
         else
         {
             nodeBt.interactable = true;
@@ -66,25 +68,26 @@ public class SkillNode : MonoBehaviour
         title.SetText(skill.title);
         description.SetText(skill.description);
         
-        level.SetText($"Level:  {skill.currentLevel} / {skill.mxLevel}");
-        cost.SetText($"Cost: {skill.cost}");
+        level.SetText($"Level: {skill.currentLevel} / {skill.MaxLevel}");
+        cost.SetText($"Cost: {skill.currentCost}");
         
         icon.sprite = skill.icon;
     }
 
     private void Buy()
     {
-        if(currentCoins >= skill.cost)
+        if(currentCoins >= skill.currentCost)
         {
             PassiveSkill passiveSkill = new PassiveSkill();
             passiveSkill.id = skill.id;
             passiveSkill.increaseAmount = skill.increaseAmount;
 
             events.OnSkillBuy.Invoke(passiveSkill);
-            events.GameplayData.SpendCoins(skill.cost);
+            events.GameplayData.SpendCoins(skill.currentCost);
             
             skill.currentLevel++;
-            skill.cost *= 2;
+            skill.currentCost *= 2;
+            EditorUtility.SetDirty(skill);
             UpdateNode();
         }
         else Debug.Log("NOT ENOUGH COINS!");
