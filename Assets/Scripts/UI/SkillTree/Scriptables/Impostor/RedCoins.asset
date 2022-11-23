@@ -20,4 +20,4 @@ MonoBehaviour:
   cost: 125
   currentLevel: 0
   mxLevel: 3
-  increaseAmount: 0.15
+  increaseAmount: 0.05

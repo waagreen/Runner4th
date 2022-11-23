@@ -54,7 +54,7 @@ public class EventsController : MonoBehaviour, ISaveble
 
         if(FileManager.WriteToFile("SaveData.dat", sd.ToJson()))
         {
-            // Debug.Log("Save Succesful");
+            Debug.Log("Save Succesful");
         }
     }
 
@@ -66,7 +66,7 @@ public class EventsController : MonoBehaviour, ISaveble
             sd.LoadFromJson(json);
 
             eController.LoadFromSaveData(sd);
-            // Debug.Log("Load Succesful");
+            Debug.Log("Load Succesful");
         }
     }
 

@@ -99,5 +99,12 @@ public class PlayerGameplayData : ScriptableObject
     protected void ResetSkillTree()
     {
         ClearSkills();
+        if(FileManager.LoadFromFile("SaveData.dat", out var json))
+        {
+            SaveData _tempLoadListData = JsonUtility.FromJson<SaveData>(json);
+            _tempLoadListData.currentPassiveSkills = new List<PassiveSkill>(capacity: 6);
+            string jsonToSave = JsonUtility.ToJson(_tempLoadListData);
+            FileManager.WriteToFile("SaveData.dat", jsonToSave);
+        };
     }
 }
