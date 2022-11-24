@@ -6,7 +6,7 @@ public class EnemyFlying : MonoBehaviour
 {
     [Header("Speed and Bounds")]
     [SerializeField] private float speed;
-    [SerializeField] private float lineOfSite;
+    [SerializeField] private float lineOfSigth;
     private Transform player, target;
     
     [Space]
@@ -33,7 +33,7 @@ public class EnemyFlying : MonoBehaviour
         float distanceFromPlayer = Vector3.Distance(player.position, transform.position);
 
         //set a limit to the enemie view and shooting range
-        if(distanceFromPlayer < lineOfSite && distanceFromPlayer > shootingRange){
+        if(distanceFromPlayer < lineOfSigth && distanceFromPlayer > shootingRange){
             transform.position = Vector3.MoveTowards(this.transform.position, target.position, speed * Time.deltaTime);
         }
         //preparing to shoot and cooldown for it
@@ -50,7 +50,7 @@ public class EnemyFlying : MonoBehaviour
     private void OnDrawGizmosSelected() {
         Gizmos.color = Color.green;
         //set the trigger sphere
-        Gizmos.DrawWireSphere(transform.position, lineOfSite);
+        Gizmos.DrawWireSphere(transform.position, lineOfSigth);
         Gizmos.DrawWireSphere(transform.position, shootingRange);
     }
 }

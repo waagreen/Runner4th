@@ -50,7 +50,7 @@ public class SkillNode : MonoBehaviour
         UpdateNode();
     }
 
-    private void UpdateNode()
+    public void UpdateNode()
     {
         bool isScientist = id < 3 ;
         frame.sprite = isScientist ? scientistIcon : impostorIcon;
@@ -99,6 +99,8 @@ public class SkillNode : MonoBehaviour
         bg.color = Color.grey;
         frame.color = Color.grey;
     }
+
+    public void ResetSkillValues() => skill.ResetValues();
 
     private void OnDestroy() {
         nodeBt.onClick.RemoveListener(Buy);

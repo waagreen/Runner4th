@@ -22,4 +22,4 @@ MonoBehaviour:
   maxLevel: 3
   currentCost: 125
   currentLevel: 0
-  increaseAmount: 0.05
+  increaseAmount: 0

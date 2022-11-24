@@ -8,6 +8,8 @@ using System;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] SphereCollider magneticField;
+
     [Header("Jump parameters")]
     [SerializeField] protected LayerMask groundLayers;
     [SerializeField] protected float jumpHeight = 2f, inputGravity = -30f;
@@ -34,6 +36,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private TrailController trail;
     [SerializeField] private CharacterAudio cAudio;
 
+
+    List<Transform> caughtTransforms = new List<Transform>();
     private CharacterSheet passiveSkills => DataManager.Events.passiveSkills;
     private UnityEvent deathEvent;
     private Rigidbody rb;
@@ -58,8 +62,13 @@ public class PlayerController : MonoBehaviour
 
         originalColliderCenter = mCollider.center;
         originalColliderHeight = mCollider.height;
-
-        Debug.Log("redCoinChance: " + passiveSkills.redCoinChance);
+        
+        if (passiveSkills.magForce < 1f) magneticField.enabled = false;
+        else 
+        {
+            magneticField.enabled = true;
+            magneticField.radius += passiveSkills.magForce;
+        }
     }
 
 
@@ -67,6 +76,15 @@ public class PlayerController : MonoBehaviour
     {
         trail.ControlEmission(isGrounded);
         if(isGrounded && !cAudio.isPlaying) cAudio.PlaySound(SoundType.running);
+
+        if (caughtTransforms != null && caughtTransforms.Count > 0)
+        {
+            foreach (var t in caughtTransforms)
+            {
+                float coinDist = Vector3.Distance(t.position, transform.position);
+                t.position = Vector3.MoveTowards(t.position, transform.position, 15 * Time.deltaTime);
+            }
+        }
 
         // handle slide cooldown
         slideInputStartTime += Time.deltaTime;
@@ -160,6 +178,15 @@ public class PlayerController : MonoBehaviour
     
     private void OnCollisionEnter(Collision other) {
         if(other.transform.tag == "Obstacle") cAudio.PlaySound(SoundType.collision);    
+    }
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        if(!caughtTransforms.Contains(other.transform) && other.tag == "Collectable")
+        {
+            //Add Transform
+            caughtTransforms.Add(other.transform);
+        }
     }
 
     private void OnDestroy()

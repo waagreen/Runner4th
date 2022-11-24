@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using MyBox;
 
 public class SkillTreeController : MonoBehaviour
 {
@@ -43,6 +44,21 @@ public class SkillTreeController : MonoBehaviour
         {
             if(events.GameplayData.PlayerIsImpostor) foreach (SkillNode skill in goodSkills) skill.DisableNode();
             else foreach (SkillNode skill in badSkills) skill.DisableNode();
+        }
+    }
+
+    [ButtonMethod]
+    private void ResetAllSkillValues()
+    {
+        foreach (SkillNode skill in goodSkills)
+        {
+            skill.ResetSkillValues();
+            skill.UpdateNode();
+        }
+        foreach (SkillNode skill in badSkills)
+        {
+            skill.ResetSkillValues();
+            skill.UpdateNode();
         }
     }
 
