@@ -83,7 +83,11 @@ public class GlobalMovement : MonoBehaviour
     public void SetSpeedToZero() => _currentSpeed = 0f;
     public void ReduceSpeed()
     {
-        if (currentShieldCharges > 0) return; 
+        if (currentShieldCharges > 0) 
+        {
+            currentShieldCharges--;
+            return;
+        } 
         else _currentSpeed /= 2f;
     }
     

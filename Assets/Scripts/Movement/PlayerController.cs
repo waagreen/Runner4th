@@ -37,13 +37,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private CharacterAudio cAudio;
 
     private UnityEvent deathEvent;
+    private UnityEvent<int> collectEvent;
     private Rigidbody rb;
     private PlayerInput inputMap;
     private Vector3 desiredGravity;
     private float gravity => desiredGravity.y > 0f ? inputGravity : inputGravity * 3f;
     private bool isDead = false;
 
-    List<Transform> caughtTransforms = new List<Transform>();
+    public List<Transform> caughtTransforms = new List<Transform>();
     private CharacterSheet passiveSkills => DataManager.Events.passiveSkills;
 
     void Start()
@@ -54,10 +55,13 @@ public class PlayerController : MonoBehaviour
         inputMap.Keyboard.Jump.performed += Jump;
         inputMap.Keyboard.Slide.started += Sliding;
         inputMap.Keyboard.Pause.started += Pause;
-        
+
         deathEvent = DataManager.Events.OnPlayerDeath;
-        deathEvent.AddListener(Death);
+        collectEvent = DataManager.Events.OnCollectCoin;
         
+        deathEvent.AddListener(Death);
+        collectEvent.AddListener(RemoveCaughtTransform);
+
         rb = GetComponent<Rigidbody>();
 
         originalColliderCenter = mCollider.center;
@@ -188,7 +192,11 @@ public class PlayerController : MonoBehaviour
             caughtTransforms.Add(other.transform);
         }
     }
-
+    private void RemoveCaughtTransform(int dontUse)
+    {
+        Transform lastT = caughtTransforms.LastOrDefault();
+        caughtTransforms.Remove(lastT);
+    }
     private void OnDestroy()
     {
         if(inputMap != null)
