@@ -21,4 +21,5 @@ MonoBehaviour:
   maxLevel: 3
   currentCost: 250
   currentLevel: 0
-  increaseAmount: 0.05
+  increaseAmount: 0
+  TotalAmountSpent: 0

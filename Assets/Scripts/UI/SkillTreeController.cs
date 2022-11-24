@@ -13,11 +13,14 @@ public class SkillTreeController : MonoBehaviour
 
     [SerializeField] private RectTransform gHolder;
     [SerializeField] private RectTransform bHolder;
+    [SerializeField] private Button resetButton;
 
     void Start()
     {
         events = DataManager.Events;
         events.OnCoinsSpend.AddListener(UpdateTree);
+
+        resetButton.onClick.AddListener(ResetAllSkillValues);
 
         foreach (Transform child in gHolder.transform)
         {
@@ -38,9 +41,11 @@ public class SkillTreeController : MonoBehaviour
 
     public void UpdateTree()
     {
-        bool hasNoSkill = !events.GameplayData.PlayerHasNoSkills;
-        Debug.Log("has no skills: " + hasNoSkill);
-        if(hasNoSkill)
+        bool hasSkills = !events.GameplayData.PlayerHasNoSkills;
+        
+        resetButton.gameObject.SetActive(hasSkills);
+
+        if(hasSkills)
         {
             if(events.GameplayData.PlayerIsImpostor) foreach (SkillNode skill in goodSkills) skill.DisableNode();
             else foreach (SkillNode skill in badSkills) skill.DisableNode();
@@ -50,20 +55,37 @@ public class SkillTreeController : MonoBehaviour
     [ButtonMethod]
     private void ResetAllSkillValues()
     {
-        foreach (SkillNode skill in goodSkills)
+        int coinsToReturn = 0;
+        events.GameplayData.ResetSkillTree();
+
+        foreach (SkillNode node in goodSkills)
         {
-            skill.ResetSkillValues();
-            skill.UpdateNode();
+            if (node.CurrentLevel > 0)
+            {
+                coinsToReturn += node.TotalAmountSpent;
+                node.ResetSkillValues();
+                node.UpdateNode();
+            }
+            else continue;
         }
-        foreach (SkillNode skill in badSkills)
+        foreach (SkillNode node in badSkills)
         {
-            skill.ResetSkillValues();
-            skill.UpdateNode();
+            if (node.CurrentLevel > 0)
+            {
+                coinsToReturn += node.TotalAmountSpent;
+                node.ResetSkillValues();
+                node.UpdateNode();
+            }
+            else continue;
         }
+        events.GameplayData.AddCoinsToTotal(coinsToReturn);
+        events.OnCoinsSpend.Invoke();
+        UpdateTree();
     }
 
     private void OnDestroy()
     {
         events.OnCoinsSpend.RemoveListener(UpdateTree);
+        resetButton.onClick.RemoveListener(ResetAllSkillValues);
     }
 }

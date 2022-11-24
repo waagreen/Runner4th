@@ -17,17 +17,19 @@ public class Skill : ScriptableObject
     [SerializeField] private int baseLevel;
     [SerializeField] private int maxLevel;
     public int MaxLevel => maxLevel;
+    public int BaseCost => baseCost;
 
     [Header("Current Values")]
     public int currentCost;
     public int currentLevel;
     public float increaseAmount;
+    public int TotalAmountSpent;
 
     [ButtonMethod]
     public void ResetValues()
     {
         currentCost = baseCost;
         currentLevel = baseLevel;
-        increaseAmount = 0f;
+        TotalAmountSpent = 0;
     }
 }

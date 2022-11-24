@@ -36,7 +36,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private TrailController trail;
     [SerializeField] private CharacterAudio cAudio;
 
-
     List<Transform> caughtTransforms = new List<Transform>();
     private CharacterSheet passiveSkills => DataManager.Events.passiveSkills;
     private UnityEvent deathEvent;

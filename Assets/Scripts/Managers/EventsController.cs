@@ -44,7 +44,7 @@ public class EventsController : MonoBehaviour, ISaveble
     }
 
     private void UpdateSkill(PassiveSkill skill) => gameplayData.UpdateSkillList(skill);
-    private void AddCoinOnData(int coinsToAdd) => gameplayData.currentReservedCoins += coinsToAdd;
+    public void AddCoinOnData(int coinsToAdd) => gameplayData.currentReservedCoins += coinsToAdd;
     private void FreezeTime(bool shouldFreeze) => Time.timeScale = shouldFreeze ? 0f : 1f;
 
     private static void SaveJsonData(EventsController eController)

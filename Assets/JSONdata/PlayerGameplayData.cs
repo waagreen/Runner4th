@@ -71,13 +71,16 @@ public class PlayerGameplayData : ScriptableObject
         currentReservedCoins = 0;
     }
 
-    public void SyncTotalCoins(int coinValue)
+    public void SyncTotalCoins(int coinValue, bool canSubtract = false)
     {
-        if(coinValue < totalCoins) return;
+        if(coinValue < totalCoins && !canSubtract) return;
         totalCoins = coinValue;
     }
-
-    public void SpendCoins(int desiredValue)
+    public void AddCoinsToTotal(int desiredValue)
+    {
+        totalCoins += desiredValue;
+    }
+    public void SpendCoinsFromTotal(int desiredValue)
     {
         if(desiredValue > totalCoins) 
         {
@@ -96,7 +99,7 @@ public class PlayerGameplayData : ScriptableObject
         coinsToAdd = 0;
     }
     [ButtonMethod]
-    protected void ResetSkillTree()
+    public void ResetSkillTree()
     {
         ClearSkills(); // clear the local skills list
 

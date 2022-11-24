@@ -14,6 +14,10 @@ public class SkillNode : MonoBehaviour
     [SerializeField] private Skill skill;
     [SerializeField] private Button nodeBt;
 
+    public int CurrentLevel => skill.currentLevel;
+    public int BaseCost => skill.BaseCost;
+    public int TotalAmountSpent => skill.TotalAmountSpent;
+
     [Header("Visual components")]
     public TMP_Text title;
     public TMP_Text description;
@@ -83,10 +87,12 @@ public class SkillNode : MonoBehaviour
             passiveSkill.increaseAmount = skill.increaseAmount;
 
             events.OnSkillBuy.Invoke(passiveSkill);
-            events.GameplayData.SpendCoins(skill.currentCost);
+            events.GameplayData.SpendCoinsFromTotal(skill.currentCost);
             
+            
+            skill.TotalAmountSpent += skill.currentLevel > 0 ? skill.currentCost : skill.BaseCost;
             skill.currentLevel++;
-            skill.currentCost *= 2;
+            skill.currentCost = BaseCost * (CurrentLevel + 1);
             EditorUtility.SetDirty(skill);
             UpdateNode();
         }
