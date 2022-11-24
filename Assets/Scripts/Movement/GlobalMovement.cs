@@ -33,6 +33,9 @@ public class GlobalMovement : MonoBehaviour
     private UnityEvent deathEvent;
     private float runAcceleration = 1f;
     private float _currentSpeed = kMinSpeed;
+    
+    private int totalShieldCharges => (int)DataManager.Events.passiveSkills.shieldCharges;
+    private int currentShieldCharges = 0;
 
     private void Start()
     {
@@ -43,6 +46,8 @@ public class GlobalMovement : MonoBehaviour
 
         maxRunSpeed += DataManager.Events.passiveSkills.maxSpeed;
         accelerationRate += DataManager.Events.passiveSkills.maxAcceleration;
+        
+        currentShieldCharges = totalShieldCharges;
     }
 
     protected void FixedUpdate()
@@ -76,7 +81,11 @@ public class GlobalMovement : MonoBehaviour
     }
 
     public void SetSpeedToZero() => _currentSpeed = 0f;
-    public void ReduceSpeed() => _currentSpeed /= 2f;
+    public void ReduceSpeed()
+    {
+        if (currentShieldCharges > 0) return; 
+        else _currentSpeed /= 2f;
+    }
     
     private bool OnSlope(Transform t)
     {

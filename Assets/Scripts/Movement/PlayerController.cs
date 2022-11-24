@@ -36,14 +36,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private TrailController trail;
     [SerializeField] private CharacterAudio cAudio;
 
-    List<Transform> caughtTransforms = new List<Transform>();
-    private CharacterSheet passiveSkills => DataManager.Events.passiveSkills;
     private UnityEvent deathEvent;
     private Rigidbody rb;
     private PlayerInput inputMap;
     private Vector3 desiredGravity;
     private float gravity => desiredGravity.y > 0f ? inputGravity : inputGravity * 3f;
     private bool isDead = false;
+
+    List<Transform> caughtTransforms = new List<Transform>();
+    private CharacterSheet passiveSkills => DataManager.Events.passiveSkills;
 
     void Start()
     {   
