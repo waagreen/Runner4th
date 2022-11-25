@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using System.Linq;
 using UnityEngine.Events;
 using System;
+using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
@@ -35,6 +36,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator playerAnim;
     [SerializeField] private TrailController trail;
     [SerializeField] private CharacterAudio cAudio;
+    [SerializeField] private GameObject shield;
+    private Vector3 shieldOriginalScale = Vector3.zero;
+    private Vector3 ShieldOriginalPosition = Vector3.zero;
+    private const float kAnimShildTime = 1.1f;
 
     private UnityEvent deathEvent;
     private UnityEvent<int> collectEvent;
@@ -66,7 +71,12 @@ public class PlayerController : MonoBehaviour
 
         originalColliderCenter = mCollider.center;
         originalColliderHeight = mCollider.height;
+
+        shieldOriginalScale = shield.transform.localScale;
+        ShieldOriginalPosition = shield.transform.localPosition;
         
+        shield.SetActive(passiveSkills.shieldCharges > 0);
+
         if (passiveSkills.magForce < 1f) magneticField.enabled = false;
         else 
         {
@@ -97,6 +107,9 @@ public class PlayerController : MonoBehaviour
         {
             mCollider.center = originalColliderCenter;
             mCollider.height = originalColliderHeight;
+            
+            shield.transform.DOScale(shieldOriginalScale, kAnimShildTime).SetEase(Ease.OutQuint);
+            shield.transform.DOLocalMove(ShieldOriginalPosition, kAnimShildTime).SetEase(Ease.OutQuint);
 
             playerAnim.Play("Running");
             slideInputStartTime = 0;
@@ -144,6 +157,12 @@ public class PlayerController : MonoBehaviour
     {
         mCollider.center = new Vector3(0f, 0.3f, 0f); 
         mCollider.height = 0.5f;
+
+        Vector3 newShieldScale = new Vector3(150f, 105f, 150f);
+        Vector3 newShieldPosition = new Vector3(0.2f, 0.3f, 0f);
+
+        shield.transform.DOScale(newShieldScale, kAnimShildTime).SetEase(Ease.OutQuint);
+        shield.transform.DOLocalMove(newShieldPosition, kAnimShildTime).SetEase(Ease.OutQuint);
 
         doingSlide = true;
         playerAnim.Play("Slide_Dalla");
