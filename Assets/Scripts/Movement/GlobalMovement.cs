@@ -18,7 +18,7 @@ public class GlobalMovement : MonoBehaviour
 
     [Header("Speed parameters")]
     [SerializeField][Range(0.01f, 1f)] private float accelerationRate;
-    [SerializeField][Range(10f, 50f)] protected float maxRunSpeed;
+    [SerializeField][Range(1f, 50f)] protected float maxRunSpeed;
     [SerializeField] protected Transform PlayerTransform;
 
     [Header("State Colors")]
@@ -26,7 +26,7 @@ public class GlobalMovement : MonoBehaviour
 
     public VelocityState CurrentState => GetSpeedState();
     
-    public const float kMinSpeed = 2f;
+    public const float kMinSpeed = 1.5f;
     public float distance = 0;
     public float CurrentSpeed => _currentlSpeed;
     

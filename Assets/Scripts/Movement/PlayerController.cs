@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     private float? lastGroundedTime;
     private float? jumpButtonPressedTime;
     
-    public bool isGrounded => Physics.CheckSphere(transform.position, .2f, groundLayers);
+    public bool isGrounded = false; //Tells if player is touching the ground. NEED to be public so other scripts can point to it
 
     [Header("Slide parameters")]
     [SerializeField] private float reducedHeight, inputHoldTime = 2f;
@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
     private UnityEvent deathEvent;
     private Rigidbody rb;
     private PlayerInput inputMap;
-    private Vector3 desiredGravity;
+    public Vector3 desiredGravity;
     private float gravity => desiredGravity.y > 0f ? inputGravity : inputGravity * 3f;
     private bool isDead = false;
 
@@ -62,6 +62,12 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //Detects if the player is grounded
+        Vector3 actualRayPosition = new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z);
+        Ray playerRay = new Ray(actualRayPosition, Vector3.down);
+        if (Physics.Raycast(playerRay, 1.7f, groundLayers.value)) isGrounded = true;
+        else isGrounded = false;
+
         trail.ControlEmission(isGrounded);
         if(isGrounded && !cAudio.isPlaying) cAudio.PlaySound(SoundType.running);
 
@@ -151,7 +157,7 @@ public class PlayerController : MonoBehaviour
     private void OnBecameInvisible() => deathEvent.Invoke();
     
     private void OnCollisionEnter(Collision other) {
-        if(other.transform.tag == "Obstacle") cAudio.PlaySound(SoundType.collision);    
+        if(other.transform.tag == "Obstacle") cAudio.PlaySound(SoundType.collision);
     }
 
     private void OnDestroy()
