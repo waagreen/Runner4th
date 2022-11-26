@@ -28,14 +28,11 @@ public class GlobalMovement : MonoBehaviour
     
     public const float kMinSpeed = 1.5f;
     public float distance = 0;
-    public float CurrentSpeed => _currentSpeed;
+    public float CurrentSpeed => _currentlSpeed;
     
     private UnityEvent deathEvent;
     private float runAcceleration = 1f;
-    private float _currentSpeed = kMinSpeed;
-    
-    private int totalShieldCharges => (int)DataManager.Events.passiveSkills.shieldCharges;
-    private int currentShieldCharges = 0;
+    private float _currentlSpeed = kMinSpeed;
 
     private void Start()
     {
@@ -43,11 +40,6 @@ public class GlobalMovement : MonoBehaviour
 
         deathEvent = DataManager.Events.OnPlayerDeath;
         deathEvent.AddListener(SetSpeedToZero);
-
-        maxRunSpeed += DataManager.Events.passiveSkills.maxSpeed;
-        accelerationRate += DataManager.Events.passiveSkills.maxAcceleration;
-        
-        currentShieldCharges = totalShieldCharges;
     }
 
     protected void FixedUpdate()
@@ -58,13 +50,13 @@ public class GlobalMovement : MonoBehaviour
         else
         {
             //move forward
-            _currentSpeed += runAcceleration / 3f;
-            distance += _currentSpeed * Time.deltaTime;
+            _currentlSpeed += runAcceleration / 3f;
+            distance += _currentlSpeed * Time.deltaTime;
         }
 
         runAcceleration = OnSlope(PlayerTransform) ? Mathf.Sqrt((accelerationRate * 10f) * Time.fixedDeltaTime) : runAcceleration = Mathf.Sqrt(accelerationRate * Time.fixedDeltaTime);
 
-		if (CurrentState == VelocityState.Maximun) _currentSpeed = maxRunSpeed;
+		if (CurrentState == VelocityState.Maximun) _currentlSpeed = maxRunSpeed;
     }
     
     public VelocityState GetSpeedState()
@@ -80,16 +72,8 @@ public class GlobalMovement : MonoBehaviour
         return inState;
     }
 
-    public void SetSpeedToZero() => _currentSpeed = 0f;
-    public void ReduceSpeed()
-    {
-        if (currentShieldCharges > 0) 
-        {
-            currentShieldCharges--;
-            return;
-        } 
-        else _currentSpeed /= 2f;
-    }
+    private void SetSpeedToZero() => _currentlSpeed = 0f;
+    public void ReduceSpeed() => _currentlSpeed /= 2f;
     
     private bool OnSlope(Transform t)
     {

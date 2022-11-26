@@ -4,11 +4,11 @@ using UnityEngine;
 
 public static class SaveDataManager
 {
-    public static void SaveJsonData(IEnumerable<ISaveble> a_Savables)
+    public static void SaveJsonData(IEnumerable<ISaveble> a_Saveables)
     {
         SaveData sd = new SaveData();
 
-        foreach (var saveable in a_Savables) saveable.PopulateSaveData(sd);
+        foreach (var saveable in a_Saveables) saveable.PopulateSaveData(sd);
 
         if (FileManager.WriteToFile("SaveData.dat", sd.ToJson())) Debug.Log("Save Succesful");
     }
