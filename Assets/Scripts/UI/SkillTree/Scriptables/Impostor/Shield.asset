@@ -17,7 +17,10 @@ MonoBehaviour:
   title: Force shield
   description: 'You can break through an a obstacle even if you don''t have the necessary
     speed. Grants one charge per level. '
-  cost: 500
-  currentLevel: 0
-  mxLevel: 2
+  baseCost: 500
+  baseLevel: 0
+  maxLevel: 2
+  currentCost: 1000
+  currentLevel: 1
   increaseAmount: 1
+  TotalAmountSpent: 500

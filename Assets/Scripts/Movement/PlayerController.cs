@@ -5,9 +5,12 @@ using UnityEngine.InputSystem;
 using System.Linq;
 using UnityEngine.Events;
 using System;
+using DG.Tweening;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] SphereCollider magneticField;
+
     [Header("Jump parameters")]
     [SerializeField] protected LayerMask groundLayers;
     [SerializeField] protected float jumpHeight = 2f, inputGravity = -30f;
@@ -33,13 +36,21 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator playerAnim;
     [SerializeField] private TrailController trail;
     [SerializeField] private CharacterAudio cAudio;
+    [SerializeField] private GameObject shield;
+    private Vector3 shieldOriginalScale = Vector3.zero;
+    private Vector3 ShieldOriginalPosition = Vector3.zero;
+    private const float kAnimShildTime = 1.1f;
 
     private UnityEvent deathEvent;
+    private UnityEvent<int> collectEvent;
     private Rigidbody rb;
     private PlayerInput inputMap;
     public Vector3 desiredGravity;
     private float gravity => desiredGravity.y > 0f ? inputGravity : inputGravity * 3f;
     private bool isDead = false;
+
+    public List<Transform> caughtTransforms = new List<Transform>();
+    private CharacterSheet passiveSkills => DataManager.Events.passiveSkills;
 
     void Start()
     {   
@@ -49,14 +60,29 @@ public class PlayerController : MonoBehaviour
         inputMap.Keyboard.Jump.performed += Jump;
         inputMap.Keyboard.Slide.started += Sliding;
         inputMap.Keyboard.Pause.started += Pause;
-        
+
         deathEvent = DataManager.Events.OnPlayerDeath;
-        deathEvent.AddListener(Death);
+        collectEvent = DataManager.Events.OnCollectCoin;
         
+        deathEvent.AddListener(Death);
+        collectEvent.AddListener(RemoveCaughtTransform);
+
         rb = GetComponent<Rigidbody>();
 
         originalColliderCenter = mCollider.center;
         originalColliderHeight = mCollider.height;
+
+        shieldOriginalScale = shield.transform.localScale;
+        ShieldOriginalPosition = shield.transform.localPosition;
+        
+        shield.SetActive(passiveSkills.shieldCharges > 0);
+
+        if (passiveSkills.magForce < 1f) magneticField.enabled = false;
+        else 
+        {
+            magneticField.enabled = true;
+            magneticField.radius += passiveSkills.magForce;
+        }
     }
 
 
@@ -71,6 +97,15 @@ public class PlayerController : MonoBehaviour
         trail.ControlEmission(isGrounded);
         if(isGrounded && !cAudio.isPlaying) cAudio.PlaySound(SoundType.running);
 
+        if (caughtTransforms != null && caughtTransforms.Count > 0)
+        {
+            foreach (var t in caughtTransforms)
+            {
+                float coinDist = Vector3.Distance(t.position, transform.position);
+                t.position = Vector3.MoveTowards(t.position, transform.position, 15 * Time.deltaTime);
+            }
+        }
+
         // handle slide cooldown
         slideInputStartTime += Time.deltaTime;
 
@@ -78,6 +113,9 @@ public class PlayerController : MonoBehaviour
         {
             mCollider.center = originalColliderCenter;
             mCollider.height = originalColliderHeight;
+            
+            shield.transform.DOScale(shieldOriginalScale, kAnimShildTime).SetEase(Ease.OutQuint);
+            shield.transform.DOLocalMove(ShieldOriginalPosition, kAnimShildTime).SetEase(Ease.OutQuint);
 
             playerAnim.Play("Running");
             slideInputStartTime = 0;
@@ -126,8 +164,14 @@ public class PlayerController : MonoBehaviour
         mCollider.center = new Vector3(0f, 0.3f, 0f); 
         mCollider.height = 0.5f;
 
+        Vector3 newShieldScale = new Vector3(150f, 105f, 150f);
+        Vector3 newShieldPosition = new Vector3(0.2f, 0.3f, 0f);
+
+        shield.transform.DOScale(newShieldScale, kAnimShildTime).SetEase(Ease.OutQuint);
+        shield.transform.DOLocalMove(newShieldPosition, kAnimShildTime).SetEase(Ease.OutQuint);
+
         doingSlide = true;
-        playerAnim.Play("Female Action Pose");
+        playerAnim.Play("Slide_Dalla");
         slideInputStartTime = 0;
         CameraManager.SetNoise(ShakeMode.weak);
         cAudio.PlaySound(SoundType.slide);
@@ -144,8 +188,13 @@ public class PlayerController : MonoBehaviour
     
     private void Death()
     {
-        isDead = true;
-        gameObject.SetActive(false);
+        if(passiveSkills.reviveCharges < 1)
+        {
+            isDead = true;
+            gameObject.SetActive(false);
+            Debug.Log("dead");
+        }
+
     }
     
     private void Pause(InputAction.CallbackContext context)
@@ -159,7 +208,20 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter(Collision other) {
         if(other.transform.tag == "Obstacle") cAudio.PlaySound(SoundType.collision);
     }
-
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        if(!caughtTransforms.Contains(other.transform) && other.tag == "Collectable")
+        {
+            //Add Transform
+            caughtTransforms.Add(other.transform);
+        }
+    }
+    private void RemoveCaughtTransform(int dontUse)
+    {
+        Transform lastT = caughtTransforms.LastOrDefault();
+        caughtTransforms.Remove(lastT);
+    }
     private void OnDestroy()
     {
         if(inputMap != null)

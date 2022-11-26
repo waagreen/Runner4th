@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEditor;
 
 [RequireComponent(typeof(Button))]
 public class SkillNode : MonoBehaviour
@@ -12,6 +13,10 @@ public class SkillNode : MonoBehaviour
 
     [SerializeField] private Skill skill;
     [SerializeField] private Button nodeBt;
+
+    public int CurrentLevel => skill.currentLevel;
+    public int BaseCost => skill.BaseCost;
+    public int TotalAmountSpent => skill.TotalAmountSpent;
 
     [Header("Visual components")]
     public TMP_Text title;
@@ -49,44 +54,59 @@ public class SkillNode : MonoBehaviour
         UpdateNode();
     }
 
-    private void UpdateNode()
+    public void UpdateNode()
     {
-        if(currentCoins < skill.cost)
-        {
-            nodeBt.interactable = false;
-            bg.color = Color.grey;
-        }
+        bool isScientist = id < 3 ;
+        frame.sprite = isScientist ? scientistIcon : impostorIcon;
+        
+        if(currentCoins < skill.currentCost) DisableNode();
+        else if (skill.currentLevel >= skill.MaxLevel) DisableNode();
         else
         {
-            bool isScientist = id < 3 ;
             nodeBt.interactable = true;
-
-            bg.color = isScientist ? scientistColor : impostorColor;
-            frame.sprite = isScientist ? scientistIcon : impostorIcon;
+            Color32 nodeColor = isScientist ? scientistColor : impostorColor;
+            bg.color = nodeColor;
+            frame.color = nodeColor;
         }
 
         title.SetText(skill.title);
         description.SetText(skill.description);
         
-        level.SetText($"Level:  {skill.currentLevel} / {skill.mxLevel}");
-        cost.SetText($"Cost: {skill.cost}");
+        level.SetText($"Level: {skill.currentLevel} / {skill.MaxLevel}");
+        cost.SetText($"Cost: {skill.currentCost}");
         
         icon.sprite = skill.icon;
     }
 
     private void Buy()
     {
-        if(currentCoins >= skill.cost)
+        if(currentCoins >= skill.currentCost)
         {
-            events.OnSkillBuy.Invoke(skill.increaseAmount);
-            events.GameplayData.SpendCoins(skill.cost);
+            PassiveSkill passiveSkill = new PassiveSkill();
+            passiveSkill.id = skill.id;
+            passiveSkill.increaseAmount = skill.increaseAmount;
+
+            events.OnSkillBuy.Invoke(passiveSkill);
+            events.GameplayData.SpendCoinsFromTotal(skill.currentCost);
             
+            
+            skill.TotalAmountSpent += skill.currentLevel > 0 ? skill.currentCost : skill.BaseCost;
             skill.currentLevel++;
-            skill.cost *= 2;
+            skill.currentCost = BaseCost * (CurrentLevel + 1);
+            EditorUtility.SetDirty(skill);
             UpdateNode();
         }
         else Debug.Log("NOT ENOUGH COINS!");
     }
+
+    public void DisableNode()
+    {
+        nodeBt.interactable = false;
+        bg.color = Color.grey;
+        frame.color = Color.grey;
+    }
+
+    public void ResetSkillValues() => skill.ResetValues();
 
     private void OnDestroy() {
         nodeBt.onClick.RemoveListener(Buy);

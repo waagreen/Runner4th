@@ -16,7 +16,10 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: d112dc9a938ea094896aee6a8fe3c7c1, type: 3}
   title: Life stabilizer
   description: Come back from the dead. Grants one charge per level.
-  cost: 500
+  baseCost: 500
+  baseLevel: 0
+  maxLevel: 2
+  currentCost: 500
   currentLevel: 0
-  mxLevel: 2
   increaseAmount: 1
+  TotalAmountSpent: 0
