@@ -39,12 +39,12 @@ public class TrailController : MonoBehaviour
             case 1:
                 colorOverLifeTime.color = grads[1];
                 emissionModule.rateOverTime = 150f;
-                CameraManager.SetFov(35);
+                CameraManager.SetFov(45);
                 break;
             case 2:
                 colorOverLifeTime.color = grads[2];
                 emissionModule.rateOverTime = 450f;
-                CameraManager.SetFov(40);
+                CameraManager.SetFov(50);
                 break;
         }
 

@@ -357,4 +357,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDestructable: 1
-  desiredVelocity: 3
+  desiredVelocity: 0
