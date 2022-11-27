@@ -5098,14 +5098,16 @@ MonoBehaviour:
     m_Bits: 8
   jumpHeight: 8
   inputGravity: -18
-  inputJumpTime: 0.8
+  inputJumpTime: 0.7
   jumpButtonGracePeriod: 0.1
+  isGrounded: 0
   reducedHeight: 0.35
-  inputHoldTime: 0.5
+  inputHoldTime: 0.65
   mCollider: {fileID: 1806503444}
   playerAnim: {fileID: 5609211602285801454}
   trail: {fileID: 916423943014411546}
   cAudio: {fileID: 6352440473234375320}
+  desiredGravity: {x: 0, y: 0, z: 0}
 --- !u!54 &6977278634281835142
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5116,7 +5118,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0.5
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -5245,6 +5247,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Protagonista@T-Pose
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7c8ea62ee46df4aa0895ee165545de84,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 7c8ea62ee46df4aa0895ee165545de84,
         type: 3}
