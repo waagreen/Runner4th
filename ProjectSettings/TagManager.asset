@@ -11,6 +11,7 @@ TagManager:
   - RestartScreen
   - Target
   - Collectable
+  - JumpPlataform
   layers:
   - Default
   - TransparentFX
