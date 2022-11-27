@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     private float? lastGroundedTime;
     private float? jumpButtonPressedTime;
     
-    public bool isGrounded => Physics.CheckSphere(transform.position, .2f, groundLayers);
+    public bool isGrounded = false;
 
     [Header("Slide parameters")]
     [SerializeField] private float reducedHeight, inputHoldTime = 2f;
