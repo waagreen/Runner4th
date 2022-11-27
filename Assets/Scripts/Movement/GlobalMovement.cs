@@ -34,6 +34,7 @@ public class GlobalMovement : MonoBehaviour
     private float runAcceleration = 1f;
     private float _currentSpeed = kMinSpeed;
     
+    public int CurrentShieldCharges => currentShieldCharges;
     private int totalShieldCharges => (int)DataManager.Events.passiveSkills.shieldCharges;
     private int currentShieldCharges = 0;
 
@@ -86,7 +87,7 @@ public class GlobalMovement : MonoBehaviour
         if (currentShieldCharges > 0) 
         {
             currentShieldCharges--;
-            return;
+            DataManager.Events.OnShieldHit.Invoke();
         } 
         else _currentSpeed /= 2f;
     }

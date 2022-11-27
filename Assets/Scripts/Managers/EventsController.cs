@@ -16,6 +16,7 @@ public class EventsController : MonoBehaviour, ISaveble
     [HideInInspector] public UnityEvent<PassiveSkill> OnSkillBuy;
     [HideInInspector] public UnityEvent OnUpdateSkillTree;
     [HideInInspector] public UnityEvent OnCoinsSpend;
+    [HideInInspector] public UnityEvent OnShieldHit;
 
     public PlayerGameplayData GameplayData => gameplayData; 
     private ScriptableRendererFeature blitFeature;
@@ -33,6 +34,7 @@ public class EventsController : MonoBehaviour, ISaveble
         OnSkillBuy = new UnityEvent<PassiveSkill>();
         OnCoinsSpend = new UnityEvent();
         OnUpdateSkillTree = new UnityEvent();
+        OnShieldHit = new UnityEvent();
 
         LoadJsonData(this);
     
@@ -120,5 +122,7 @@ public class EventsController : MonoBehaviour, ISaveble
         OnPlayerDeath.RemoveAllListeners();
         OnSkillBuy.RemoveAllListeners();
         OnCoinsSpend.RemoveAllListeners();
+        OnUpdateSkillTree.RemoveAllListeners();
+        OnShieldHit.RemoveAllListeners();
     }
 }

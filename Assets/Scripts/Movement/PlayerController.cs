@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEngine.Events;
 using System;
 using DG.Tweening;
+using System.Threading.Tasks;
 
 public class PlayerController : MonoBehaviour
 {
@@ -42,7 +43,9 @@ public class PlayerController : MonoBehaviour
     private const float kAnimShildTime = 1.1f;
 
     private UnityEvent deathEvent;
+    private UnityEvent shieldEvent;
     private UnityEvent<int> collectEvent;
+
     private Rigidbody rb;
     private PlayerInput inputMap;
     private Vector3 desiredGravity;
@@ -63,9 +66,11 @@ public class PlayerController : MonoBehaviour
 
         deathEvent = DataManager.Events.OnPlayerDeath;
         collectEvent = DataManager.Events.OnCollectCoin;
-        
+        shieldEvent = DataManager.Events.OnShieldHit;
+
         deathEvent.AddListener(Death);
         collectEvent.AddListener(RemoveCaughtTransform);
+        shieldEvent.AddListener(UptadeShield);
 
         rb = GetComponent<Rigidbody>();
 
@@ -74,8 +79,6 @@ public class PlayerController : MonoBehaviour
 
         shieldOriginalScale = shield.transform.localScale;
         ShieldOriginalPosition = shield.transform.localPosition;
-        
-        shield.SetActive(passiveSkills.shieldCharges > 0);
 
         if (passiveSkills.magForce < 1f) magneticField.enabled = false;
         else 
@@ -83,6 +86,8 @@ public class PlayerController : MonoBehaviour
             magneticField.enabled = true;
             magneticField.radius += passiveSkills.magForce;
         }
+
+        Debug.Log(passiveSkills.shieldCharges);
     }
 
 
@@ -108,7 +113,7 @@ public class PlayerController : MonoBehaviour
             mCollider.center = originalColliderCenter;
             mCollider.height = originalColliderHeight;
             
-            shield.transform.DOScale(shieldOriginalScale, kAnimShildTime).SetEase(Ease.OutQuint);
+            shield.transform.DOScale(shieldOriginalScale, kAnimShildTime - 0.5f).SetEase(Ease.OutQuint);
             shield.transform.DOLocalMove(ShieldOriginalPosition, kAnimShildTime).SetEase(Ease.OutQuint);
 
             playerAnim.Play("Running");
@@ -186,11 +191,12 @@ public class PlayerController : MonoBehaviour
         {
             isDead = true;
             gameObject.SetActive(false);
-            Debug.Log("dead");
         }
 
     }
     
+    private void UptadeShield() => shield.SetActive(DataManager.GlobalMovement.CurrentShieldCharges > 0);
+
     private void Pause(InputAction.CallbackContext context)
     {
         if(isDead) return;
@@ -199,8 +205,9 @@ public class PlayerController : MonoBehaviour
 
     private void OnBecameInvisible() => deathEvent.Invoke();
     
-    private void OnCollisionEnter(Collision other) {
-        if(other.transform.tag == "Obstacle") cAudio.PlaySound(SoundType.collision);    
+    private void OnCollisionEnter(Collision other)
+    {
+        if(other.transform.tag == "Obstacle") cAudio.PlaySound(SoundType.collision);   
     }
     
     private void OnTriggerEnter(Collider other)
