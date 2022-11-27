@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Materials/PrototypeMaterialCyan.mat.meta
 guid: 9f53d36eac5bfd84ebe932e4e96a71e6
+========
+guid: a5a30cfab531d0149a54dc7d97e0e5cb
+>>>>>>>> 8c81d8e36e1fe1d694d3a7c3a87861735219c409:Assets/Models/Materials/Materiais 2/Lampada.mat.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 2100000

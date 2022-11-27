@@ -10,7 +10,6 @@ TagManager:
   - Obstacle
   - RestartScreen
   - Target
-  - Collectable
   - JumpPlataform
   layers:
   - Default

@@ -5,44 +5,18 @@ using System.Threading.Tasks;
 
 public class Coins : MonoBehaviour
 {
-	public Renderer sphere;
     public AudioSource audioScr;
-    public int coinValue;
 
-	private Gradient[] grads => DataManager.GlobalMovement.velocityGradients;
-    private float redCoinChance;
-
-    private void Start() {
-        redCoinChance = DataManager.Events.passiveSkills.redCoinChance;
-        Setup();
-    }
-
-    private void Setup()
-    {
-        float diceThrow = Random.Range(0f, 1f);
-        if (redCoinChance >= diceThrow) SetRedCoin();
-        else SetGreenCoin();
-    }
+    public int coinValue = 1;
 
     private async void OnTriggerEnter(Collider other) 
     {
-        audioScr.Play();
-        DataManager.Events.OnCollectCoin.Invoke(coinValue);
-        await Task.Delay(115);
-        gameObject?.SetActive(false);
-    }
-
-    private void SetRedCoin()
-    {
-        coinValue = 5;
-        sphere.material.color = grads[2].colorKeys[1].color;
-        transform.localScale = Vector3.one * 0.8f;
-    }
-
-    private void SetGreenCoin()
-    {
-        coinValue = 1;
-        sphere.material.color = grads[0].colorKeys[1].color;
-        transform.localScale = Vector3.one * 0.5f;
+        if(other.tag == DataManager.playerTag)
+        {
+            audioScr.Play();
+            DataManager.Events.OnCollectCoin.Invoke(coinValue);
+            await Task.Delay(115);
+            gameObject.SetActive(false);
+        }
     }
 }

@@ -17,10 +17,7 @@ MonoBehaviour:
   title: Bloody Money
   description: Increase the chance of red coins spawning. Their value is greater
     than normal coins!
-  baseCost: 125
-  baseLevel: 0
-  maxLevel: 3
-  currentCost: 125
+  cost: 125
   currentLevel: 0
-  increaseAmount: 0.05
-  TotalAmountSpent: 0
+  mxLevel: 3
+  increaseAmount: 0.15
