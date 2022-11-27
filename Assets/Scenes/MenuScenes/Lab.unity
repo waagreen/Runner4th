@@ -1368,7 +1368,7 @@ PrefabInstance:
         type: 3}
       propertyPath: resetButton
       value: 
-      objectReference: {fileID: 1571408132}
+      objectReference: {fileID: 1919534437}
     - target: {fileID: 3894591761869342021, guid: a0bc5b9555c3af0408f1d9fd806191e2,
         type: 3}
       propertyPath: m_SizeDelta.y
@@ -1632,7 +1632,7 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1571408130}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1571408132 stripped
+--- !u!114 &1919534437 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3338631133253766558, guid: a0bc5b9555c3af0408f1d9fd806191e2,
     type: 3}
