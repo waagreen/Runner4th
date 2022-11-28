@@ -35,10 +35,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DissolveStrength: 0.025
+    - _DissolveStrength: 1
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Transparency: 0.8
+    - _Transparency: 0.1
     m_Colors:
     - _MaskSmoothStep: {r: 0, g: 0, b: 0, a: 0}
     - _ShieldColor: {r: 1.9290464, g: 1.9531426, b: 0.47039038, a: 1}

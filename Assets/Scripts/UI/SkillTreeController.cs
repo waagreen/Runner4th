@@ -5,7 +5,6 @@ using System;
 using UnityEngine.UI;
 using MyBox;
 using System.Linq;
-using System.Threading.Tasks;
 
 public class SkillTreeController : MonoBehaviour
 {
@@ -18,6 +17,10 @@ public class SkillTreeController : MonoBehaviour
     [SerializeField] private RectTransform gHolder;
     [SerializeField] private RectTransform bHolder;
     [SerializeField] private Button resetButton;
+    [SerializeField] private Material tilingMat;
+    
+    private Color kRed = new Color(229, 68, 71);
+    private Color kBlue = new Color(68, 207, 229);
 
     void Start()
     {
@@ -38,56 +41,58 @@ public class SkillTreeController : MonoBehaviour
             if (newSkill != null) badSkills.Add(newSkill);
         }
 
-        Task.Delay(200);
         UpdateTree();
     }
 
     public void UpdateTree()
     {
+        Color bgColor = playerIsImpostor ? kRed : kBlue;
+        // tilingMat.SetColor("_BaseColor", bgColor);
+
         Debug.Log("no skills: " + hasNoSkills);
         resetButton.gameObject.SetActive(!hasNoSkills);
         
         if (hasNoSkills) LockOppositeTree();
         else DisableOppositeSide();
 
-        if(hasNoSkills)
+        foreach (SkillNode skill in goodSkills)
         {
-            foreach (SkillNode skill in goodSkills)
-            {
-                SkillNode previousSkill = null;
-                int currentIndex = goodSkills.IndexOf(skill);
-                previousSkill = currentIndex == 0 ? goodSkills[currentIndex] : goodSkills[currentIndex-1];
-                
-                skill.SetupNode();
+            SkillNode previousSkill = null;
+            int currentIndex = goodSkills.IndexOf(skill);
+            previousSkill = currentIndex == 0 ? goodSkills[currentIndex] : goodSkills[currentIndex-1];
+            
+            skill.SetupNode();
 
-                if(currentIndex == 0 || previousSkill.CurrentLevel > skill.CurrentLevel / 2)
-                {
-                    skill.EnableNode();
-                }
-                else
-                {   
-                    skill.DisableNode();
-                }
+            if(currentIndex == 0 || previousSkill.CurrentLevel > skill.CurrentLevel / 2)
+            {
+                skill.EnableNode();
+                Debug.Log("Disabled: " + skill.name);
             }
-
-            foreach (SkillNode skill in badSkills)
-            {
-                SkillNode previousSkill = null;
-                int currentIndex = badSkills.IndexOf(skill);
-                previousSkill = currentIndex == 0 ? badSkills[currentIndex] : badSkills[currentIndex-1];
-                
-                skill.SetupNode();
-
-                if(currentIndex == 0 || previousSkill.CurrentLevel > skill.CurrentLevel / 2)
-                { 
-                    skill.EnableNode();
-                }
-                else
-                {
-                    skill.DisableNode();
-                }
+            else
+            {   
+                skill.DisableNode();
+                Debug.Log("Disabled: " + skill.name);
             }
         }
+        
+        foreach (SkillNode skill in badSkills)
+        {
+            SkillNode previousSkill = null;
+            int currentIndex = badSkills.IndexOf(skill);
+            previousSkill = currentIndex == 0 ? badSkills[currentIndex] : badSkills[currentIndex-1];
+            
+            skill.SetupNode();
+
+            if(currentIndex == 0 || previousSkill.CurrentLevel > skill.CurrentLevel / 2)
+            { 
+                skill.EnableNode();
+            }
+            else
+            {
+                skill.DisableNode();
+            }
+        }
+        
     }
 
     [ButtonMethod]

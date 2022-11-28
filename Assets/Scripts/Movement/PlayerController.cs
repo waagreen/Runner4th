@@ -81,6 +81,7 @@ public class PlayerController : MonoBehaviour
 
         shieldOriginalScale = shield.transform.localScale;
         ShieldOriginalPosition = shield.transform.localPosition;
+        UptadeShield();
 
         if (passiveSkills.magForce < 1f) magneticField.enabled = false;
         else 
@@ -88,8 +89,6 @@ public class PlayerController : MonoBehaviour
             magneticField.enabled = true;
             magneticField.radius += passiveSkills.magForce;
         }
-
-        Debug.Log(passiveSkills.shieldCharges);
     }
 
 

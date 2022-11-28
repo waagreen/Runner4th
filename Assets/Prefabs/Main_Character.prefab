@@ -5102,6 +5102,7 @@ MonoBehaviour:
   inputGravity: -18
   inputJumpTime: 0.8
   jumpButtonGracePeriod: 0.1
+  isGrounded: 0
   reducedHeight: 0.35
   inputHoldTime: 0.5
   mCollider: {fileID: 1806503444}
@@ -5188,7 +5189,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 3e96ed22f27b1954bad3d9bdd61cca21,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 200
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 3e96ed22f27b1954bad3d9bdd61cca21,
         type: 3}
@@ -5443,12 +5444,12 @@ PrefabInstance:
     - target: {fileID: 795487115560537357, guid: 211c93c33b45d2f49b54b510bef98ac9,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.15
+      value: 0.17
       objectReference: {fileID: 0}
     - target: {fileID: 795487115560537357, guid: 211c93c33b45d2f49b54b510bef98ac9,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.95
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 795487115560537357, guid: 211c93c33b45d2f49b54b510bef98ac9,
         type: 3}
