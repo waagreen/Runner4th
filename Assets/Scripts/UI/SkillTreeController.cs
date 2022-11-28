@@ -78,6 +78,7 @@ public class SkillTreeController : MonoBehaviour
             }
             else continue;
         }
+        
         events.GameplayData.AddCoinsToTotal(coinsToReturn);
         events.OnCoinsSpend.Invoke();
         UpdateTree();

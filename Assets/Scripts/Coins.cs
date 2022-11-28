@@ -16,7 +16,7 @@ public class Coins : MonoBehaviour
             audioScr.Play();
             DataManager.Events.OnCollectCoin.Invoke(coinValue);
             await Task.Delay(115);
-            gameObject.SetActive(false);
+            gameObject?.SetActive(false);
         }
     }
 }

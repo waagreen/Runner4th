@@ -45,6 +45,8 @@ public class GlobalMovement : MonoBehaviour
 
         deathEvent = DataManager.Events.OnPlayerDeath;
         deathEvent.AddListener(SetSpeedToZero);
+        
+        currentShieldCharges = totalShieldCharges;
     }
 
     protected void FixedUpdate()
