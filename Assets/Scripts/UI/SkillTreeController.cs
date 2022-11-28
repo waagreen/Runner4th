@@ -71,9 +71,8 @@ public class SkillTreeController : MonoBehaviour
                 int currentIndex = activeList.IndexOf(skill);
                 previousSkill = currentIndex == 0 ? activeList[currentIndex] : activeList[currentIndex-1];
                 skill.SetupNode(previousSkill.CurrentLevel);
+                skill.UpdateNode();
             }
-            
-            events.OnSkillTreeLock.Invoke();
         }
     
     }

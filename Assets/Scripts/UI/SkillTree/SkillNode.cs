@@ -9,7 +9,6 @@ using UnityEditor;
 public class SkillNode : MonoBehaviour
 {
     private EventsController events;
-    int currentCoins => events.GameplayData.TotalCoins;
 
     [SerializeField] private Skill skill;
     [SerializeField] private Button nodeBt;
@@ -61,25 +60,25 @@ public class SkillNode : MonoBehaviour
 
     public void UpdateNode()
     {
-        if (previousLevel < CurrentLevel / 2)
+        if (skill == null) return;
+
+        int totalCoins = DataManager.Events.GameplayData.TotalCoins;
+
+        if (previousLevel < 1)
         {
             DisableNode();
-            Debug.Log("previous level was insufficient");
         }
-        else if (currentCoins < skill.currentCost) 
+        else if (totalCoins < skill.currentCost) 
         {
             DisableNode();
-            Debug.Log("coins was insufficient");
         }
         else if (skill.currentLevel >= skill.MaxLevel)
         {
             DisableNode();
-            Debug.Log("was max level");
         }
-        else if (nodeBt.interactable == false)
+        else
         {
             EnableNode();
-            Debug.Log("enabled");
         }
 
         SetNodeVisuals();
@@ -87,7 +86,9 @@ public class SkillNode : MonoBehaviour
 
     private void Buy()
     {
-        if(currentCoins >= skill.currentCost)
+        int totalCoins = DataManager.Events.GameplayData.TotalCoins;
+    
+        if(totalCoins >= skill.currentCost)
         {
             PassiveSkill passiveSkill = new PassiveSkill();
             passiveSkill.id = skill.id;
