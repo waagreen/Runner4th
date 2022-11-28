@@ -42,7 +42,6 @@ public class SkillNode : MonoBehaviour
 
         nodeBt.onClick.AddListener(Buy);
         events.OnCoinsSpend.AddListener(UpdateNode);
-        events.OnSkillTreeLock.AddListener(UpdateNode);
     }
 
     public void SetupNode(int previousLevel)

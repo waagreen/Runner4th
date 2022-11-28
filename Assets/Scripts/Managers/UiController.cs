@@ -8,11 +8,12 @@ using UnityEngine.Events;
 
 public enum SceneOrder
 {
-    MainMenu,
-    Lab,
     FirstLevel,
     SecondLevel,
     ThirdLevel,
+    MainMenu,
+    Lab,
+    Cutscene
 }
 
 public class UiController : MonoBehaviour
@@ -25,8 +26,12 @@ public class UiController : MonoBehaviour
     public Animator transition;
     public float transitionDuration;
     
+    public int GetCurrentSceneIndex() => SceneManager.GetActiveScene().buildIndex;
     private UnityEvent deathEvent;
     private UnityEvent<bool> pauseEvent;
+
+    public int CurrentCutscene => currentCutscene;
+    private int currentCutscene;
 
     private void Start() 
     {   
@@ -37,6 +42,17 @@ public class UiController : MonoBehaviour
         pauseEvent.AddListener(ShowPauseScreen);
     }
 
+    public void SetCurrentCutscene(int currentCutscene)
+    {
+        this.currentCutscene = currentCutscene;
+        StartCoroutine(loadCoroutine(SceneOrder.Cutscene));
+    }
+
+    public void LoadLevel(SceneOrder desiredScene) => StartCoroutine(loadCoroutine(desiredScene));
+    private void ShowDeathScreen() => deathScreen.SetActive(true);
+    private void ShowPauseScreen(bool isPaused) => pauseScreen.SetActive(isPaused); 
+
+    
     IEnumerator loadCoroutine(SceneOrder desiredScene)
     {
         Time.timeScale = 1f;
@@ -45,10 +61,4 @@ public class UiController : MonoBehaviour
 
         SceneManager.LoadScene(desiredScene.ToString());
     }
-
-    public void LoadLevel(SceneOrder desiredScene) => StartCoroutine( loadCoroutine(desiredScene));
-    
-
-    private void ShowDeathScreen() => deathScreen.SetActive(true);
-    private void ShowPauseScreen(bool isPaused) => pauseScreen.SetActive(isPaused); 
 }

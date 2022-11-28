@@ -12,6 +12,12 @@ EditorBuildSettings:
     path: Assets/Scenes/MenuScenes/Lab.unity
     guid: e66f89c64fa47a34585cb3a6a8730560
   - enabled: 1
-    path: Assets/Scenes/Levels/LostLevel.unity
-    guid: 02b03aecb29130f49987242c0d987804
+    path: Assets/Scenes/Cutscene.unity
+    guid: 808ca349ef5c0cb46a52825fe2450c52
+  - enabled: 1
+    path: Assets/Scenes/Levels/FirstLevel.unity
+    guid: c43dc91ddc74f3d4d92c4ac761e115dd
+  - enabled: 1
+    path: Assets/Scenes/Levels/SecondLevel.unity
+    guid: 01d01229d510f8e40ad761a3c1f4dece
   m_configObjects: {}
