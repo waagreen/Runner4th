@@ -20,7 +20,7 @@ MonoBehaviour:
   baseCost: 500
   baseLevel: 0
   maxLevel: 2
-  currentCost: 1000
-  currentLevel: 1
+  currentCost: 500
+  currentLevel: 0
   increaseAmount: 1
-  TotalAmountSpent: 500
+  TotalAmountSpent: 0

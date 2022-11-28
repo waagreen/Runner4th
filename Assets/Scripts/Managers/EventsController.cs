@@ -12,10 +12,10 @@ public class EventsController : MonoBehaviour, ISaveble
 
     [HideInInspector] public UnityEvent OnPlayerDeath;
     [HideInInspector] public UnityEvent<int> OnCollectCoin;
+    [HideInInspector] public UnityEvent OnCoinsSpend;
     [HideInInspector] public UnityEvent<bool> OnPauseGame;
     [HideInInspector] public UnityEvent<PassiveSkill> OnSkillBuy;
     [HideInInspector] public UnityEvent OnUpdateSkillTree;
-    [HideInInspector] public UnityEvent OnCoinsSpend;
     [HideInInspector] public UnityEvent OnShieldHit;
 
     public PlayerGameplayData GameplayData => gameplayData; 
@@ -30,9 +30,9 @@ public class EventsController : MonoBehaviour, ISaveble
 
         OnPlayerDeath = new UnityEvent();
         OnCollectCoin = new UnityEvent<int>();
+        OnCoinsSpend = new UnityEvent();
         OnPauseGame = new UnityEvent<bool>();
         OnSkillBuy = new UnityEvent<PassiveSkill>();
-        OnCoinsSpend = new UnityEvent();
         OnUpdateSkillTree = new UnityEvent();
         OnShieldHit = new UnityEvent();
 

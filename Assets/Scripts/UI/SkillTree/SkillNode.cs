@@ -59,7 +59,7 @@ public class SkillNode : MonoBehaviour
         bool isScientist = id < 3 ;
         frame.sprite = isScientist ? scientistIcon : impostorIcon;
         
-        if(currentCoins < skill.currentCost) DisableNode();
+        if (currentCoins < skill.currentCost) DisableNode();
         else if (skill.currentLevel >= skill.MaxLevel) DisableNode();
         else
         {
@@ -89,7 +89,6 @@ public class SkillNode : MonoBehaviour
             events.OnSkillBuy.Invoke(passiveSkill);
             events.GameplayData.SpendCoinsFromTotal(skill.currentCost);
             
-            
             skill.TotalAmountSpent += skill.currentLevel > 0 ? skill.currentCost : skill.BaseCost;
             skill.currentLevel++;
             skill.currentCost = BaseCost * (CurrentLevel + 1);
@@ -101,6 +100,7 @@ public class SkillNode : MonoBehaviour
 
     public void DisableNode()
     {
+        Debug.Log(skill.name + " was disabled");
         nodeBt.interactable = false;
         bg.color = Color.grey;
         frame.color = Color.grey;

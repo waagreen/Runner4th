@@ -31,6 +31,7 @@ public class PlayerGameplayData : ScriptableObject
     
     public bool PlayerIsImpostor => passiveSkills.TrueForAll(k => k.id > 2);
     public bool PlayerHasNoSkills => passiveSkills.IsNullOrEmpty();
+    public bool FirstSkill => passiveSkills.Count == 1;
 
     public void ClearSkills() => passiveSkills.Clear();
     public void SyncPassiveSkills(List<PassiveSkill> skillsToSync)
