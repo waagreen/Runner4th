@@ -5,6 +5,7 @@ using System;
 using UnityEngine.UI;
 using MyBox;
 using System.Linq;
+using System.Threading.Tasks;
 
 public class SkillTreeController : MonoBehaviour
 {
@@ -25,27 +26,46 @@ public class SkillTreeController : MonoBehaviour
         events.OnCoinsSpend.AddListener(UpdateTree);
         resetButton.onClick.AddListener(ResetAllSkillValues);
 
+        foreach (Transform child in gHolder.transform)
+        {
+            var newSkill = child.GetComponent<SkillNode>();
+            if (newSkill != null) goodSkills.Add(newSkill);
+        }        
+        
+        foreach (Transform child in bHolder.transform)
+        {
+            var newSkill = child.GetComponent<SkillNode>();
+            if (newSkill != null) badSkills.Add(newSkill);
+        }
+
+        Task.Delay(200);
         UpdateTree();
     }
 
     public void UpdateTree()
     {
+        Debug.Log("no skills: " + hasNoSkills);
         resetButton.gameObject.SetActive(!hasNoSkills);
         
         if (hasNoSkills) LockOppositeTree();
         else DisableOppositeSide();
 
-        if(hasNoSkills && DataManager.Events.GameplayData.FirstSkill)
+        if(hasNoSkills)
         {
-            Debug.Log("GOT ON MULT");
             foreach (SkillNode skill in goodSkills)
             {
                 SkillNode previousSkill = null;
                 int currentIndex = goodSkills.IndexOf(skill);
-                if(currentIndex > 0) previousSkill = goodSkills[currentIndex-1];
+                previousSkill = currentIndex == 0 ? goodSkills[currentIndex] : goodSkills[currentIndex-1];
+                
+                skill.SetupNode();
 
-                if(previousSkill != null && previousSkill.CurrentLevel <= 2)
-                {  
+                if(currentIndex == 0 || previousSkill.CurrentLevel > skill.CurrentLevel / 2)
+                {
+                    skill.EnableNode();
+                }
+                else
+                {   
                     skill.DisableNode();
                 }
             }
@@ -54,9 +74,15 @@ public class SkillTreeController : MonoBehaviour
             {
                 SkillNode previousSkill = null;
                 int currentIndex = badSkills.IndexOf(skill);
-                if(currentIndex > 0) previousSkill = badSkills[currentIndex-1];
+                previousSkill = currentIndex == 0 ? badSkills[currentIndex] : badSkills[currentIndex-1];
+                
+                skill.SetupNode();
 
-                if(previousSkill != null && previousSkill.CurrentLevel <= 2)
+                if(currentIndex == 0 || previousSkill.CurrentLevel > skill.CurrentLevel / 2)
+                { 
+                    skill.EnableNode();
+                }
+                else
                 {
                     skill.DisableNode();
                 }

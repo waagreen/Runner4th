@@ -27,6 +27,7 @@ public class SkillNode : MonoBehaviour
     public Image icon;
     public Image frame;
     public int id => skill.id; 
+    private bool isScientist => id < 3 ;
 
     [Header("Node Colors & Sprites")]
     public Color32 impostorColor;
@@ -38,7 +39,6 @@ public class SkillNode : MonoBehaviour
     {
         events = DataManager.Events;
 
-        SetupNode();
         nodeBt.onClick.AddListener(Buy);
         events.OnCoinsSpend.AddListener(UpdateNode);
     }
@@ -50,32 +50,17 @@ public class SkillNode : MonoBehaviour
             Debug.LogError("The node needs a skill to function");
             return;
         }
-
-        UpdateNode();
+        
+        frame.sprite = isScientist ? scientistIcon : impostorIcon;
+        SetNodeVisuals();
     }
 
     public void UpdateNode()
     {
-        bool isScientist = id < 3 ;
-        frame.sprite = isScientist ? scientistIcon : impostorIcon;
-        
-        if (currentCoins < skill.currentCost) DisableNode();
-        else if (skill.currentLevel >= skill.MaxLevel) DisableNode();
-        else
-        {
-            nodeBt.interactable = true;
-            Color32 nodeColor = isScientist ? scientistColor : impostorColor;
-            bg.color = nodeColor;
-            frame.color = nodeColor;
-        }
+        if (currentCoins < skill.currentCost || skill.currentLevel >= skill.MaxLevel) DisableNode();
+        else EnableNode();
 
-        title.SetText(skill.title);
-        description.SetText(skill.description);
-        
-        level.SetText($"Level: {skill.currentLevel} / {skill.MaxLevel}");
-        cost.SetText($"Cost: {skill.currentCost}");
-        
-        icon.sprite = skill.icon;
+        SetNodeVisuals();
     }
 
     private void Buy()
@@ -98,12 +83,32 @@ public class SkillNode : MonoBehaviour
         else Debug.Log("NOT ENOUGH COINS!");
     }
 
+    private void SetNodeVisuals()
+    {
+        title.SetText(skill.title);
+        description.SetText(skill.description);
+        
+        level.SetText($"Level: {skill.currentLevel} / {skill.MaxLevel}");
+        cost.SetText($"Cost: {skill.currentCost}");
+        
+        icon.sprite = skill.icon;
+    }
+
     public void DisableNode()
     {
-        Debug.Log(skill.name + " was disabled");
         nodeBt.interactable = false;
         bg.color = Color.grey;
         frame.color = Color.grey;
+    }
+
+    public void EnableNode()
+    {
+        Debug.Log(skill.name + " was enabled");
+        
+        Color32 nodeColor = isScientist ? scientistColor : impostorColor;
+        nodeBt.interactable = true;
+        bg.color = nodeColor;
+        frame.color = nodeColor;
     }
 
     public void ResetSkillValues() => skill.ResetValues();
