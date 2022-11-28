@@ -570,7 +570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bt: {fileID: 753683159}
-  desiredScene: 0
+  desiredScene: 3
 --- !u!222 &753683162
 CanvasRenderer:
   m_ObjectHideFlags: 0
