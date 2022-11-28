@@ -17,6 +17,7 @@ public class EventsController : MonoBehaviour, ISaveble
     [HideInInspector] public UnityEvent<PassiveSkill> OnSkillBuy;
     [HideInInspector] public UnityEvent OnUpdateSkillTree;
     [HideInInspector] public UnityEvent OnShieldHit;
+    [HideInInspector] public UnityEvent OnSkillTreeLock;
 
     public PlayerGameplayData GameplayData => gameplayData; 
     private ScriptableRendererFeature blitFeature;
@@ -35,6 +36,7 @@ public class EventsController : MonoBehaviour, ISaveble
         OnSkillBuy = new UnityEvent<PassiveSkill>();
         OnUpdateSkillTree = new UnityEvent();
         OnShieldHit = new UnityEvent();
+        OnSkillTreeLock = new UnityEvent();
 
         LoadJsonData(this);
     
@@ -56,7 +58,6 @@ public class EventsController : MonoBehaviour, ISaveble
 
         if(FileManager.WriteToFile("SaveData.dat", sd.ToJson()))
         {
-            Debug.Log("Save Succesful");
         }
     }
 
@@ -68,7 +69,6 @@ public class EventsController : MonoBehaviour, ISaveble
             sd.LoadFromJson(json);
 
             eController.LoadFromSaveData(sd);
-            Debug.Log("Load Succesful");
         }
     }
 
@@ -124,5 +124,6 @@ public class EventsController : MonoBehaviour, ISaveble
         OnCoinsSpend.RemoveAllListeners();
         OnUpdateSkillTree.RemoveAllListeners();
         OnShieldHit.RemoveAllListeners();
+        OnSkillTreeLock.RemoveAllListeners();
     }
 }

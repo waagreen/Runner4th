@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MyBox;
+using UnityEditor;
 
 [CreateAssetMenu (menuName = "Skills/Create new Skill")]
 public class Skill : ScriptableObject

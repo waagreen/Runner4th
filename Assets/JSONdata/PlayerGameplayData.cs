@@ -30,7 +30,7 @@ public class PlayerGameplayData : ScriptableObject
     public List<PassiveSkill> PassiveSkills => passiveSkills;
     
     public bool PlayerIsImpostor => passiveSkills.TrueForAll(k => k.id > 2);
-    public bool PlayerHasNoSkills => passiveSkills.IsNullOrEmpty();
+    public bool PlayerHasNoSkills => passiveSkills.Count == 0;
     public bool FirstSkill => passiveSkills.Count == 1;
 
     public void ClearSkills() => passiveSkills.Clear();
@@ -98,6 +98,11 @@ public class PlayerGameplayData : ScriptableObject
     {
         totalCoins += coinsToAdd;
         coinsToAdd = 0;
+    }
+    [ButtonMethod]
+    private void ResetTotalCoins()
+    {
+        totalCoins = 0;
     }
     [ButtonMethod]
     public void ResetSkillTree()

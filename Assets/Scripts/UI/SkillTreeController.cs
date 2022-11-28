@@ -5,22 +5,26 @@ using System;
 using UnityEngine.UI;
 using MyBox;
 using System.Linq;
+using System.Threading.Tasks;
 
 public class SkillTreeController : MonoBehaviour
 {
     public List<SkillNode> goodSkills = new List<SkillNode>();
     public List<SkillNode> badSkills = new List<SkillNode>();
+    private List<SkillNode> GetActiveList() => playerIsImpostor ? badSkills : goodSkills;
     private EventsController events;
     private bool playerIsImpostor => events.GameplayData.PlayerIsImpostor;
     private bool hasNoSkills => events.GameplayData.PlayerHasNoSkills;
+    private static bool firstBuy = true;
 
     [SerializeField] private RectTransform gHolder;
     [SerializeField] private RectTransform bHolder;
     [SerializeField] private Button resetButton;
     [SerializeField] private Material tilingMat;
     
-    private Color kRed = new Color(229, 68, 71);
-    private Color kBlue = new Color(68, 207, 229);
+    private Color kRed = new Color(0.89f, 0.25f, 0.27f);
+    private Color kBlue = new Color(0.26f, 0.81f, 0.89f);
+    private Color kNeutral = new Color(0.45f, 0.45f, 0.45f);
 
     void Start()
     {
@@ -46,104 +50,32 @@ public class SkillTreeController : MonoBehaviour
 
     public void UpdateTree()
     {
-        Color bgColor = playerIsImpostor ? kRed : kBlue;
-        // tilingMat.SetColor("_BaseColor", bgColor);
-
-        Debug.Log("no skills: " + hasNoSkills);
         resetButton.gameObject.SetActive(!hasNoSkills);
         
-        if (hasNoSkills) LockOppositeTree();
-        else DisableOppositeSide();
-
-        foreach (SkillNode skill in goodSkills)
+        if (hasNoSkills)
         {
-            SkillNode previousSkill = null;
-            int currentIndex = goodSkills.IndexOf(skill);
-            previousSkill = currentIndex == 0 ? goodSkills[currentIndex] : goodSkills[currentIndex-1];
+            tilingMat.SetColor("_BaseColor", kNeutral);
+            SetupForFirstPurchase();
+        }
+        else
+        {   
+            Color bgColor = playerIsImpostor ? kRed : kBlue;
+            tilingMat.SetColor("_BaseColor", bgColor);
+            DisableOppositeSide();
+
+            List<SkillNode> activeList = GetActiveList();
             
-            skill.SetupNode();
-
-            if(currentIndex == 0 || previousSkill.CurrentLevel > skill.CurrentLevel / 2)
+            foreach (SkillNode skill in activeList)
             {
-                skill.EnableNode();
-                Debug.Log("Disabled: " + skill.name);
+                SkillNode previousSkill = null;
+                int currentIndex = activeList.IndexOf(skill);
+                previousSkill = currentIndex == 0 ? activeList[currentIndex] : activeList[currentIndex-1];
+                skill.SetupNode(previousSkill.CurrentLevel);
             }
-            else
-            {   
-                skill.DisableNode();
-                Debug.Log("Disabled: " + skill.name);
-            }
-        }
-        
-        foreach (SkillNode skill in badSkills)
-        {
-            SkillNode previousSkill = null;
-            int currentIndex = badSkills.IndexOf(skill);
-            previousSkill = currentIndex == 0 ? badSkills[currentIndex] : badSkills[currentIndex-1];
             
-            skill.SetupNode();
-
-            if(currentIndex == 0 || previousSkill.CurrentLevel > skill.CurrentLevel / 2)
-            { 
-                skill.EnableNode();
-            }
-            else
-            {
-                skill.DisableNode();
-            }
+            events.OnSkillTreeLock.Invoke();
         }
-        
-    }
-
-    [ButtonMethod]
-    private void ResetAllSkillValues()
-    {
-        int coinsToReturn = 0;
-        events.GameplayData.ResetSkillTree();
-        
-        gHolder.gameObject.SetActive(true);
-        bHolder.gameObject.SetActive(true);
-
-        foreach (SkillNode node in goodSkills)
-        {
-            if (node.CurrentLevel > 0)
-            {
-                coinsToReturn += node.TotalAmountSpent;
-                node.ResetSkillValues();
-                node.UpdateNode();
-            }
-            else continue;
-        }
-        foreach (SkillNode node in badSkills)
-        {
-            if (node.CurrentLevel > 0)
-            {
-                coinsToReturn += node.TotalAmountSpent;
-                node.ResetSkillValues();
-                node.UpdateNode();
-            }
-            else continue;
-        }
-        
-        events.GameplayData.AddCoinsToTotal(coinsToReturn);
-        events.OnCoinsSpend.Invoke();
-        UpdateTree();
-    }
-
-    private void LockOppositeTree()
-    {
-        if(playerIsImpostor) foreach (SkillNode skill in goodSkills)
-        {
-            int currentIndex = goodSkills.IndexOf(skill);
-            if (currentIndex == 0) continue;
-            skill.DisableNode();
-        }
-        else foreach (SkillNode skill in badSkills)
-        {
-            int currentIndex = badSkills.IndexOf(skill);
-            if (currentIndex == 0) continue;
-            skill.DisableNode();
-        }
+    
     }
 
     private void DisableOppositeSide()
@@ -158,6 +90,69 @@ public class SkillTreeController : MonoBehaviour
             bHolder.gameObject.SetActive(false);
             gHolder.gameObject.SetActive(true);
         }
+    }
+
+    private void SetupForFirstPurchase()
+    {
+        foreach (SkillNode skill in goodSkills)
+        {
+            int currentIndex = goodSkills.IndexOf(skill);
+            
+            skill.SetupNode(0);
+            
+            if (currentIndex > 0)
+            {
+                skill.DisableNode();
+            }
+            else skill.EnableNode();
+        }
+        
+        foreach (SkillNode skill in badSkills)
+        {
+            int currentIndex = badSkills.IndexOf(skill);
+            
+            skill.SetupNode(0);
+            
+            if (currentIndex > 0)
+            {
+                skill.DisableNode();
+            }
+            else skill.EnableNode();
+        }
+    }
+
+    [ButtonMethod]
+    private void ResetAllSkillValues()
+    {
+        firstBuy = true;
+        gHolder.gameObject.SetActive(true);
+        bHolder.gameObject.SetActive(true);
+
+        int coinsToReturn = 0;
+        events.GameplayData.ResetSkillTree();
+
+        foreach (SkillNode node in goodSkills)
+        {
+            if (node.CurrentLevel > 0)
+            {
+                coinsToReturn += node.TotalAmountSpent;
+                node.ResetSkillValues();
+                node.UpdateNode();
+            }
+        }
+        foreach (SkillNode node in badSkills)
+        {
+            if (node.CurrentLevel > 0)
+            {
+                coinsToReturn += node.TotalAmountSpent;
+                node.ResetSkillValues();
+                node.UpdateNode();
+            }
+        }
+        
+        events.GameplayData.AddCoinsToTotal(coinsToReturn);
+        events.OnCoinsSpend.Invoke();
+        UpdateTree();
     }
 
     private void OnDestroy()

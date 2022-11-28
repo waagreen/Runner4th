@@ -17,6 +17,8 @@ public class SkillNode : MonoBehaviour
     public int CurrentLevel => skill.currentLevel;
     public int BaseCost => skill.BaseCost;
     public int TotalAmountSpent => skill.TotalAmountSpent;
+    private int previousLevel;
+    public int PreviousLevel => previousLevel;
 
     [Header("Visual components")]
     public TMP_Text title;
@@ -41,9 +43,10 @@ public class SkillNode : MonoBehaviour
 
         nodeBt.onClick.AddListener(Buy);
         events.OnCoinsSpend.AddListener(UpdateNode);
+        events.OnSkillTreeLock.AddListener(UpdateNode);
     }
 
-    public void SetupNode()
+    public void SetupNode(int previousLevel)
     {
         if(skill == null)
         {
@@ -51,14 +54,33 @@ public class SkillNode : MonoBehaviour
             return;
         }
         
+        this.previousLevel = previousLevel;
         frame.sprite = isScientist ? scientistIcon : impostorIcon;
         SetNodeVisuals();
     }
 
     public void UpdateNode()
     {
-        if (currentCoins < skill.currentCost || skill.currentLevel >= skill.MaxLevel) DisableNode();
-        else EnableNode();
+        if (previousLevel < CurrentLevel / 2)
+        {
+            DisableNode();
+            Debug.Log("previous level was insufficient");
+        }
+        else if (currentCoins < skill.currentCost) 
+        {
+            DisableNode();
+            Debug.Log("coins was insufficient");
+        }
+        else if (skill.currentLevel >= skill.MaxLevel)
+        {
+            DisableNode();
+            Debug.Log("was max level");
+        }
+        else if (nodeBt.interactable == false)
+        {
+            EnableNode();
+            Debug.Log("enabled");
+        }
 
         SetNodeVisuals();
     }
@@ -72,10 +94,12 @@ public class SkillNode : MonoBehaviour
             passiveSkill.increaseAmount = skill.increaseAmount;
 
             events.OnSkillBuy.Invoke(passiveSkill);
-            events.GameplayData.SpendCoinsFromTotal(skill.currentCost);
             
             skill.TotalAmountSpent += skill.currentLevel > 0 ? skill.currentCost : skill.BaseCost;
             skill.currentLevel++;
+            
+            events.GameplayData.SpendCoinsFromTotal(skill.currentCost);
+            
             skill.currentCost = BaseCost * (CurrentLevel + 1);
             EditorUtility.SetDirty(skill);
             UpdateNode();
@@ -103,8 +127,6 @@ public class SkillNode : MonoBehaviour
 
     public void EnableNode()
     {
-        Debug.Log(skill.name + " was enabled");
-        
         Color32 nodeColor = isScientist ? scientistColor : impostorColor;
         nodeBt.interactable = true;
         bg.color = nodeColor;

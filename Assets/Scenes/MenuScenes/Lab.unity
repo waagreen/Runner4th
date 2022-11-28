@@ -498,6 +498,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3578928267139398991, guid: a0bc5b9555c3af0408f1d9fd806191e2,
         type: 3}
+      propertyPath: tilingMat
+      value: 
+      objectReference: {fileID: 2100000, guid: 06bcb4ec1f1574949bcf1c6429919fae, type: 2}
+    - target: {fileID: 3578928267139398991, guid: a0bc5b9555c3af0408f1d9fd806191e2,
+        type: 3}
       propertyPath: badSkills.Array.size
       value: 0
       objectReference: {fileID: 0}
