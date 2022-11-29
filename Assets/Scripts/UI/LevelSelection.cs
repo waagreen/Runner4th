@@ -29,8 +29,8 @@ public class LevelSelection : MonoBehaviour
     {
         int newIndex = currentIndex + direction;
       
-        if (newIndex > 2) newIndex = 0;
-        else if (newIndex < 0) newIndex = 2; 
+        if (newIndex > 1) newIndex = 0;
+        else if (newIndex < 0) newIndex = 1; 
         
         currentIndex = newIndex;
         spriteHolder.sprite = levelSprites[currentIndex];
