@@ -154,7 +154,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1115813369}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -781,7 +781,6 @@ GameObject:
   - component: {fileID: 1115813369}
   - component: {fileID: 1115813371}
   - component: {fileID: 1115813370}
-  - component: {fileID: 1115813372}
   m_Layer: 5
   m_Name: ControllerScene
   m_TagString: Untagged
@@ -804,6 +803,7 @@ RectTransform:
   - {fileID: 1862294228}
   - {fileID: 753683156}
   - {fileID: 1896940438}
+  - {fileID: 1972236230}
   - {fileID: 127938057}
   m_Father: {fileID: 2015016665}
   m_RootOrder: 0
@@ -826,10 +826,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   storyHolder: {fileID: 1862294229}
+  player: {fileID: 1972236231}
   stories:
   - {fileID: 21300000, guid: e845ac9d29d388f4b8ceea9b89f3c5d9, type: 3}
   - {fileID: 21300000, guid: da8f0ab551d7d42448723e1f9cc4586b, type: 3}
   - {fileID: 21300000, guid: 95df00952f8c50c40b7b7e663c5c05e9, type: 3}
+  clips:
+  - {fileID: 32900000, guid: afa69980076e330428961e94ee588bae, type: 3}
+  - {fileID: 32900000, guid: c113341b6e51d4f4eba48f4f49e1db43, type: 3}
   nextLevelButton: {fileID: 1896940443}
 --- !u!222 &1115813371
 CanvasRenderer:
@@ -839,41 +843,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1115813368}
   m_CullTransparentMesh: 1
---- !u!328 &1115813372
-VideoPlayer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1115813368}
-  m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: afa69980076e330428961e94ee588bae, type: 3}
-  m_TargetCameraAlpha: 1
-  m_TargetCamera3DLayout: 0
-  m_TargetCamera: {fileID: 961739752}
-  m_TargetTexture: {fileID: 8400000, guid: 655690a66e5484c70b34c5daf9392426, type: 2}
-  m_TimeReference: 0
-  m_TargetMaterialRenderer: {fileID: 0}
-  m_TargetMaterialProperty: <noninit>
-  m_RenderMode: 2
-  m_AspectRatio: 2
-  m_DataSource: 0
-  m_PlaybackSpeed: 1
-  m_AudioOutputMode: 2
-  m_TargetAudioSources:
-  - {fileID: 0}
-  m_DirectAudioVolumes:
-  - 1
-  m_Url: https://youtu.be/E1b17p1XK7c
-  m_EnabledAudioTracks: 01
-  m_DirectAudioMutes: 00
-  m_ControlledAudioTrackCount: 1
-  m_PlayOnAwake: 1
-  m_SkipOnDrop: 1
-  m_Looping: 0
-  m_WaitForFirstFrame: 1
-  m_FrameReadyEventEnabled: 0
-  m_VideoShaders: []
 --- !u!1001 &1172059701
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1407,6 +1376,78 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1896940437}
   m_CullTransparentMesh: 1
+--- !u!1 &1972236229
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1972236230}
+  - component: {fileID: 1972236231}
+  m_Layer: 5
+  m_Name: Player
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1972236230
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1972236229}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1115813369}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!328 &1972236231
+VideoPlayer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1972236229}
+  m_Enabled: 1
+  m_VideoClip: {fileID: 32900000, guid: afa69980076e330428961e94ee588bae, type: 3}
+  m_TargetCameraAlpha: 1
+  m_TargetCamera3DLayout: 0
+  m_TargetCamera: {fileID: 961739752}
+  m_TargetTexture: {fileID: 8400000, guid: 655690a66e5484c70b34c5daf9392426, type: 2}
+  m_TimeReference: 0
+  m_TargetMaterialRenderer: {fileID: 0}
+  m_TargetMaterialProperty: <noninit>
+  m_RenderMode: 2
+  m_AspectRatio: 2
+  m_DataSource: 0
+  m_PlaybackSpeed: 1
+  m_AudioOutputMode: 2
+  m_TargetAudioSources:
+  - {fileID: 0}
+  m_DirectAudioVolumes:
+  - 1
+  m_Url: https://youtu.be/E1b17p1XK7c
+  m_EnabledAudioTracks: 01
+  m_DirectAudioMutes: 00
+  m_ControlledAudioTrackCount: 1
+  m_PlayOnAwake: 0
+  m_SkipOnDrop: 1
+  m_Looping: 0
+  m_WaitForFirstFrame: 1
+  m_FrameReadyEventEnabled: 0
+  m_VideoShaders: []
 --- !u!1 &2015016661
 GameObject:
   m_ObjectHideFlags: 0

@@ -31,7 +31,7 @@ public class UiController : MonoBehaviour
     private UnityEvent<bool> pauseEvent;
 
     public int CurrentCutscene => currentCutscene;
-    private int currentCutscene;
+    private int currentCutscene = 3;
 
     private void Start() 
     {   

@@ -2,18 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class CutsceneController : MonoBehaviour
 {
     [SerializeField] private Image storyHolder;
+    [SerializeField] private VideoPlayer player;
     [SerializeField] private List<Sprite> stories;
+    [SerializeField] private List<VideoClip> clips;
     [SerializeField] private ButtonController nextLevelButton;
+    [SerializeField] private RawImage screen;
     private int currentCutscene => DataManager.Ui.CurrentCutscene;
 
     void Start()
     {
-        if (currentCutscene > 0) storyHolder.sprite = stories[currentCutscene - 1];
+        if (currentCutscene > 0)
+        {
+            storyHolder.sprite = stories[currentCutscene - 3];
+            player.clip = clips[currentCutscene - 3];
+            player.Play();
+        }
         nextLevelButton.desiredScene = GetNextScene(currentCutscene);
+
+        player.loopPointReached += EndVideo;
     }
 
     private SceneOrder GetNextScene(int desiredLevel)
@@ -23,11 +34,23 @@ public class CutsceneController : MonoBehaviour
             case 1:
                 return SceneOrder.SecondLevel;
             case 2:
-                return SceneOrder.ThirdLevel;
+                return SceneOrder.MainMenu;
             case 3: 
                 return SceneOrder.MainMenu;
             default:
                 return SceneOrder.FirstLevel;
         }
+    }
+
+    private void EndVideo(UnityEngine.Video.VideoPlayer vp)
+    {
+        player.Stop();
+        player.gameObject.SetActive(false);
+        screen.gameObject.SetActive(false);
+    }
+
+    private void OnDestroy() {
+        
+        player.loopPointReached -= EndVideo;
     }
 }
