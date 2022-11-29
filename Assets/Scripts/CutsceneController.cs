@@ -8,12 +8,11 @@ public class CutsceneController : MonoBehaviour
     [SerializeField] private Image storyHolder;
     [SerializeField] private List<Sprite> stories;
     [SerializeField] private ButtonController nextLevelButton;
-    private int currentCutscene = DataManager.Ui.CurrentCutscene;
-
+    private int currentCutscene => DataManager.Ui.CurrentCutscene;
 
     void Start()
     {
-        storyHolder.sprite = stories[currentCutscene - 1];
+        if (currentCutscene > 0) storyHolder.sprite = stories[currentCutscene - 1];
         nextLevelButton.desiredScene = GetNextScene(currentCutscene);
     }
 
