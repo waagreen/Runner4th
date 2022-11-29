@@ -101,7 +101,6 @@ public class SkillNode : MonoBehaviour
             events.GameplayData.SpendCoinsFromTotal(skill.currentCost);
             
             skill.currentCost = BaseCost * (CurrentLevel + 1);
-            EditorUtility.SetDirty(skill);
             UpdateNode();
         }
         else Debug.Log("NOT ENOUGH COINS!");
