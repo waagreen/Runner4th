@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3831100613448898687}
   m_Layer: 0
   m_Name: CharacterAudio
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -172,7 +172,7 @@ GameObject:
   - component: {fileID: 916423943014411546}
   m_Layer: 0
   m_Name: Particle System
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5261,6 +5261,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlanarSphere
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3e96ed22f27b1954bad3d9bdd61cca21,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e96ed22f27b1954bad3d9bdd61cca21, type: 3}
 --- !u!4 &543450651834034818 stripped
@@ -5356,6 +5361,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Protagonista@T-Pose
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7c8ea62ee46df4aa0895ee165545de84,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 7c8ea62ee46df4aa0895ee165545de84,
         type: 3}

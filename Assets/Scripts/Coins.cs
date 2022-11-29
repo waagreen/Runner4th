@@ -11,12 +11,9 @@ public class Coins : MonoBehaviour
 
     private async void OnTriggerEnter(Collider other) 
     {
-        if(other.tag == DataManager.playerTag)
-        {
-            audioScr.Play();
-            DataManager.Events.OnCollectCoin.Invoke(coinValue);
-            await Task.Delay(115);
-            gameObject?.SetActive(false);
-        }
+        audioScr.Play();
+        DataManager.Events.OnCollectCoin.Invoke(coinValue);
+        await Task.Delay(115);
+        gameObject?.SetActive(false);
     }
 }
