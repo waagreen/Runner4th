@@ -63,15 +63,16 @@ public class PlayerController : MonoBehaviour
         inputMap.Keyboard.Jump.performed += Jump;
         inputMap.Keyboard.Slide.started += Sliding;
         inputMap.Keyboard.Pause.started += Pause;
+        inputMap.Keyboard.Quit.started += Quit;
 
         deathEvent = DataManager.Events.OnPlayerDeath;
         collectEvent = DataManager.Events.OnCollectCoin;
         shieldEvent = DataManager.Events.OnShieldHit;
+        deathEvent = DataManager.Events.OnPlayerDeath;
 
         deathEvent.AddListener(Death);
         collectEvent.AddListener(RemoveCaughtTransform);
         shieldEvent.AddListener(UptadeShield);
-        deathEvent = DataManager.Events.OnPlayerDeath;
         deathEvent.AddListener(Death);
 
         rb = GetComponent<Rigidbody>();
@@ -94,6 +95,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (DataManager.isPlayingCutscene == true) return;
+
         //Detects if the player is grounded
         Vector3 actualRayPosition = new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z);
         Ray playerRay = new Ray(actualRayPosition, Vector3.down);
@@ -200,7 +203,8 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-    
+    private void Quit(InputAction.CallbackContext context) => DataManager.Events.QuitGame();
+
     private void UptadeShield() => shield.SetActive(DataManager.GlobalMovement.CurrentShieldCharges > 0);
 
     private void Pause(InputAction.CallbackContext context)
@@ -238,6 +242,7 @@ public class PlayerController : MonoBehaviour
             inputMap.Keyboard.Jump.performed -= Jump;
             inputMap.Keyboard.Slide.started -= Sliding;
             inputMap.Keyboard.Pause.started -= Pause;
+            inputMap.Keyboard.Quit.started -= Quit;
         }
     }
 }

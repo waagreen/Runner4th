@@ -15,7 +15,9 @@ public class DataManager : Singleton<DataManager>
     public static EventsController Events => Instance.events;
 
     public static bool isGameplay => UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex > 2;
-    
+    public static bool isPlayingCutscene = true;
+    public static bool firstTimeLevel = true;
+
     public const string playerTag = "Player";
     public const string target = "Target";
 }

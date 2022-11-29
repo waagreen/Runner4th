@@ -4,9 +4,15 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering.Universal;
 using System.Linq;
+using UnityEngine.Video;
+using UnityEngine.UI;
+using System.Threading.Tasks;
 
 public class EventsController : MonoBehaviour, ISaveble
 {
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private VideoPlayer player;
+    [SerializeField] private RawImage screen;
     [SerializeField] private UniversalRendererData rendererData;
     [SerializeField] private PlayerGameplayData gameplayData;
 
@@ -43,6 +49,12 @@ public class EventsController : MonoBehaviour, ISaveble
         OnPauseGame.AddListener(FreezeTime);
 
         passiveSkills = gameplayData.GetCharacterSheet();
+        if (DataManager.firstTimeLevel)
+        {
+            player.Play();
+            DataManager.firstTimeLevel = false;
+        }
+        player.loopPointReached += EndVideo;
     }
 
     private void UpdateSkill(PassiveSkill skill) => gameplayData.UpdateSkillList(skill);
@@ -111,6 +123,17 @@ public class EventsController : MonoBehaviour, ISaveble
         DataManager.Events.OnPauseGame.Invoke(pauseWasPressed);
     }
     
+    public void QuitGame() => Application.Quit();
+    
+    private void EndVideo(UnityEngine.Video.VideoPlayer vp)
+    {
+        player.Stop();
+        player.gameObject.SetActive(false);
+        screen.gameObject.SetActive(false);
+        DataManager.isPlayingCutscene = false;
+        audioSource.Play();
+    }
+
     private void OnDestroy() 
     {
         SaveJsonData(this);
@@ -122,5 +145,7 @@ public class EventsController : MonoBehaviour, ISaveble
         OnCoinsSpend.RemoveAllListeners();
         OnUpdateSkillTree.RemoveAllListeners();
         OnShieldHit.RemoveAllListeners();
+        
+        player.loopPointReached -= EndVideo;
     }
 }

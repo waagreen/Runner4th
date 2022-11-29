@@ -12,14 +12,15 @@ public class CutsceneController : MonoBehaviour
     [SerializeField] private List<VideoClip> clips;
     [SerializeField] private ButtonController nextLevelButton;
     [SerializeField] private RawImage screen;
-    private int currentCutscene => DataManager.Ui.CurrentCutscene;
 
     void Start()
     {
+        int currentCutscene = DataManager.Ui.CurrentCutscene;
+        
         if (currentCutscene > 0)
         {
-            storyHolder.sprite = stories[currentCutscene - 3];
-            player.clip = clips[currentCutscene - 3];
+            storyHolder.sprite = stories[currentCutscene - 1];
+            player.clip = clips[currentCutscene - 1];
             player.Play();
         }
         nextLevelButton.desiredScene = GetNextScene(currentCutscene);

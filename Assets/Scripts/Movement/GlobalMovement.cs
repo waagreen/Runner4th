@@ -51,7 +51,8 @@ public class GlobalMovement : MonoBehaviour
 
     protected void FixedUpdate()
     {
-        if(!DataManager.isGameplay) return;
+        if (DataManager.isPlayingCutscene == true) return;
+        if (!DataManager.isGameplay) return;
 
         if(CurrentState == VelocityState.Idle) deathEvent.Invoke();
         else

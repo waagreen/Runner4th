@@ -22,6 +22,8 @@ public class MovingObject : PoolingObjectReturner
 
     private void FixedUpdate()
     {
+        if (DataManager.isPlayingCutscene == true) return;
+
         transform.position += (Vector3.left * speed) * Time.fixedDeltaTime;
 
         if(transform.position.x < leftBorder.x - (myExtension.size.x + 2.5f)) gameObject.SetActive(false);

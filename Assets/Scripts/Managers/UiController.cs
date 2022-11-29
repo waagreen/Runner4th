@@ -31,7 +31,7 @@ public class UiController : MonoBehaviour
     private UnityEvent<bool> pauseEvent;
 
     public int CurrentCutscene => currentCutscene;
-    private int currentCutscene = 3;
+    private static int currentCutscene;
 
     private void Start() 
     {   
@@ -42,9 +42,9 @@ public class UiController : MonoBehaviour
         pauseEvent.AddListener(ShowPauseScreen);
     }
 
-    public void SetCurrentCutscene(int currentCutscene)
+    public void SetCurrentCutscene(int sceneIndex)
     {
-        this.currentCutscene = currentCutscene;
+        currentCutscene = sceneIndex;
         StartCoroutine(loadCoroutine(SceneOrder.Cutscene));
     }
 

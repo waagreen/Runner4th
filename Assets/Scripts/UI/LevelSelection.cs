@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class LevelSelection : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class LevelSelection : MonoBehaviour
     [Header("Level Thumbs")]
     [SerializeField] Image spriteHolder;
     [SerializeField] List<Sprite> levelSprites;
+    [SerializeField] TMP_Text levelName;
     
     private int currentIndex = 0;
 
@@ -20,6 +22,7 @@ public class LevelSelection : MonoBehaviour
     {
         spriteHolder.sprite = levelSprites[currentIndex];
         playButton.desiredScene = SceneOrder.FirstLevel;
+        levelName.SetText("FirstLevel");
         
         leftButton.onClick.AddListener(() => ScrollImages(-1));
         rightButton.onClick.AddListener(() => ScrollImages(1));
@@ -34,7 +37,10 @@ public class LevelSelection : MonoBehaviour
         
         currentIndex = newIndex;
         spriteHolder.sprite = levelSprites[currentIndex];
-        playButton.desiredScene = GetNextScene(newIndex);
+        SceneOrder desiredScene = GetNextScene(newIndex);
+        
+        playButton.desiredScene = desiredScene;
+        levelName.SetText(desiredScene.ToString());
     }
     
     private SceneOrder GetNextScene(int desiredLevel)
