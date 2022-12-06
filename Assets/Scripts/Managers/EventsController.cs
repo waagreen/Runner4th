@@ -49,9 +49,9 @@ public class EventsController : MonoBehaviour, ISaveble
         OnPauseGame.AddListener(FreezeTime);
 
         passiveSkills = gameplayData.GetCharacterSheet();
-        if (DataManager.firstTimeLevel)
+        if (DataManager.firstTimeLevel && DataManager.isGameplay)
         {
-            player.Play();
+            player?.Play();
             DataManager.firstTimeLevel = false;
         }
         player.loopPointReached += EndVideo;

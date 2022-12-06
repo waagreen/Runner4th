@@ -53,8 +53,6 @@ public class GlobalMovement : MonoBehaviour
         if (DataManager.isPlayingCutscene == true) return;
         if (!DataManager.isGameplay) return;
 
-        Debug.Log(_currentSpeed);
-
         if(CurrentState == VelocityState.Idle) deathEvent.Invoke();
         else
         {
@@ -91,7 +89,6 @@ public class GlobalMovement : MonoBehaviour
         }
         else
         {
-            Debug.Log("Reduce");
             _currentSpeed /= 2f;
         }
     }
