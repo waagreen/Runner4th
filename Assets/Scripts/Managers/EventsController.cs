@@ -51,6 +51,7 @@ public class EventsController : MonoBehaviour, ISaveble
         passiveSkills = gameplayData.GetCharacterSheet();
         if (DataManager.firstTimeLevel && DataManager.isGameplay)
         {
+            screen.gameObject.SetActive(true);
             player?.Play();
             DataManager.firstTimeLevel = false;
         }
@@ -99,8 +100,9 @@ public class EventsController : MonoBehaviour, ISaveble
 
         gameplayData.ResetAndSaveReservedCoins();
         a_SaveData.myCoins = gameplayData.TotalCoins;
-
-        float distance = DataManager.GlobalMovement.distance;
+        
+        float distance = 0f;
+        if (DataManager.Instance != null) distance = DataManager.GlobalMovement.distance;
 
         if (distance > gameplayData.BestDistance)
         { 

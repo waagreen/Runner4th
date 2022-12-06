@@ -9,10 +9,10 @@ public class DataManager : Singleton<DataManager>
     [SerializeField] private UiController ui;
     [SerializeField] private EventsController events;
 
-    public static GlobalMovement GlobalMovement => Instance.globalMovement;
-    public static PoolingMaster PoolingMaster => Instance.poolingMaster;
-    public static UiController Ui => Instance.ui;
-    public static EventsController Events => Instance.events;
+    public static GlobalMovement GlobalMovement => Instance?.globalMovement;
+    public static PoolingMaster PoolingMaster => Instance?.poolingMaster;
+    public static UiController Ui => Instance?.ui;
+    public static EventsController Events => Instance?.events;
 
     public static bool isGameplay => UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex > 2;
     public static bool isPlayingCutscene = true;
