@@ -7,12 +7,16 @@ using System.Linq;
 using UnityEngine.Video;
 using UnityEngine.UI;
 using System.Threading.Tasks;
+using MyBox;
 
 public class EventsController : MonoBehaviour, ISaveble
 {
-    [SerializeField] private AudioSource audioSource;
-    [SerializeField] private VideoPlayer player;
-    [SerializeField] private RawImage screen;
+    [Header("Video stuff")]
+    [SerializeField] private bool hasOpeningCutscene = false;
+    [ConditionalField(nameof(hasOpeningCutscene))][SerializeField] private AudioSource audioSource;
+    [ConditionalField(nameof(hasOpeningCutscene))][SerializeField] private VideoPlayer player;
+    [ConditionalField(nameof(hasOpeningCutscene))][SerializeField] private RawImage screen;
+
     [SerializeField] private UniversalRendererData rendererData;
     [SerializeField] private PlayerGameplayData gameplayData;
 
@@ -49,12 +53,15 @@ public class EventsController : MonoBehaviour, ISaveble
         OnPauseGame.AddListener(FreezeTime);
 
         passiveSkills = gameplayData.GetCharacterSheet();
-        if (DataManager.firstTimeLevel && DataManager.isGameplay)
+
+        if (DataManager.firstTimeLevel && DataManager.isGameplay && hasOpeningCutscene)
         {
-            screen.gameObject.SetActive(true);
+            screen?.gameObject.SetActive(true);
             player?.Play();
             DataManager.firstTimeLevel = false;
         }
+        else DataManager.isPlayingCutscene = false;
+        
         player.loopPointReached += EndVideo;
     }
 
