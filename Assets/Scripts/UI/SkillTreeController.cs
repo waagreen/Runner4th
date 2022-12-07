@@ -149,7 +149,9 @@ public class SkillTreeController : MonoBehaviour
             }
         }
         
-        events.GameplayData.AddCoinsToTotal(coinsToReturn);
+        Debug.Log(coinsToReturn);
+        events.GameplayData.AddCoinsToTotal(events.GameplayData.TotalAmountSpent);
+        events.GameplayData.SyncTotalSpent(0);
         events.OnCoinsSpend.Invoke();
         UpdateTree();
     }

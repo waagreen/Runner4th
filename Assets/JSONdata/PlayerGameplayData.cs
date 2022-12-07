@@ -18,13 +18,16 @@ public struct CharacterSheet
 public class PlayerGameplayData : ScriptableObject
 {
     public int TotalCoins => totalCoins;
+    public int TotalAmountSpent => totalAmountSpent;
     public int currentReservedCoins;
     public int BestDistance;
+    
     
     [Space(10f)]
     [Header("Debug options")]
     public int coinsToAdd;
     
+    private int totalAmountSpent;
     private int totalCoins;
     private List<PassiveSkill> passiveSkills = new List<PassiveSkill>(capacity: 6);
     public List<PassiveSkill> PassiveSkills => passiveSkills;
@@ -92,7 +95,9 @@ public class PlayerGameplayData : ScriptableObject
         totalCoins -= desiredValue;
         DataManager.Events.OnCoinsSpend.Invoke();
     }    
-    
+    public void RegisterAmountSpent(int amount) => totalAmountSpent += amount;
+    public void SyncTotalSpent(int amount) => totalAmountSpent = amount;
+
     [ButtonMethod]
     protected void AddCoins()
     {

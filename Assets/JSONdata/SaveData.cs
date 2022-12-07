@@ -8,6 +8,7 @@ public class SaveData
 {
     public int myCoins;
     public int bestDistance;
+    public int amountSpent;
     public List<PassiveSkill> currentPassiveSkills = new List<PassiveSkill>(capacity: 6);
 
     public string ToJson() => JsonUtility.ToJson(this);

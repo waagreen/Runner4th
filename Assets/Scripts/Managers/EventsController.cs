@@ -61,7 +61,7 @@ public class EventsController : MonoBehaviour, ISaveble
             DataManager.firstTimeLevel = false;
         }
         else DataManager.isPlayingCutscene = false;
-        
+
         player.loopPointReached += EndVideo;
     }
 
@@ -107,7 +107,8 @@ public class EventsController : MonoBehaviour, ISaveble
 
         gameplayData.ResetAndSaveReservedCoins();
         a_SaveData.myCoins = gameplayData.TotalCoins;
-        
+        a_SaveData.amountSpent = gameplayData.TotalAmountSpent;
+
         float distance = 0f;
         if (DataManager.Instance != null) distance = DataManager.GlobalMovement.distance;
 
@@ -123,6 +124,7 @@ public class EventsController : MonoBehaviour, ISaveble
     {
         gameplayData.SyncPassiveSkills(a_SaveData.currentPassiveSkills);
         gameplayData.SyncTotalCoins(a_SaveData.myCoins);
+        gameplayData.SyncTotalSpent(a_SaveData.amountSpent);
         gameplayData.BestDistance = a_SaveData.bestDistance;
     }
 

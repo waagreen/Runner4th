@@ -20,7 +20,6 @@ public class DestructableObject : PoolingObjectReturner
 			}
             else if(other.transform.tag == DataManager.playerTag && (int)desiredVelocity > (int)globalMove.CurrentState)
             {
-                Debug.Log("reduced");
                 globalMove.ReduceSpeed();
                 gameObject.SetActive(false);
             }

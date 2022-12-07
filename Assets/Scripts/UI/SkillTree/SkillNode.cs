@@ -99,6 +99,7 @@ public class SkillNode : MonoBehaviour
             skill.currentLevel++;
             
             events.GameplayData.SpendCoinsFromTotal(skill.currentCost);
+            events.GameplayData.RegisterAmountSpent(skill.currentCost);
             
             skill.currentCost = BaseCost * (CurrentLevel + 1);
             UpdateNode();
