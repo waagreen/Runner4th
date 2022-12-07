@@ -53,9 +53,9 @@ public class EventsController : MonoBehaviour, ISaveble
         OnPauseGame.AddListener(FreezeTime);
 
         passiveSkills = gameplayData.GetCharacterSheet();
-
         if (DataManager.firstTimeLevel && DataManager.isGameplay && hasOpeningCutscene)
         {
+            DataManager.isPlayingCutscene = true;
             screen?.gameObject.SetActive(true);
             player?.Play();
             DataManager.firstTimeLevel = false;
